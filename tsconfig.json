@@ -1,0 +1,18 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-native",
+    "module": "commonjs",
+    "lib": ["es2017"],
+    "baseUrl": "./src",
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
