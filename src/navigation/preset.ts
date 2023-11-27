@@ -107,6 +107,8 @@ export const SCREENS_KEY = {
   },
   PROFILE: {
     INDEX: 'PROFILE_INDEX' as const,
+    CHANGE_PASSWORD: 'PROFILE_CHANGE_PASSWORD' as const,
+    UPDATE: 'PROFILE_UPDATE' as const,
   },
   SETTING: {
     INDEX: 'SETTING_INDEX' as const,

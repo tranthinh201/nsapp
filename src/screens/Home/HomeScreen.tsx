@@ -1,7 +1,7 @@
+import EyeSvg from '@/assets/svg/eye.svg'
 import { NavigationProp } from '@/navigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
-
 import { View } from 'react-native'
 import { Button, Text } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
@@ -15,7 +15,7 @@ const HomeScreen = () => {
   }
 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('persist:root')
+    await AsyncStorage.removeItem('persist:root:auth')
     dispatch.auth.setUser(null)
   }
 
@@ -30,6 +30,8 @@ const HomeScreen = () => {
       <Button onPress={handleGetToken}>GET TOKEN</Button>
 
       <Button onPress={handleLogout}>LOGOUT</Button>
+
+      <EyeSvg />
     </View>
   )
 }

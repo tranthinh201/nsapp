@@ -1,4 +1,4 @@
 export type MainBottomTabParamList = {
   TAB_HOME: undefined
-  TAB_LIKE: undefined
+  TAB_PROFILE: undefined
 }

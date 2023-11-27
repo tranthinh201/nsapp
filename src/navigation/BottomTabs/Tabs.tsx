@@ -1,8 +1,13 @@
+import HomeFocusedSvg from '@/assets/svg/home-focused.svg'
+import HomeSvg from '@/assets/svg/home.svg'
+import ProfileFocusedSvg from '@/assets/svg/profile-focused.svg'
+import ProfileSvg from '@/assets/svg/profile.svg'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React from 'react'
 import { BOTTOM_TABS_KEY } from '../preset'
 import { MainBottomTabParamList } from './MainBottomTabParams'
 import TabHome from './TabHome/HomeStack'
+import TabProfile from './TabProfile/ProfileStack'
 
 const Tab = createBottomTabNavigator<MainBottomTabParamList>()
 
@@ -19,14 +24,22 @@ const BottomTabs = () => {
       options: {
         title: 'Home',
         headerShown: true,
+        tabBarIcon: ({ focused }: tabBarIconProps) =>
+          focused ? <HomeFocusedSvg width={33} height={33} /> : <HomeSvg width={33} height={33} />,
       },
     },
     {
-      name: BOTTOM_TABS_KEY.TAB_LIKE,
-      component: TabHome,
+      name: BOTTOM_TABS_KEY.TAB_PROFILE,
+      component: TabProfile,
       options: {
-        title: 'LIKE',
-        headerShown: true,
+        title: 'Profile',
+        headerShown: false,
+        tabBarIcon: ({ focused }: tabBarIconProps) =>
+          focused ? (
+            <ProfileFocusedSvg width={33} height={33} />
+          ) : (
+            <ProfileSvg width={33} height={33} />
+          ),
       },
     },
   ]

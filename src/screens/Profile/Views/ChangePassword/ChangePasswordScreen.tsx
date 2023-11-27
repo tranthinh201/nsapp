@@ -1,21 +1,18 @@
 import EyeSvg from '@/assets/svg/eye.svg'
 import HideSvg from '@/assets/svg/hide.svg'
-import { signIn } from '@/libs/api/auth'
-import { setAccessToken, setAuthUser } from '@/libs/asyncStorage'
 import { Header, Input } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
 import { btnStyles, textStyles } from '@/libs/styles'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Button, TextInput as TextInputPaper } from 'react-native-paper'
+import { Button, Text, TextInput as TextInputPaper } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
-import { SignInSchema, SignInType } from './types'
+import { ChangePasswordSchema, ChangePasswordType } from './types'
 
-const SignInScreen = () => {
+const ChangePasswordScreen = () => {
   const dispatch = useDispatch()
   const theme = useAppTheme()
   const [isHidePassword, setIsHidePassword] = useState<boolean>(true)
@@ -27,73 +24,24 @@ const SignInScreen = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInType>({
+  } = useForm<ChangePasswordType>({
     mode: 'onChange',
-    resolver: zodResolver(SignInSchema),
+    resolver: zodResolver(ChangePasswordSchema),
     defaultValues: {
-      email: '',
       password: '',
+      new_password: '',
+      confirm_password: '',
     },
   })
 
-  const { isLoading, mutate } = useMutation(signIn, {
-    onSuccess: (response, { email }) => {
-      if (response) {
-        setAccessToken(response.payload.token)
-
-        setAuthUser({
-          id: response.user.id,
-          email: email,
-          name: response.user.first_name,
-        })
-
-        dispatch.auth.setUser({
-          email: email,
-          id: response.user.id,
-        })
-      }
-    },
-    onSettled(data) {
-      if (!data) {
-        Alert.alert('Error', 'Email or password is incorrect')
-      }
-    },
-  })
-
-  const onSubmit = (data: SignInType) => {
-    mutate(data)
-  }
+  const onSubmit = (data: ChangePasswordType) => {}
 
   return (
     <View style={styles.root}>
-      <Header title="Mini app" hideHeaderLeft />
 
       <KeyboardAwareScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           <View style={styles.containerInput}>
-            <View style={{ marginBottom: 29 }}>
-              <Text style={textStyles.labelInput14}>Email</Text>
-
-              <Controller
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <Input
-                    outlineColor={theme.colors.borderInput}
-                    styleInput={{
-                      fontFamily: theme.fonts.default.fontFamily,
-                      fontSize: 14,
-                    }}
-                    theme={theme}
-                    value={value}
-                    onChangeText={onChange}
-                    error={!!errors?.email?.message}
-                    helperText={errors?.email?.message}
-                  />
-                )}
-                name="email"
-              />
-            </View>
-
             <View>
               <Text style={textStyles.labelInput14}>Password</Text>
 
@@ -128,14 +76,79 @@ const SignInScreen = () => {
                 name="password"
               />
             </View>
+
+            <View>
+              <Text style={textStyles.labelInput14}>New password</Text>
+
+              <Controller
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    outlineColor={theme.colors.borderInput}
+                    styleInput={{
+                      fontFamily: theme.fonts.default.fontFamily,
+                      fontSize: 14,
+                    }}
+                    theme={theme}
+                    value={value}
+                    onChangeText={onChange}
+                    secureTextEntry={isHidePassword}
+                    error={!!errors?.new_password?.message}
+                    helperText={errors?.new_password?.message}
+                    right={
+                      <TextInputPaper.Icon
+                        forceTextInputFocus={false}
+                        onPress={handleHidePassword}
+                        icon={() => (
+                          <View style={styles.paddingTouch}>
+                            {isHidePassword ? <HideSvg /> : <EyeSvg />}
+                          </View>
+                        )}
+                      />
+                    }
+                  />
+                )}
+                name="new_password"
+              />
+            </View>
+
+            <View>
+              <Text style={textStyles.labelInput14}>Confirm password</Text>
+
+              <Controller
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    outlineColor={theme.colors.borderInput}
+                    styleInput={{
+                      fontFamily: theme.fonts.default.fontFamily,
+                      fontSize: 14,
+                    }}
+                    theme={theme}
+                    value={value}
+                    onChangeText={onChange}
+                    secureTextEntry={isHidePassword}
+                    error={!!errors?.confirm_password?.message}
+                    helperText={errors?.confirm_password?.message}
+                    right={
+                      <TextInputPaper.Icon
+                        forceTextInputFocus={false}
+                        onPress={handleHidePassword}
+                        icon={() => (
+                          <View style={styles.paddingTouch}>
+                            {isHidePassword ? <HideSvg /> : <EyeSvg />}
+                          </View>
+                        )}
+                      />
+                    }
+                  />
+                )}
+                name="confirm_password"
+              />
+            </View>
           </View>
 
-          <Button
-            loading={isLoading}
-            mode="contained"
-            style={btnStyles.button}
-            onPress={handleSubmit(onSubmit)}
-          >
+          <Button mode="contained" style={btnStyles.button} onPress={handleSubmit(onSubmit)}>
             <Text style={{ fontSize: 14 }}>Login</Text>
           </Button>
         </View>
@@ -144,7 +157,7 @@ const SignInScreen = () => {
   )
 }
 
-export { SignInScreen }
+export { ChangePasswordScreen }
 
 const styles = StyleSheet.create({
   root: {
