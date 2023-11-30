@@ -1,11 +1,10 @@
 import { STORAGE_KEY, getAccessToken } from '@/libs/asyncStorage'
-import { Dispatch, RootStore } from '@/store'
+import { Dispatch } from '@/store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
-import { isEqual } from 'lodash'
 import { useEffect } from 'react'
 import { Alert } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const baseURL = 'https://nsbe.onrender.com/'
 
@@ -35,34 +34,25 @@ export const ApiClientUnAuth = Axios.create({
 export const AxiosInterceptor = ({ children }: any) => {
   const dispatch = useDispatch<Dispatch>()
 
-  const { isGuestMode } = useSelector(
-    ({ auth }: RootStore) => ({
-      isGuestMode: auth.guestMode,
-    }),
-    isEqual,
-  )
-
   useEffect(() => {
-    if (!isGuestMode) {
-      const resInterceptor = (response: AxiosResponse) => {
-        return response
-      }
-
-      const errInterceptor = (error: AxiosError) => {
-        console.log({ error })
-
-        if (error.response?.status === 401) {
-          dispatch.auth.setUser(null as never)
-          AsyncStorage.removeItem(STORAGE_KEY.TOKEN)
-          Alert.alert('Error', 'Token Expired!')
-        }
-
-        return Promise.reject(error.message)
-      }
-      const interceptor = ApiClient.interceptors.response.use(resInterceptor, errInterceptor)
-
-      return () => ApiClient.interceptors.response.eject(interceptor)
+    const resInterceptor = (response: AxiosResponse) => {
+      return response
     }
-  }, [isGuestMode])
+
+    const errInterceptor = (error: AxiosError) => {
+      console.log({ error })
+
+      if (error.response?.status === 401) {
+        dispatch.auth.setUser(null as never)
+        AsyncStorage.removeItem(STORAGE_KEY.TOKEN)
+        Alert.alert('Error', 'Token Expired!')
+      }
+
+      return Promise.reject(error.message)
+    }
+    const interceptor = ApiClient.interceptors.response.use(resInterceptor, errInterceptor)
+
+    return () => ApiClient.interceptors.response.eject(interceptor)
+  }, [])
   return children
 }

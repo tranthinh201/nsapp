@@ -4,11 +4,25 @@ import { Navigation, navigationRef } from '@/navigation'
 import Gate from '@/store/Gate'
 import { NavigationContainer } from '@react-navigation/native'
 import { QueryClientProvider } from '@tanstack/react-query'
+import { useFonts } from 'expo-font'
 import { useRef } from 'react'
-import { Provider as ThemeProvider } from 'react-native-paper'
+import { View } from 'react-native'
+import { ActivityIndicator, Provider as ThemeProvider } from 'react-native-paper'
 
 export default function App() {
   const routeNameRef = useRef<string>()
+
+  const [fontLoaded] = useFonts({
+    'Itim-Regular': require('@/assets/fonts/Itim-Regular.ttf'),
+  })
+
+  if (!fontLoaded) {
+    return (
+      <View>
+        <ActivityIndicator animating={true} color="base.primary" />
+      </View>
+    )
+  }
 
   return (
     <QueryClientProvider client={queryClient}>

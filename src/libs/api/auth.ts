@@ -24,8 +24,6 @@ export const signIn = async ({ email, password }: SignInType): Promise<SignInRes
     password: password,
   })
 
-  console.log(response.data.user)
-
   return {
     user: {
       id: response.data.user.id,
@@ -34,4 +32,20 @@ export const signIn = async ({ email, password }: SignInType): Promise<SignInRes
     },
     payload: response.data.payload,
   }
+}
+
+type ChangePasswordType = {
+  password: string
+  new_password: string
+  id: string
+}
+
+export const changePassword = async ({ password, new_password, id }: ChangePasswordType) => {
+  const response = await ApiClient.post('auth/change-password', {
+    password,
+    new_password,
+    id,
+  })
+
+  return response.data
 }
