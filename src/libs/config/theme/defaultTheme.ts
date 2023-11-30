@@ -1,10 +1,6 @@
 import { Platform } from 'react-native'
 import { DefaultTheme, useTheme } from 'react-native-paper'
 
-const fontConfig = {
-  fontFamily: 'NotoSans-Regular',
-}
-
 export const defaultTheme = {
   ...DefaultTheme,
   custom: 'property',
@@ -16,14 +12,15 @@ export const defaultTheme = {
     backgroundYellow: '#F9F7D1',
     error: '#F0A69B',
     text: '#fff',
-    borderInput: '#9B9B9B',
+    borderInput: '#E8ECF4',
     textGray: '#545454',
     textRed: '#D4102A',
     secondaryText: '#8F8F8F',
     placeholder: '#C0C0C0',
     divider: '#D4D4D4',
+    borderBack: '#E8ECF4',
+    textForgot: '#6A707C',
   },
-  // fonts: configureFonts({ config: fontConfig }),
 }
 
 export const BANNER_HEIGHT = Platform.select({ ios: 325, android: 315 })

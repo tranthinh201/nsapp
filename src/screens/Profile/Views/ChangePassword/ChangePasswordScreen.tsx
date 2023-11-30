@@ -9,11 +9,9 @@ import { Controller, useForm } from 'react-hook-form'
 import { StyleSheet, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Button, Text, TextInput as TextInputPaper } from 'react-native-paper'
-import { useDispatch } from 'react-redux'
 import { ChangePasswordSchema, ChangePasswordType } from './types'
 
 const ChangePasswordScreen = () => {
-  const dispatch = useDispatch()
   const theme = useAppTheme()
   const [isHidePassword, setIsHidePassword] = useState<boolean>(true)
   const handleHidePassword = () => {
@@ -38,9 +36,14 @@ const ChangePasswordScreen = () => {
 
   return (
     <View style={styles.root}>
+      <Header title="Change password" />
 
       <KeyboardAwareScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
+          <View>
+            <Text style={textStyles.labelInput14}>Please enter and confirm your new password.</Text>
+          </View>
+
           <View style={styles.containerInput}>
             <View>
               <Text style={textStyles.labelInput14}>Password</Text>

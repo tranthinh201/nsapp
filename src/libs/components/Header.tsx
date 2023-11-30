@@ -1,5 +1,5 @@
+import ArrowBackSvg from '@/assets/svg/arrow-right.svg'
 import { useNavigation } from '@react-navigation/native'
-// import ArrowBackSvg from 'assets/svg/arrow-back.svg'
 import { truncate } from 'lodash'
 import React from 'react'
 import { Platform, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -37,22 +37,17 @@ const Header: React.FC<Props> = ({
           ios: insets.top,
           android: StatusBar.currentHeight,
         }),
-        backgroundColor: colors.primary,
         zIndex: 1000,
       }}
     >
       <View>
-        <FocusAwareStatusBar
-          barStyle="light-content"
-          translucent={true}
-          backgroundColor={colors.primary}
-        />
+        <FocusAwareStatusBar barStyle="light-content" translucent={true} />
+
         <View
           style={{
             flexDirection: 'row',
-            backgroundColor: colors.primary,
             padding: 10,
-            height: 72,
+            height: Platform.OS === 'ios' ? 42 : 70,
           }}
         >
           <View
@@ -72,7 +67,16 @@ const Header: React.FC<Props> = ({
                     }}
                     onPress={() => (customFuncBack ? customFuncBack() : navigation.goBack())}
                   >
-                    <Text>Back</Text>
+                    <View
+                      style={{
+                        borderColor: colors.borderBack,
+                        borderWidth: 0.5,
+                        borderRadius: 6,
+                        padding: 10,
+                      }}
+                    >
+                      <ArrowBackSvg />
+                    </View>
                   </TouchableOpacity>
                 )}
               </View>
@@ -83,7 +87,7 @@ const Header: React.FC<Props> = ({
                 style={[
                   styles.title,
                   {
-                    color: colors.text,
+                    color: colors.textGray,
                     justifyContent: 'center',
                     includeFontPadding: false,
                     textAlign: isTitleCenter ? 'center' : 'left',
@@ -93,7 +97,7 @@ const Header: React.FC<Props> = ({
                 ]}
               >
                 {truncate(title, {
-                  length: 12,
+                  length: 22,
                 })}
               </Text>
             ) : (

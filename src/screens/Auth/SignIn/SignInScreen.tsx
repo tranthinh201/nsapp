@@ -1,4 +1,7 @@
+import AppleIcon from '@/assets/svg/apple.svg'
 import EyeSvg from '@/assets/svg/eye.svg'
+import FaceBookIcon from '@/assets/svg/facebook.svg'
+import GoogleIcon from '@/assets/svg/google.svg'
 import HideSvg from '@/assets/svg/hide.svg'
 import { signIn } from '@/libs/api/auth'
 import { setAccessToken, setAuthUser } from '@/libs/asyncStorage'
@@ -19,6 +22,7 @@ const SignInScreen = () => {
   const dispatch = useDispatch()
   const theme = useAppTheme()
   const [isHidePassword, setIsHidePassword] = useState<boolean>(true)
+  const { colors } = useAppTheme()
   const handleHidePassword = () => {
     setIsHidePassword((prevState) => !prevState)
   }
@@ -66,14 +70,16 @@ const SignInScreen = () => {
 
   return (
     <View style={styles.root}>
-      <Header title="Mini app" hideHeaderLeft />
+      <Header />
 
       <KeyboardAwareScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
+          <View style={styles.title}>
+            <Text style={textStyles.title}>Welcome back! NsTeam to see you, Again!</Text>
+          </View>
+
           <View style={styles.containerInput}>
             <View style={{ marginBottom: 29 }}>
-              <Text style={textStyles.labelInput14}>Email</Text>
-
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
@@ -83,11 +89,13 @@ const SignInScreen = () => {
                       fontFamily: theme.fonts.default.fontFamily,
                       fontSize: 14,
                     }}
+                    label="Email"
                     theme={theme}
                     value={value}
                     onChangeText={onChange}
                     error={!!errors?.email?.message}
                     helperText={errors?.email?.message}
+                    placeholder="Enter your email"
                   />
                 )}
                 name="email"
@@ -95,8 +103,6 @@ const SignInScreen = () => {
             </View>
 
             <View>
-              <Text style={textStyles.labelInput14}>Password</Text>
-
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
@@ -106,12 +112,14 @@ const SignInScreen = () => {
                       fontFamily: theme.fonts.default.fontFamily,
                       fontSize: 14,
                     }}
+                    label="Password"
                     theme={theme}
                     value={value}
                     onChangeText={onChange}
                     secureTextEntry={isHidePassword}
                     error={!!errors?.password?.message}
                     helperText={errors?.password?.message}
+                    placeholder="Enter your password"
                     right={
                       <TextInputPaper.Icon
                         forceTextInputFocus={false}
@@ -127,6 +135,26 @@ const SignInScreen = () => {
                 )}
                 name="password"
               />
+            </View>
+          </View>
+
+          <View style={styles.textForgotPassword}>
+            <Text style={{ ...textStyles.labelInput14, color: colors.textForgot }}>
+              Forgot password?
+            </Text>
+          </View>
+
+          <View style={styles.socialList}>
+            <View style={styles.socialItem}>
+              <FaceBookIcon />
+            </View>
+
+            <View style={styles.socialItem}>
+              <GoogleIcon />
+            </View>
+
+            <View style={styles.socialItem}>
+              <AppleIcon />
             </View>
           </View>
 
@@ -157,13 +185,37 @@ const styles = StyleSheet.create({
     paddingHorizontal: 29,
   },
   containerInput: {
-    marginTop: 53,
-    marginBottom: 20,
+    marginTop: 32,
+    marginBottom: 10,
   },
   scrollContainer: {
     paddingBottom: 20,
   },
   paddingTouch: {
     padding: 10,
+  },
+  title: {
+    marginTop: 20,
+  },
+  textForgotPassword: {
+    flex: 1,
+    alignItems: 'flex-end',
+    marginBottom: 20,
+  },
+  socialList: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  socialItem: {
+    width: 105,
+    height: 56,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
   },
 })

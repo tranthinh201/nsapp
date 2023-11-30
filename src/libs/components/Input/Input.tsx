@@ -1,3 +1,4 @@
+import { textStyles } from '@/libs/styles'
 import React from 'react'
 import { StyleProp, StyleSheet, Text, TextInput, TextStyle, View } from 'react-native'
 import { TextInput as TextInputPaper, TextInputProps } from 'react-native-paper'
@@ -5,14 +6,17 @@ import { TextInput as TextInputPaper, TextInputProps } from 'react-native-paper'
 type Props = {
   helperText?: string
   styleInput?: StyleProp<TextStyle>
+  label?: string
 } & TextInputProps
 
-const Input: React.FC<Props> = ({ helperText, style, styleInput, ...props }) => {
+const Input: React.FC<Props> = ({ helperText, style, styleInput, label, ...props }) => {
   return (
     <View style={style}>
+      {label && <Text style={textStyles.labelInput14}>{label}</Text>}
+
       <TextInputPaper
         mode="outlined"
-        placeholderTextColor="#C0C0C0"
+        placeholderTextColor="#8391A1"
         {...props}
         render={(innerProps) => (
           <TextInput
@@ -34,16 +38,16 @@ const styles = StyleSheet.create({
   text: {
     includeFontPadding: false,
     paddingBottom: 5,
-    fontSize: 12,
+    fontSize: 15,
   },
   textMultiline: {
     includeFontPadding: false,
     paddingBottom: 15,
     height: 150,
-    fontSize: 12,
+    fontSize: 15,
   },
   helperText: {
-    color: '#ff4400ec',
+    color: 'red',
     fontSize: 12,
     includeFontPadding: false,
   },

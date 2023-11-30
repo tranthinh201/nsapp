@@ -5,7 +5,6 @@ export const btnStyles = StyleSheet.create({
     borderRadius: 6,
     height: 52,
     justifyContent: 'center',
-
     fontSize: 14,
   },
 })

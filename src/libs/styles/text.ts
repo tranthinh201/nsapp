@@ -40,7 +40,8 @@ export const textStyles = StyleSheet.create({
     includeFontPadding: false,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     includeFontPadding: false,
+    fontWeight: 'bold',
   },
 })
