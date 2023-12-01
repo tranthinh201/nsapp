@@ -10,6 +10,11 @@ const AuthScreens = [
     component: SignInScreen,
     options: { headerShown: false },
   },
+  {
+    name: SCREENS_KEY.FORGOT_PASSWORD.INDEX,
+    component: SignInScreen,
+    options: { headerShown: false },
+  },
 ]
 
 const Stack = createStackNavigator<AuthStackParams>()

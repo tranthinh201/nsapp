@@ -23,7 +23,7 @@ const HomeScreen = () => {
     <View>
       <Text>Home Screen</Text>
 
-      <Button onPress={() => navigation.navigate('BottomTabs', { screen: 'TAB_LIKE' })}>
+      <Button onPress={() => navigation.navigate('BottomTabs', { screen: 'TAB_PROFILE' })}>
         CLICK NE
       </Button>
 

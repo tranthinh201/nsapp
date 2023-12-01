@@ -8,7 +8,9 @@ import { setAccessToken, setAuthUser } from '@/libs/asyncStorage'
 import { Header, Input } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
 import { btnStyles, textStyles } from '@/libs/styles'
+import { NavigationProp } from '@/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigation } from '@react-navigation/native'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -23,6 +25,7 @@ const SignInScreen = () => {
   const theme = useAppTheme()
   const [isHidePassword, setIsHidePassword] = useState<boolean>(true)
   const { colors } = useAppTheme()
+  const navigation = useNavigation<NavigationProp>()
   const handleHidePassword = () => {
     setIsHidePassword((prevState) => !prevState)
   }
@@ -139,7 +142,10 @@ const SignInScreen = () => {
           </View>
 
           <View style={styles.textForgotPassword}>
-            <Text style={{ ...textStyles.labelInput14, color: colors.textForgot }}>
+            <Text
+              style={{ ...textStyles.labelInput14, color: colors.textForgot }}
+              onPress={() => navigation.navigate('AuthStack', { screen: 'FORGOT_PASSWORD' })}
+            >
               Forgot password?
             </Text>
           </View>
