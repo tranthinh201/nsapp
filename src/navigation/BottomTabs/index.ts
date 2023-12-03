@@ -1,3 +1,3 @@
 export * from './TabHome'
-export * from './TabProfile'
+export * from './TabSetting'
 export * from './Tabs'

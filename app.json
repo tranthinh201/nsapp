@@ -8,23 +8,14 @@
     "userInterfaceStyle": "light",
     "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": [
-        "ts",
-        "tsx",
-        "js",
-        "jsx",
-        "wasm",
-        "svg"
-      ]
+      "sourceExts": ["ts", "tsx", "js", "jsx", "wasm", "svg"]
     },
     "splash": {
       "image": "./src/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },

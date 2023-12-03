@@ -1,5 +1,7 @@
+import { ForgotPasswordType, VerifyOtpType } from '@/screens/Auth/ForgotPassword/types'
+import { ResetPasswordType } from '@/screens/Auth/ResetPassword/types'
 import { SignInType } from '@/screens/Auth/SignIn/types'
-import { ApiClient } from '../config/react-query'
+import { ApiClient, ApiClientUnAuth } from '../config/react-query'
 
 type PayloadType = {
   refresh_token: string
@@ -48,4 +50,29 @@ export const changePassword = async ({ password, new_password, id }: ChangePassw
   })
 
   return response.data
+}
+
+export const forgotPassword = async ({ email }: ForgotPasswordType) => {
+  const response = await ApiClientUnAuth.post('auth/forgot-password', {
+    email,
+  })
+
+  return response.data
+}
+
+export const verifyForgotPassword = async ({ token }: VerifyOtpType) => {
+  const response = await ApiClientUnAuth.post('auth/verify-otp', {
+    token,
+  })
+
+  return response
+}
+
+export const resetPassword = async ({ password, token }: ResetPasswordType) => {
+  const response = await ApiClientUnAuth.post('auth/reset-password', {
+    password,
+    token,
+  })
+
+  return response
 }

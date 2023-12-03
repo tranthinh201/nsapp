@@ -116,10 +116,10 @@ export { Header }
 
 const styles = StyleSheet.create({
   left: {
-    paddingVertical: 10,
+    paddingVertical: Platform.OS === 'ios' ? 10 : 0,
     paddingLeft: 10,
     paddingRight: 30,
-    paddingBottom: 30,
+    paddingBottom: Platform.OS === 'ios' ? 30 : 0,
     alignItems: 'center',
     position: 'absolute',
     left: 0,

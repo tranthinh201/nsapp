@@ -11,8 +11,8 @@ export type NavigationProp = StackNavigationProp<RootStackParamList>
 
 const Navigation = () => {
   //Check auth ~ introduce app
-  const { user, isFirstTime, isGuestMode, seenIntroduce } = useSelector(
-    ({ auth, event, tutorial, master }: RootStore) => ({
+  const { user } = useSelector(
+    ({ auth, tutorial }: RootStore) => ({
       user: auth.user,
       isFirstTime: auth.isFirstTime,
       isGuestMode: auth.guestMode,
@@ -24,6 +24,7 @@ const Navigation = () => {
   if (!user) {
     return (
       <RootStack.Navigator screenOptions={{ headerShown: false, presentation: 'card' }}>
+        <RootStack.Screen name="BottomTabs" component={BottomTabs} />
         <RootStack.Screen name="AuthStack" component={AuthStack} />
       </RootStack.Navigator>
     )

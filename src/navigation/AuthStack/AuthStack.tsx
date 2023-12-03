@@ -1,4 +1,7 @@
+import { ForgotPasswordScreen } from '@/screens/Auth/ForgotPassword'
+import { ResetPasswordScreen } from '@/screens/Auth/ResetPassword/'
 import { SignInScreen } from '@/screens/Auth/SignIn'
+import { VerificationScreen } from '@/screens/Auth/Verification'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { SCREENS_KEY } from '../preset'
@@ -12,7 +15,17 @@ const AuthScreens = [
   },
   {
     name: SCREENS_KEY.FORGOT_PASSWORD.INDEX,
-    component: SignInScreen,
+    component: ForgotPasswordScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: SCREENS_KEY.VERIFICATION.INDEX,
+    component: VerificationScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: SCREENS_KEY.RESET_PASSWORD.INDEX,
+    component: ResetPasswordScreen,
     options: { headerShown: false },
   },
 ]

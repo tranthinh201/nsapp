@@ -4,4 +4,6 @@ export type AuthStackParams = {
   WELCOME: undefined
   FORGOT_PASSWORD: undefined
   HOME: undefined
+  VERIFICATION: { email: string }
+  RESET_PASSWORD: { token: string }
 }

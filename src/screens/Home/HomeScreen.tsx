@@ -11,12 +11,15 @@ const HomeScreen = () => {
   const dispatch = useDispatch()
   const handleGetToken = async () => {
     const token = await AsyncStorage.getItem('persist:root')
-    console.log(token)
   }
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('persist:root:auth')
     dispatch.auth.setUser(null)
+  }
+
+  const handleLogIn = async () => {
+    navigation.navigate('AuthStack', { screen: 'SIGN_IN' })
   }
 
   return (
@@ -30,6 +33,23 @@ const HomeScreen = () => {
       <Button onPress={handleGetToken}>GET TOKEN</Button>
 
       <Button onPress={handleLogout}>LOGOUT</Button>
+
+      <Button onPress={handleLogIn}>LOGIN</Button>
+
+      <Button
+        onPress={() =>
+          navigation.navigate('AuthStack', {
+            screen: 'VERIFICATION',
+            params: { email: 'thinh221201@gmail.com' },
+          })
+        }
+      >
+        VERIFY
+      </Button>
+
+      <Button onPress={() => navigation.navigate('AuthStack', { screen: 'FORGOT_PASSWORD' })}>
+        FORGOT
+      </Button>
 
       <EyeSvg />
     </View>

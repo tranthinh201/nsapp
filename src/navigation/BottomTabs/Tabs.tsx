@@ -7,7 +7,7 @@ import React from 'react'
 import { BOTTOM_TABS_KEY } from '../preset'
 import { MainBottomTabParamList } from './MainBottomTabParams'
 import TabHome from './TabHome/HomeStack'
-import TabProfile from './TabProfile/ProfileStack'
+import TabProfile from './TabSetting/SettingStack'
 
 const Tab = createBottomTabNavigator<MainBottomTabParamList>()
 
