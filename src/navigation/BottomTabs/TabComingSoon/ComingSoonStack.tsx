@@ -2,22 +2,22 @@ import { SCREENS_KEY } from '@/navigation/preset'
 import { HomeScreen } from '@/screens/Home'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import { HomeStackParams } from './HomeStackParams'
+import { ComingSoonStackParams } from './ComingSoonStackParams'
 
-const HomeScreens = [
+const ComingSoonScreens = [
   {
-    name: SCREENS_KEY.HOME.INDEX,
+    name: SCREENS_KEY.COMING_SOON.INDEX,
     component: HomeScreen,
     options: { headerShown: false },
   },
 ]
 
-const HomeStack = createStackNavigator<HomeStackParams>()
+const HomeStack = createStackNavigator<ComingSoonStackParams>()
 
-export function TabHome() {
+export function TabComingSoon() {
   return (
     <HomeStack.Navigator>
-      {HomeScreens.map((child) => (
+      {ComingSoonScreens.map((child) => (
         <HomeStack.Screen
           key={child.name}
           name={child.name}

@@ -45,6 +45,13 @@ export const SCREENS_KEY = {
     INDEX: 'SETTING_INDEX' as const,
     PROFILE: 'SETTING_PROFILE' as const,
   },
+  COMING_SOON: {
+    INDEX: 'COMING_SOON_INDEX' as const,
+  },
+  FOOD: {
+    INDEX: 'FOOD_INDEX' as const,
+    DETAIL: 'FOOD_DETAIL' as const,
+  },
   ...SEARCH,
   ...TUTORIAL,
   ...AUTH_SCREEN,
@@ -52,6 +59,7 @@ export const SCREENS_KEY = {
 
 export const BOTTOM_TABS_KEY = {
   TAB_HOME: 'TAB_HOME' as const,
-  TAB_LIKE: 'TAB_LIKE' as const,
   TAB_PROFILE: 'TAB_PROFILE' as const,
+  TAB_COMING_SOON: 'TAB_COMING_SOON' as const,
+  TAB_FOOD: 'TAB_FOOD' as const,
 }

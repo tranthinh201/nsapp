@@ -19,7 +19,7 @@ const SettingScreens = [
 
 const HomeStack = createStackNavigator<SettingStackParams>()
 
-export default function TabProfile() {
+export function TabProfile() {
   return (
     <HomeStack.Navigator>
       {SettingScreens.map((child) => (

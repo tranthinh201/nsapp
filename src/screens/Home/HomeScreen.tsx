@@ -2,7 +2,7 @@ import EyeSvg from '@/assets/svg/eye.svg'
 import { NavigationProp } from '@/navigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Button, Text } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
 
@@ -23,7 +23,7 @@ const HomeScreen = () => {
   }
 
   return (
-    <View>
+    <View style={styles.root}>
       <Text>Home Screen</Text>
 
       <Button onPress={() => navigation.navigate('BottomTabs', { screen: 'TAB_PROFILE' })}>
@@ -57,3 +57,12 @@ const HomeScreen = () => {
 }
 
 export { HomeScreen }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#161621',
+  },
+})

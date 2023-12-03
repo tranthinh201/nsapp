@@ -2,29 +2,29 @@ import { SCREENS_KEY } from '@/navigation/preset'
 import { HomeScreen } from '@/screens/Home'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import { HomeStackParams } from './HomeStackParams'
+import { FoodStackParams } from './FoodStackParams'
 
-const HomeScreens = [
+const FoodScreens = [
   {
-    name: SCREENS_KEY.HOME.INDEX,
+    name: SCREENS_KEY.FOOD.INDEX,
     component: HomeScreen,
     options: { headerShown: false },
   },
 ]
 
-const HomeStack = createStackNavigator<HomeStackParams>()
+const FoodStack = createStackNavigator<FoodStackParams>()
 
-export function TabHome() {
+export function TabFood() {
   return (
-    <HomeStack.Navigator>
-      {HomeScreens.map((child) => (
-        <HomeStack.Screen
+    <FoodStack.Navigator>
+      {FoodScreens.map((child) => (
+        <FoodStack.Screen
           key={child.name}
           name={child.name}
           component={child.component}
           options={child.options}
         />
       ))}
-    </HomeStack.Navigator>
+    </FoodStack.Navigator>
   )
 }

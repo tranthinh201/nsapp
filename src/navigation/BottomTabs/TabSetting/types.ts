@@ -1,4 +1,4 @@
 import type { StackScreenProps } from '@react-navigation/stack'
-import { ProfileStackParams } from './SettingStackParams'
+import { SettingStackParams } from './SettingStackParams'
 
-export type ProfileStackProps = StackScreenProps<ProfileStackParams>
+export type ProfileStackProps = StackScreenProps<SettingStackParams>
