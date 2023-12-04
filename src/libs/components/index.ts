@@ -1,4 +1,5 @@
 export * from './FocusAwareStatusBar'
 export * from './Header'
+export * from './HeaderAuth'
 export * from './HeadingTitle'
 export * from './Input'

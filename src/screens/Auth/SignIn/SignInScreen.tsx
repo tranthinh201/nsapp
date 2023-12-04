@@ -45,8 +45,7 @@ const SignInScreen = () => {
 
   const { isLoading, mutate } = useMutation(signIn, {
     onSuccess: (response, { email }) => {
-      const { id, email_verified, first_name } = response.user
-      console.log(response.user)
+      const { id, email_verified, first_name, avatar } = response.user
 
       if (response) {
         if (email_verified) {
@@ -54,13 +53,16 @@ const SignInScreen = () => {
 
           setAuthUser({
             id,
-            email: email,
+            email,
             name: first_name,
+            avatar,
           })
 
           dispatch.auth.setUser({
-            email: email,
+            email,
             id: id,
+            name: first_name,
+            avatar,
           })
         } else {
           navigation.navigate('AuthStack', {

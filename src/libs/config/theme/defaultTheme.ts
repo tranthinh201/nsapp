@@ -20,16 +20,16 @@ export const defaultTheme = {
     divider: '#D4D4D4',
     borderBack: '#E8ECF4',
     textForgot: '#6A707C',
+    grey: '#92929D',
+    backgroundMain: '#1F1D2B',
+    borderColor: '#252836',
   },
 }
 
 export const BANNER_HEIGHT = Platform.select({ ios: 325, android: 315 })
 export const SECTION_RADIUS = 20
-
 export const TAB_BAR_HEIGHT = Platform.OS === 'android' ? 70 : 80
-
 export const PADDING_HORIZONTAL_CONTAINER = 10
 
 export type AppTheme = typeof defaultTheme
-
 export const useAppTheme = () => useTheme<AppTheme>()

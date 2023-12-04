@@ -98,12 +98,13 @@ const BottomTabs = () => {
             tabBarActiveTintColor: colors.textRed,
             tabBarInactiveTintColor: colors.textGray,
             tabBarLabelStyle: {
-              fontSize: 12,
+              fontSize: 14,
               fontWeight: 'bold',
+              fontFamily: 'Itim-Regular',
             },
             tabBarStyle: {
-              backgroundColor: '#161621',
-              borderTopColor: '#161621',
+              backgroundColor: colors.backgroundMain,
+              borderTopColor: colors.backgroundMain,
             },
           }}
         />

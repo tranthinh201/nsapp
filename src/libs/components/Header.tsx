@@ -1,4 +1,4 @@
-import ArrowBackSvg from '@/assets/svg/arrow-right.svg'
+import ArrowBackSvg from '@/assets/svg/arrow-back.svg'
 import { useNavigation } from '@react-navigation/native'
 import { truncate } from 'lodash'
 import React from 'react'
@@ -87,10 +87,13 @@ const Header: React.FC<Props> = ({
                 style={[
                   styles.title,
                   {
-                    color: colors.textGray,
+                    color: colors.background,
+                    fontFamily: 'Itim-Regular',
                     justifyContent: 'center',
                     includeFontPadding: false,
                     textAlign: isTitleCenter ? 'center' : 'left',
+                    fontSize: 22,
+                    fontWeight: '600',
                     width: '65%',
                     flexShrink: 1,
                   },

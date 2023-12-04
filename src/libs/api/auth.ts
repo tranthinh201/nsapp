@@ -15,6 +15,7 @@ type UserType = {
   first_name: string
   email: string
   email_verified?: Date
+  avatar: string
 }
 
 type SignInResult = {
@@ -34,6 +35,7 @@ export const signIn = async ({ email, password }: SignInType): Promise<SignInRes
       first_name: response.data.user.first_name,
       email: email,
       email_verified: response.data.user.email_verified,
+      avatar: response.data.user.avatar,
     },
     payload: response.data.payload,
   }
