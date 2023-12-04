@@ -5,9 +5,18 @@ import Gate from '@/store/Gate'
 import { NavigationContainer } from '@react-navigation/native'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { useFonts } from 'expo-font'
+import * as Notifications from 'expo-notifications'
 import { useRef } from 'react'
 import { View } from 'react-native'
 import { ActivityIndicator, Provider as ThemeProvider } from 'react-native-paper'
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+})
 
 export default function App() {
   const routeNameRef = useRef<string>()
