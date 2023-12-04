@@ -6,4 +6,5 @@ export type AuthStackParams = {
   HOME: undefined
   VERIFICATION: { email: string }
   RESET_PASSWORD: { token: string }
+  VERIFICATION_ACCOUNT: { email: string }
 }

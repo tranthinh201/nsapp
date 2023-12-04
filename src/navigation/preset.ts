@@ -17,6 +17,9 @@ export const AUTH_SCREEN = {
   RESET_PASSWORD: {
     INDEX: 'RESET_PASSWORD' as const,
   },
+  VERIFICATION_ACCOUNT: {
+    INDEX: 'VERIFICATION_ACCOUNT' as const,
+  },
 }
 
 export const TUTORIAL = {

@@ -47,6 +47,16 @@ const HomeScreen = () => {
         VERIFY
       </Button>
 
+      <Button
+        onPress={() =>
+          navigation.navigate('AuthStack', {
+            screen: 'SIGN_UP',
+          })
+        }
+      >
+        SIGN UP
+      </Button>
+
       <Button onPress={() => navigation.navigate('AuthStack', { screen: 'FORGOT_PASSWORD' })}>
         FORGOT
       </Button>

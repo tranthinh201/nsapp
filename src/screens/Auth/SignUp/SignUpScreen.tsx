@@ -1,10 +1,4 @@
-import AppleIcon from '@/assets/svg/apple.svg'
-import EyeSvg from '@/assets/svg/eye.svg'
-import FaceBookIcon from '@/assets/svg/facebook.svg'
-import GoogleIcon from '@/assets/svg/google.svg'
-import HideSvg from '@/assets/svg/hide.svg'
-import { signIn } from '@/libs/api/auth'
-import { setAccessToken, setAuthUser } from '@/libs/asyncStorage'
+import { signUp } from '@/libs/api/auth'
 import { Header, Input } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
 import { btnStyles, textStyles } from '@/libs/styles'
@@ -12,74 +6,41 @@ import { NavigationProp } from '@/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigation } from '@react-navigation/native'
 import { useMutation } from '@tanstack/react-query'
-import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Alert, StyleSheet, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Button, TextInput as TextInputPaper } from 'react-native-paper'
-import { useDispatch } from 'react-redux'
-import { SignInSchema, SignInType } from './types'
+import { Button } from 'react-native-paper'
+import { SignUpSchema, SignUpType } from './types'
 
-const SignInScreen = () => {
-  const dispatch = useDispatch()
+const SignUpScreen = () => {
   const theme = useAppTheme()
-  const [isHidePassword, setIsHidePassword] = useState<boolean>(true)
   const { colors } = useAppTheme()
   const navigation = useNavigation<NavigationProp>()
-  const handleHidePassword = () => {
-    setIsHidePassword((prevState) => !prevState)
-  }
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInType>({
+  } = useForm<SignUpType>({
     mode: 'onChange',
-    resolver: zodResolver(SignInSchema),
+    resolver: zodResolver(SignUpSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   })
 
-  const { isLoading, mutate } = useMutation(signIn, {
+  const { isLoading, mutate } = useMutation(signUp, {
     onSuccess: (response, { email }) => {
-      const { id, email_verified, first_name } = response.user
-      console.log(response.user)
-
-      if (response) {
-        if (email_verified) {
-          setAccessToken(response.payload.token)
-
-          setAuthUser({
-            id,
-            email: email,
-            name: first_name,
-          })
-
-          dispatch.auth.setUser({
-            email: email,
-            id: id,
-          })
-        } else {
-          navigation.navigate('AuthStack', {
-            screen: 'VERIFICATION_ACCOUNT',
-            params: {
-              email: email,
-            },
-          })
-        }
-      }
-    },
-    onSettled(data) {
-      if (!data) {
-        Alert.alert('Error', 'Email or password is incorrect')
+      if (response.status === 201) {
+        navigation.navigate('AuthStack', { screen: 'VERIFICATION_ACCOUNT', params: { email } })
+      } else {
+        Alert.alert('Error')
       }
     },
   })
 
-  const onSubmit = (data: SignInType) => {
+  const onSubmit = (data: SignUpType) => {
     mutate(data)
   }
 
@@ -117,7 +78,7 @@ const SignInScreen = () => {
               />
             </View>
 
-            <View>
+            <View style={{ marginBottom: 29 }}>
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
@@ -130,49 +91,85 @@ const SignInScreen = () => {
                     label="Password"
                     theme={theme}
                     value={value}
+                    secureTextEntry={true}
                     onChangeText={onChange}
-                    secureTextEntry={isHidePassword}
                     error={!!errors?.password?.message}
                     helperText={errors?.password?.message}
                     placeholder="Enter your password"
-                    right={
-                      <TextInputPaper.Icon
-                        forceTextInputFocus={false}
-                        onPress={handleHidePassword}
-                        icon={() => (
-                          <View style={styles.paddingTouch}>
-                            {isHidePassword ? <HideSvg /> : <EyeSvg />}
-                          </View>
-                        )}
-                      />
-                    }
                   />
                 )}
                 name="password"
               />
             </View>
-          </View>
 
-          <View style={styles.textForgotPassword}>
-            <Text
-              style={{ ...textStyles.labelInput14, color: colors.textForgot }}
-              onPress={() => navigation.navigate('AuthStack', { screen: 'FORGOT_PASSWORD' })}
-            >
-              Forgot password?
-            </Text>
-          </View>
-
-          <View style={styles.socialList}>
-            <View style={styles.socialItem}>
-              <FaceBookIcon />
+            <View style={{ marginBottom: 29 }}>
+              <Controller
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    outlineColor={theme.colors.borderInput}
+                    styleInput={{
+                      fontFamily: theme.fonts.default.fontFamily,
+                      fontSize: 14,
+                    }}
+                    label="Confirm Password"
+                    theme={theme}
+                    value={value}
+                    secureTextEntry={true}
+                    onChangeText={onChange}
+                    error={!!errors?.confirm_password?.message}
+                    helperText={errors?.confirm_password?.message}
+                    placeholder="Enter your confirm password"
+                  />
+                )}
+                name="confirm_password"
+              />
             </View>
 
-            <View style={styles.socialItem}>
-              <GoogleIcon />
+            <View style={{ marginBottom: 29 }}>
+              <Controller
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    outlineColor={theme.colors.borderInput}
+                    styleInput={{
+                      fontFamily: theme.fonts.default.fontFamily,
+                      fontSize: 14,
+                    }}
+                    label="First name"
+                    theme={theme}
+                    value={value}
+                    onChangeText={onChange}
+                    error={!!errors?.first_name?.message}
+                    helperText={errors?.first_name?.message}
+                    placeholder="Enter your first name"
+                  />
+                )}
+                name="first_name"
+              />
             </View>
 
-            <View style={styles.socialItem}>
-              <AppleIcon />
+            <View>
+              <Controller
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    outlineColor={theme.colors.borderInput}
+                    styleInput={{
+                      fontFamily: theme.fonts.default.fontFamily,
+                      fontSize: 14,
+                    }}
+                    label="Last name"
+                    theme={theme}
+                    value={value}
+                    onChangeText={onChange}
+                    error={!!errors?.last_name?.message}
+                    helperText={errors?.last_name?.message}
+                    placeholder="Enter your password"
+                  />
+                )}
+                name="last_name"
+              />
             </View>
           </View>
 
@@ -182,7 +179,7 @@ const SignInScreen = () => {
             style={btnStyles.button}
             onPress={handleSubmit(onSubmit)}
           >
-            <Text style={{ fontSize: 14 }}>Login</Text>
+            <Text style={{ fontSize: 14 }}>Sign up</Text>
           </Button>
         </View>
       </KeyboardAwareScrollView>
@@ -190,7 +187,7 @@ const SignInScreen = () => {
   )
 }
 
-export { SignInScreen }
+export { SignUpScreen }
 
 const styles = StyleSheet.create({
   root: {
@@ -214,26 +211,5 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 20,
-  },
-  textForgotPassword: {
-    flex: 1,
-    alignItems: 'flex-end',
-    marginBottom: 20,
-  },
-  socialList: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  socialItem: {
-    width: 105,
-    height: 56,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#E5E5E5',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
   },
 })

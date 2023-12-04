@@ -5,9 +5,10 @@ import Axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'ax
 import { useEffect } from 'react'
 import { Alert } from 'react-native'
 import { useDispatch } from 'react-redux'
+import { getEnvVars } from '../../../../environment'
 
-const baseURL = 'https://nsbe.onrender.com/'
-// const baseURL = 'http://localhost:5000/'
+const env = getEnvVars()
+const baseURL = env?.REACT_APP_ENV_ENDPOINT || 'https://nsbe.onrender.com/'
 
 // Create an authenticated Axios instance
 export const ApiClient = Axios.create({
