@@ -1,4 +1,4 @@
-import EyeSvg from '@/assets/svg/eye.svg'
+import { AvatarSetting } from '@/libs/components/Input/AvatarSetting'
 import { NavigationProp } from '@/navigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
@@ -51,7 +51,7 @@ const HomeScreen = () => {
         FORGOT
       </Button>
 
-      <EyeSvg />
+      <AvatarSetting source={{ uri: undefined }} />
     </View>
   )
 }
