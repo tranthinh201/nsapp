@@ -35,12 +35,13 @@
       }
     },
     "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
-        }
-      ]
+      "expo-image-picker",
+      "@stripe/stripe-react-native",
+      {
+        "photosPermission": "The app accesses your photos to let you share them with your friends.",
+        "merchantIdentifier": "your.merchant.id",
+        "enableGooglePay": true
+      }
     ]
   }
 }

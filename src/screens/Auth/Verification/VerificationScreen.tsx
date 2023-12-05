@@ -26,7 +26,7 @@ const VerificationScreen = () => {
         <View style={styles.container}>
           <Text style={{ ...textStyles.title, marginTop: 20 }}>Enter Verification Code</Text>
 
-          <Text style={{ ...textStyles.labelInput12_regular, marginTop: 10 }}>
+          <Text style={{ ...textStyles.text12_regular, marginTop: 10 }}>
             Enter code that we have sent to your email {route.params?.email}
           </Text>
 
@@ -62,9 +62,9 @@ const VerificationScreen = () => {
             }}
           />
 
-          <Text style={{ ...textStyles.labelInput12_regular, marginTop: 0 }}>
+          <Text style={{ ...textStyles.text12_regular, marginTop: 0 }}>
             Didn’t receive the code?{' '}
-            <Text style={{ ...textStyles.labelInput14, color: colors.primary }}>Resend Code</Text>
+            <Text style={{ ...textStyles.text14, color: colors.primary }}>Resend Code</Text>
           </Text>
         </View>
       </KeyboardAwareScrollView>

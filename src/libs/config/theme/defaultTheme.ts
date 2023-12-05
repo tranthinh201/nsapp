@@ -12,7 +12,7 @@ export const defaultTheme = {
     backgroundYellow: '#F9F7D1',
     error: '#F0A69B',
     text: '#fff',
-    borderInput: '#E8ECF4',
+    borderInput: '#252836',
     textGray: '#545454',
     textRed: '#D4102A',
     secondaryText: '#8F8F8F',

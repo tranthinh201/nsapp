@@ -44,7 +44,7 @@ const ProfileScreen = () => {
             <View style={{ marginLeft: 20 }}>
               <Text
                 style={{
-                  ...textStyles.content16_regular,
+                  ...textStyles.content16,
                   color: colors.text,
                   fontWeight: '500',
                   marginBottom: 4,
@@ -53,7 +53,7 @@ const ProfileScreen = () => {
                 {user?.name}
               </Text>
 
-              <Text style={{ ...textStyles.labelInput12_regular, color: colors.grey }}>
+              <Text style={{ ...textStyles.text12_regular, color: colors.grey }}>
                 {user?.email}
               </Text>
             </View>
@@ -81,7 +81,7 @@ const ProfileScreen = () => {
                 justifyContent: 'space-between',
                 width: '100%',
               }}
-              onPress={() => navigation.navigate('AuthStack', { screen: 'CHANGE_PASSWORD' })}
+              onPress={() => navigation.navigate('InformationStack', { screen: 'CHANGE_PASSWORD' })}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
@@ -95,7 +95,7 @@ const ProfileScreen = () => {
                   <LockSvg width={20} height={20} />
                 </View>
 
-                <Text style={textStyles.content16_regular}>Change password</Text>
+                <Text style={textStyles.content16}>Change password</Text>
               </View>
 
               <Button>

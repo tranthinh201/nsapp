@@ -8,7 +8,7 @@ import { Text } from 'react-native-paper'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
 import { useAppTheme } from '../config/theme'
-import { textStyles } from '../styles'
+import { flexBoxStyles, textStyles } from '../styles'
 import FocusAwareStatusBar from './FocusAwareStatusBar'
 
 const HeaderAuth = () => {
@@ -39,9 +39,7 @@ const HeaderAuth = () => {
           style={{
             paddingLeft: 24,
             paddingRight: 24,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            ...flexBoxStyles.flexRowSpace,
             height: Platform.OS === 'ios' ? 62 : 70,
             backgroundColor: colors.backgroundMain,
           }}
@@ -52,7 +50,7 @@ const HeaderAuth = () => {
             <View style={{ marginLeft: 20 }}>
               <Text
                 style={{
-                  ...textStyles.content16_regular,
+                  ...textStyles.content16,
                   color: colors.text,
                   fontWeight: '500',
                   marginBottom: 4,
@@ -61,7 +59,7 @@ const HeaderAuth = () => {
                 Hello, {user?.name}
               </Text>
 
-              <Text style={{ ...textStyles.labelInput12_regular, color: colors.grey }}>
+              <Text style={{ ...textStyles.text12_regular, color: colors.grey }}>
                 Let’s stream your favorite movie
               </Text>
             </View>

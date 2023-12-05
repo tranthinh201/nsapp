@@ -1,22 +1,27 @@
-import EyeSvg from '@/assets/svg/eye.svg'
-import HideSvg from '@/assets/svg/hide.svg'
+import { changePassword } from '@/libs/api/auth'
 import { Header, Input } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
 import { btnStyles, textStyles } from '@/libs/styles'
+import { RootStore } from '@/store'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
+import { isEqual } from 'lodash'
 import { Controller, useForm } from 'react-hook-form'
-import { StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Button, Text, TextInput as TextInputPaper } from 'react-native-paper'
+import { Button, Text } from 'react-native-paper'
+import { useSelector } from 'react-redux'
 import { ChangePasswordSchema, ChangePasswordType } from './types'
 
 const ChangePasswordScreen = () => {
   const theme = useAppTheme()
-  const [isHidePassword, setIsHidePassword] = useState<boolean>(true)
-  const handleHidePassword = () => {
-    setIsHidePassword((prevState) => !prevState)
-  }
+
+  const { user } = useSelector(
+    ({ auth }: RootStore) => ({
+      user: auth.user,
+    }),
+    isEqual,
+  )
 
   const {
     control,
@@ -26,124 +31,86 @@ const ChangePasswordScreen = () => {
     mode: 'onChange',
     resolver: zodResolver(ChangePasswordSchema),
     defaultValues: {
+      id: user?.id,
       password: '',
       new_password: '',
       confirm_password: '',
     },
   })
 
-  const onSubmit = (data: ChangePasswordType) => {}
+  const { isLoading, mutate } = useMutation(changePassword, {
+    onSuccess: (data) => {
+      Alert.alert('Success', data.message)
+    },
+  })
+
+  const onSubmit = (data: ChangePasswordType) => {
+    mutate(data)
+  }
 
   return (
     <View style={styles.root}>
-      <Header title="Change password" />
+      <Header />
 
       <KeyboardAwareScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
-          <View>
-            <Text style={textStyles.labelInput14}>Please enter and confirm your new password.</Text>
-          </View>
+          <Text style={{ ...textStyles.title, textAlign: 'center' }}>Change password</Text>
 
           <View style={styles.containerInput}>
-            <View>
-              <Text style={textStyles.labelInput14}>Password</Text>
-
+            <View style={styles.marginInput}>
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <Input
                     outlineColor={theme.colors.borderInput}
-                    styleInput={{
-                      fontFamily: theme.fonts.default.fontFamily,
-                      fontSize: 14,
-                    }}
+                    styleInput={textStyles.text14}
                     theme={theme}
                     value={value}
                     onChangeText={onChange}
-                    secureTextEntry={isHidePassword}
+                    secureTextEntry={true}
+                    label="Current password"
                     error={!!errors?.password?.message}
                     helperText={errors?.password?.message}
-                    right={
-                      <TextInputPaper.Icon
-                        forceTextInputFocus={false}
-                        onPress={handleHidePassword}
-                        icon={() => (
-                          <View style={styles.paddingTouch}>
-                            {isHidePassword ? <HideSvg /> : <EyeSvg />}
-                          </View>
-                        )}
-                      />
-                    }
                   />
                 )}
                 name="password"
               />
             </View>
 
-            <View>
-              <Text style={textStyles.labelInput14}>New password</Text>
-
+            <View style={styles.marginInput}>
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <Input
                     outlineColor={theme.colors.borderInput}
-                    styleInput={{
-                      fontFamily: theme.fonts.default.fontFamily,
-                      fontSize: 14,
-                    }}
+                    styleInput={textStyles.text14}
                     theme={theme}
                     value={value}
                     onChangeText={onChange}
-                    secureTextEntry={isHidePassword}
+                    secureTextEntry={true}
+                    label="New password"
                     error={!!errors?.new_password?.message}
                     helperText={errors?.new_password?.message}
-                    right={
-                      <TextInputPaper.Icon
-                        forceTextInputFocus={false}
-                        onPress={handleHidePassword}
-                        icon={() => (
-                          <View style={styles.paddingTouch}>
-                            {isHidePassword ? <HideSvg /> : <EyeSvg />}
-                          </View>
-                        )}
-                      />
-                    }
                   />
                 )}
                 name="new_password"
               />
             </View>
 
-            <View>
-              <Text style={textStyles.labelInput14}>Confirm password</Text>
-
+            <View style={styles.marginInput}>
               <Controller
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <Input
                     outlineColor={theme.colors.borderInput}
-                    styleInput={{
-                      fontFamily: theme.fonts.default.fontFamily,
-                      fontSize: 14,
-                    }}
+                    styleInput={textStyles.text14}
                     theme={theme}
                     value={value}
                     onChangeText={onChange}
-                    secureTextEntry={isHidePassword}
+                    secureTextEntry={true}
                     error={!!errors?.confirm_password?.message}
                     helperText={errors?.confirm_password?.message}
-                    right={
-                      <TextInputPaper.Icon
-                        forceTextInputFocus={false}
-                        onPress={handleHidePassword}
-                        icon={() => (
-                          <View style={styles.paddingTouch}>
-                            {isHidePassword ? <HideSvg /> : <EyeSvg />}
-                          </View>
-                        )}
-                      />
-                    }
+                    label="Confirm password"
                   />
                 )}
                 name="confirm_password"
@@ -151,8 +118,13 @@ const ChangePasswordScreen = () => {
             </View>
           </View>
 
-          <Button mode="contained" style={btnStyles.button} onPress={handleSubmit(onSubmit)}>
-            <Text style={{ fontSize: 14 }}>Login</Text>
+          <Button
+            mode="contained"
+            loading={isLoading}
+            style={btnStyles.button}
+            onPress={handleSubmit(onSubmit)}
+          >
+            <Text style={textStyles.text14}>Update</Text>
           </Button>
         </View>
       </KeyboardAwareScrollView>
@@ -165,7 +137,7 @@ export { ChangePasswordScreen }
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1F1D2B',
     justifyContent: 'center',
     height: '100%',
   },
@@ -173,13 +145,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 29,
   },
   containerInput: {
-    marginTop: 53,
-    marginBottom: 20,
+    marginVertical: 20,
   },
   scrollContainer: {
     paddingBottom: 20,
   },
-  paddingTouch: {
-    padding: 10,
+  marginInput: {
+    marginBottom: 29,
   },
 })

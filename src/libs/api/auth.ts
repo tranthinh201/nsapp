@@ -2,6 +2,7 @@ import { ForgotPasswordType, VerifyOtpType } from '@/screens/Auth/ForgotPassword
 import { ResetPasswordType } from '@/screens/Auth/ResetPassword/types'
 import { SignInType } from '@/screens/Auth/SignIn/types'
 import { SignUpType } from '@/screens/Auth/SignUp/types'
+import { ChangePasswordType } from '@/screens/Profile'
 import { ApiClient, ApiClientUnAuth } from '../config/react-query'
 
 type PayloadType = {
@@ -39,12 +40,6 @@ export const signIn = async ({ email, password }: SignInType): Promise<SignInRes
     },
     payload: response.data.payload,
   }
-}
-
-type ChangePasswordType = {
-  password: string
-  new_password: string
-  id: string
 }
 
 export const changePassword = async ({ password, new_password, id }: ChangePasswordType) => {

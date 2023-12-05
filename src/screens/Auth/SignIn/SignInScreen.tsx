@@ -157,7 +157,7 @@ const SignInScreen = () => {
 
           <View style={styles.textForgotPassword}>
             <Text
-              style={{ ...textStyles.labelInput14, color: colors.textForgot }}
+              style={{ ...textStyles.text14, color: colors.textForgot }}
               onPress={() => navigation.navigate('AuthStack', { screen: 'FORGOT_PASSWORD' })}
             >
               Forgot password?
@@ -216,6 +216,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 20,
+    color: 'red',
   },
   textForgotPassword: {
     flex: 1,

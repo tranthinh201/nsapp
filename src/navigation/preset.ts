@@ -34,15 +34,22 @@ export const SEARCH = {
   },
 }
 
+export const INFORMATION_STACK = {
+  INFORMATION: {
+    INDEX: 'INFORMATION' as const,
+  },
+  CHANGE_PASSWORD: {
+    INDEX: 'CHANGE_PASSWORD' as const,
+  },
+  ABOUT_APP: {
+    INDEX: 'ABOUT_APP' as const,
+  },
+}
+
 export const SCREENS_KEY = {
   HOME: {
     INDEX: 'HOME_INDEX' as const,
     MEW: 'HOME_MEW' as const,
-  },
-  PROFILE: {
-    INDEX: 'PROFILE_INDEX' as const,
-    CHANGE_PASSWORD: 'PROFILE_CHANGE_PASSWORD' as const,
-    UPDATE: 'PROFILE_UPDATE' as const,
   },
   SETTING: {
     INDEX: 'SETTING_INDEX' as const,
@@ -58,6 +65,7 @@ export const SCREENS_KEY = {
   ...SEARCH,
   ...TUTORIAL,
   ...AUTH_SCREEN,
+  ...INFORMATION_STACK,
 }
 
 export const BOTTOM_TABS_KEY = {

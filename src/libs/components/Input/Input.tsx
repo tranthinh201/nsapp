@@ -12,11 +12,12 @@ type Props = {
 const Input: React.FC<Props> = ({ helperText, style, styleInput, label, ...props }) => {
   return (
     <View style={style}>
-      {label && <Text style={textStyles.labelInput14}>{label}</Text>}
+      {label && <Text style={textStyles.text14}>{label}</Text>}
 
       <TextInputPaper
         mode="outlined"
         placeholderTextColor="#8391A1"
+        style={styles.input}
         {...props}
         render={(innerProps) => (
           <TextInput
@@ -35,6 +36,13 @@ const Input: React.FC<Props> = ({ helperText, style, styleInput, label, ...props
 }
 
 const styles = StyleSheet.create({
+  input: {
+    ...textStyles.text14,
+    backgroundColor: '#1F1D2B',
+    border: 1,
+    borderRadius: 24,
+    color: '#fff',
+  },
   text: {
     includeFontPadding: false,
     paddingBottom: 5,
@@ -50,6 +58,8 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     includeFontPadding: false,
+    fontFamily: 'Itim-Regular',
   },
 })
+
 export { Input }

@@ -46,8 +46,9 @@ const Header: React.FC<Props> = ({
         <View
           style={{
             flexDirection: 'row',
+            justifyContent: 'center',
             padding: 10,
-            height: Platform.OS === 'ios' ? 42 : 70,
+            height: Platform.OS === 'ios' ? 52 : 70,
           }}
         >
           <View
@@ -69,10 +70,9 @@ const Header: React.FC<Props> = ({
                   >
                     <View
                       style={{
-                        borderColor: colors.borderBack,
-                        borderWidth: 0.5,
-                        borderRadius: 6,
-                        padding: 10,
+                        backgroundColor: colors.borderInput,
+                        borderRadius: 12,
+                        padding: 6,
                       }}
                     >
                       <ArrowBackSvg />
