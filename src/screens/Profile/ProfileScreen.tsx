@@ -31,7 +31,8 @@ const ProfileScreen = () => {
 
       <KeyboardAwareScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
-          <View
+          <TouchableOpacity
+            onPress={() => navigation.navigate('InformationStack', { screen: 'INFORMATION' })}
             style={{
               ...styles.boxContainer,
               borderColor: colors.borderColor,
@@ -57,7 +58,7 @@ const ProfileScreen = () => {
                 {user?.email}
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
 
           <View
             style={{

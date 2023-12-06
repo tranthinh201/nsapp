@@ -1,4 +1,4 @@
-import { ChangePasswordScreen } from '@/screens/Profile'
+import { ChangePasswordScreen, InformationScreen } from '@/screens/Profile'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { SCREENS_KEY } from '../preset'
@@ -7,7 +7,7 @@ import { InformationStackParamsList } from './InformationStackParams'
 const Information = [
   {
     name: SCREENS_KEY.INFORMATION.INDEX,
-    component: ChangePasswordScreen,
+    component: InformationScreen,
     options: { headerShown: false },
   },
   {
