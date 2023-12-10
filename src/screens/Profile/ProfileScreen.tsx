@@ -1,5 +1,5 @@
+import AvatarDefault from '@/assets/img/user.png'
 import ArrowRightSvg from '@/assets/svg/arrow-right.svg'
-import AvatarDefault from '@/assets/svg/avatar.svg'
 import LockSvg from '@/assets/svg/lock.svg'
 import { Header } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
@@ -9,7 +9,7 @@ import { RootStore } from '@/store'
 import { useNavigation } from '@react-navigation/native'
 import { isEqual } from 'lodash'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Button, Text } from 'react-native-paper'
@@ -33,20 +33,19 @@ const ProfileScreen = () => {
         <View style={styles.container}>
           <TouchableOpacity
             onPress={() => navigation.navigate('InformationStack', { screen: 'INFORMATION' })}
-            style={{
-              ...styles.boxContainer,
-              borderColor: colors.borderColor,
-            }}
+            style={styles.touch}
           >
-            <View style={styles.avatarContainer}>
-              <AvatarDefault width={40} height={40} />
+            <View style={styles.avatar}>
+              <Image
+                source={user?.avatar ? { uri: user?.avatar } : AvatarDefault}
+                style={{ width: '100%', height: '100%', borderRadius: 100 }}
+              />
             </View>
 
             <View style={{ marginLeft: 20 }}>
               <Text
                 style={{
                   ...textStyles.content16,
-                  color: colors.text,
                   fontWeight: '500',
                   marginBottom: 4,
                 }}
@@ -62,8 +61,7 @@ const ProfileScreen = () => {
 
           <View
             style={{
-              ...styles.boxContainer,
-              borderColor: colors.borderColor,
+              ...styles.touch,
               height: 'auto',
               display: 'flex',
               flexDirection: 'column',
@@ -89,8 +87,9 @@ const ProfileScreen = () => {
                   style={{
                     marginRight: 12,
                     borderRadius: 12,
-                    backgroundColor: colors.borderColor,
                     padding: 6,
+                    borderWidth: 1,
+                    borderColor: colors.grey,
                   }}
                 >
                   <LockSvg width={20} height={20} />
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     height: '100%',
-    backgroundColor: '#1F1D2B',
+    backgroundColor: '#fff',
   },
   container: {
     paddingHorizontal: 29,
@@ -125,15 +124,16 @@ const styles = StyleSheet.create({
   scrollContainer: {
     paddingBottom: 20,
   },
-  boxContainer: {
+  touch: {
     flexDirection: 'row',
-    borderRadius: 36,
+    borderRadius: 12,
     borderWidth: 1,
     padding: 16,
     alignItems: 'center',
     marginTop: 18,
+    borderColor: '#545454',
   },
-  avatarContainer: {
+  avatar: {
     width: 40,
     height: 40,
     borderRadius: 100,

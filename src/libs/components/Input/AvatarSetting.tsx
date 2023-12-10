@@ -1,4 +1,4 @@
-import AvatarPlaceholder from '@/assets/favicon.png'
+import AvatarPlaceholder from '@/assets/img/user.png'
 import CameraSvg from '@/assets/svg/camera.svg'
 import { useAppTheme } from '@/libs/config/theme'
 import * as ImagePicker from 'expo-image-picker'
@@ -45,9 +45,20 @@ export const AvatarSetting: React.FC<AvatarSettingProps> = ({
   return (
     <TouchableOpacity
       onPress={pickImage}
-      style={[styles.avatar, { borderColor: colors.borderInput }]}
+      style={{
+        height: 80,
+        width: 80,
+        borderRadius: 100,
+        borderColor: colors.borderInput,
+        borderWidth: 1,
+        padding: 1,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
     >
       {hasCamera ? <CameraSvg style={styles.camera} /> : null}
+
       <RNImage
         style={[styles.avatar, styleCustom]}
         {...props}
@@ -62,7 +73,6 @@ const styles = StyleSheet.create({
     height: 76,
     width: 76,
     borderRadius: 100,
-    borderWidth: 1,
   },
   camera: {
     position: 'absolute',

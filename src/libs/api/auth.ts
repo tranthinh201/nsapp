@@ -1,45 +1,17 @@
-import { ForgotPasswordType, VerifyOtpType } from '@/screens/Auth/ForgotPassword/types'
-import { ResetPasswordType } from '@/screens/Auth/ResetPassword/types'
-import { SignInType } from '@/screens/Auth/SignIn/types'
-import { SignUpType } from '@/screens/Auth/SignUp/types'
+import { ForgotPasswordType, VerifyOtpType } from '@/screens/Auth/ForgotPassword'
+import { ResetPasswordType } from '@/screens/Auth/ResetPassword'
+import { SignInResult, SignInType } from '@/screens/Auth/SignIn'
+import { SignUpType } from '@/screens/Auth/SignUp'
 import { ChangePasswordType } from '@/screens/Profile'
 import { ApiClient, ApiClientUnAuth } from '../config/react-query'
 
-type PayloadType = {
-  refresh_token: string
-  token: string
-  type: string
-}
-
-type UserType = {
-  id: string
-  first_name: string
-  email: string
-  email_verified?: Date
-  avatar: string
-}
-
-type SignInResult = {
-  user: UserType
-  payload: PayloadType
-}
-
 export const signIn = async ({ email, password }: SignInType): Promise<SignInResult> => {
-  const response = await ApiClient.post<{ user: UserType; payload: PayloadType }>('auth/sign-in', {
+  const response = await ApiClient.post('auth/sign-in', {
     email: email,
     password: password,
   })
 
-  return {
-    user: {
-      id: response.data.user.id,
-      first_name: response.data.user.first_name,
-      email: email,
-      email_verified: response.data.user.email_verified,
-      avatar: response.data.user.avatar,
-    },
-    payload: response.data.payload,
-  }
+  return response.data
 }
 
 export const changePassword = async ({ password, new_password, id }: ChangePasswordType) => {

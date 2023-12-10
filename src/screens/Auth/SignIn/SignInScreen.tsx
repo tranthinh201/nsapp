@@ -49,7 +49,7 @@ const SignInScreen = () => {
 
       if (response) {
         if (email_verified) {
-          setAccessToken(response.payload.token)
+          setAccessToken(response.access_token)
 
           setAuthUser({
             id,
@@ -102,10 +102,7 @@ const SignInScreen = () => {
                 render={({ field: { onChange, value } }) => (
                   <Input
                     outlineColor={theme.colors.borderInput}
-                    styleInput={{
-                      fontFamily: theme.fonts.default.fontFamily,
-                      fontSize: 14,
-                    }}
+                    styleInput={textStyles.text14}
                     label="Email"
                     theme={theme}
                     value={value}
@@ -125,10 +122,7 @@ const SignInScreen = () => {
                 render={({ field: { onChange, value } }) => (
                   <Input
                     outlineColor={theme.colors.borderInput}
-                    styleInput={{
-                      fontFamily: theme.fonts.default.fontFamily,
-                      fontSize: 14,
-                    }}
+                    styleInput={textStyles.text14}
                     label="Password"
                     theme={theme}
                     value={value}

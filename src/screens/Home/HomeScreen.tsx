@@ -1,3 +1,4 @@
+import { getAccessToken } from '@/libs/asyncStorage'
 import { AvatarSetting, HeaderAuth } from '@/libs/components'
 import { NavigationProp } from '@/navigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -11,7 +12,8 @@ const HomeScreen = () => {
   const navigation = useNavigation<NavigationProp>()
   const dispatch = useDispatch()
   const handleGetToken = async () => {
-    const token = await AsyncStorage.getItem('persist:root')
+    const token = await getAccessToken()
+    console.log(token)
   }
 
   const handleLogout = async () => {

@@ -11,7 +11,6 @@ export const textStyles = StyleSheet.create({
     includeFontPadding: false,
     lineHeight: 20,
     fontFamily: 'Itim-Regular',
-    color: '#fff',
   },
   text12: {
     fontSize: 12,
@@ -29,7 +28,6 @@ export const textStyles = StyleSheet.create({
     fontSize: 16,
     includeFontPadding: false,
     fontFamily: 'Itim-Regular',
-    color: '#fff',
   },
   text12_thin: {
     fontSize: 12,
@@ -48,7 +46,6 @@ export const textStyles = StyleSheet.create({
     includeFontPadding: false,
     fontWeight: 'bold',
     fontFamily: 'Itim-Regular',
-    color: '#fff',
   },
   text18: {
     fontSize: 18,
@@ -61,6 +58,5 @@ export const textStyles = StyleSheet.create({
     includeFontPadding: false,
     lineHeight: 28,
     fontFamily: 'Itim-Regular',
-    color: '#fff',
   },
 })

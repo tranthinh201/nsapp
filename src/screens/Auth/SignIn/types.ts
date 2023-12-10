@@ -10,3 +10,24 @@ export const SignInSchema = z.object({
 })
 
 export type SignInType = z.infer<typeof SignInSchema>
+
+export type UserType = {
+  id: string
+  first_name: string
+  email: string
+  email_verified?: Date
+  avatar: string
+}
+
+export type PayloadType = {
+  refresh_token: string
+  access_token: string
+  type: string
+}
+
+export type SignInResult = {
+  refresh_token: string
+  access_token: string
+  type: string
+  user: UserType
+}

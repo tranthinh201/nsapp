@@ -48,7 +48,9 @@ const Header: React.FC<Props> = ({
             flexDirection: 'row',
             justifyContent: 'center',
             padding: 10,
-            height: Platform.OS === 'ios' ? 52 : 70,
+            height: Platform.OS === 'ios' ? 52 : 60,
+            borderBottomColor: colors.borderBack,
+            borderBottomWidth: 1,
           }}
         >
           <View
@@ -70,9 +72,13 @@ const Header: React.FC<Props> = ({
                   >
                     <View
                       style={{
-                        backgroundColor: colors.borderInput,
-                        borderRadius: 12,
-                        padding: 6,
+                        borderRadius: 10,
+                        width: 30,
+                        height: 30,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderColor: colors.borderBack,
+                        borderWidth: 1,
                       }}
                     >
                       <ArrowBackSvg />
@@ -87,13 +93,11 @@ const Header: React.FC<Props> = ({
                 style={[
                   styles.title,
                   {
-                    color: colors.background,
-                    fontFamily: 'Itim-Regular',
                     justifyContent: 'center',
                     includeFontPadding: false,
                     textAlign: isTitleCenter ? 'center' : 'left',
-                    fontSize: 22,
-                    fontWeight: '600',
+                    fontSize: 16,
+                    fontWeight: '700',
                     width: '65%',
                     flexShrink: 1,
                   },

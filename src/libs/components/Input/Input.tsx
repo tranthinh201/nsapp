@@ -1,3 +1,4 @@
+import { useAppTheme } from '@/libs/config/theme'
 import { textStyles } from '@/libs/styles'
 import React from 'react'
 import { StyleProp, StyleSheet, Text, TextInput, TextStyle, View } from 'react-native'
@@ -10,13 +11,15 @@ type Props = {
 } & TextInputProps
 
 const Input: React.FC<Props> = ({ helperText, style, styleInput, label, ...props }) => {
+  const { colors } = useAppTheme()
+
   return (
     <View style={style}>
       {label && <Text style={textStyles.text14}>{label}</Text>}
 
       <TextInputPaper
         mode="outlined"
-        placeholderTextColor="#8391A1"
+        placeholderTextColor={colors.placeholder}
         style={styles.input}
         {...props}
         render={(innerProps) => (
@@ -30,6 +33,7 @@ const Input: React.FC<Props> = ({ helperText, style, styleInput, label, ...props
           />
         )}
       />
+
       {helperText && props.error && <Text style={styles.helperText}>{helperText}</Text>}
     </View>
   )
@@ -38,15 +42,13 @@ const Input: React.FC<Props> = ({ helperText, style, styleInput, label, ...props
 const styles = StyleSheet.create({
   input: {
     ...textStyles.text14,
-    backgroundColor: '#1F1D2B',
     border: 1,
-    borderRadius: 24,
-    color: '#fff',
+    padding: 0,
   },
   text: {
     includeFontPadding: false,
-    paddingBottom: 5,
     fontSize: 15,
+    color: '#000',
   },
   textMultiline: {
     includeFontPadding: false,

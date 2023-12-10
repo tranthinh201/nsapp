@@ -137,9 +137,9 @@ export { ChangePasswordScreen }
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#1F1D2B',
     justifyContent: 'center',
     height: '100%',
+    backgroundColor: '#fff',
   },
   container: {
     paddingHorizontal: 29,

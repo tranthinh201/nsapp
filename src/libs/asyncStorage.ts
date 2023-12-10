@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AuthState } from './types/auth'
 
 export const STORAGE_KEY = {
-  TOKEN: 'token',
+  TOKEN: 'access_token',
   USER: 'user',
   TUTORIAL: 'hasSeenIntroduce',
 }
