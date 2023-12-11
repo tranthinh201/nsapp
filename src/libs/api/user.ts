@@ -1,6 +1,7 @@
 import { InformationType } from '@/screens/Setting'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { ApiClient } from '../config/react-query'
 
 export const getMe = async (id: string): Promise<InformationType> => {
@@ -11,11 +12,15 @@ export const getMe = async (id: string): Promise<InformationType> => {
 
     return response.data
   } catch (error) {
+    const { dispatch } = useDispatch()
+
     Alert.alert('ERROR', 'SERVER ERROR', [
       {
         text: 'OK',
         onPress: async () => {
           await AsyncStorage.removeItem('access_token')
+          await AsyncStorage.removeItem('persist:root:auth')
+          dispatch.auth.setUser(null)
         },
       },
     ])

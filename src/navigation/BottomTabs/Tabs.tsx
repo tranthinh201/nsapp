@@ -31,7 +31,7 @@ const BottomTabs = () => {
       name: BOTTOM_TABS_KEY.TAB_HOME,
       component: TabHome,
       options: {
-        title: 'Home',
+        title: 'Phim',
         headerShown: false,
         tabBarIcon: ({ focused }: tabBarIconProps) =>
           focused ? (
@@ -45,7 +45,7 @@ const BottomTabs = () => {
       name: BOTTOM_TABS_KEY.TAB_COMING_SOON,
       component: TabComingSoon,
       options: {
-        title: 'Coming Soon',
+        title: 'Sắp chiếu',
         headerShown: false,
         tabBarIcon: ({ focused }: tabBarIconProps) =>
           focused ? (
@@ -59,7 +59,7 @@ const BottomTabs = () => {
       name: BOTTOM_TABS_KEY.TAB_FOOD,
       component: TabFood,
       options: {
-        title: 'Food',
+        title: 'Bắp nước',
         headerShown: false,
         tabBarIcon: ({ focused }: tabBarIconProps) =>
           focused ? <FoodFocusedSvg width={20} height={20} /> : <FoodSvg width={20} height={20} />,
@@ -69,7 +69,7 @@ const BottomTabs = () => {
       name: BOTTOM_TABS_KEY.TAB_SETTING,
       component: TabSetting,
       options: {
-        title: 'Profile',
+        title: 'Tôi',
         headerShown: false,
         tabBarIcon: ({ focused }: tabBarIconProps) =>
           focused ? (

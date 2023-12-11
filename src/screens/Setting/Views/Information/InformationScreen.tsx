@@ -7,14 +7,13 @@ import { useQuery } from '@tanstack/react-query'
 import { isEqual } from 'lodash'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { StyleSheet, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { ActivityIndicator, Button } from 'react-native-paper'
+import { Button } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 import { InformationType } from './types'
 
 const InformationScreen = () => {
-  const { colors } = useAppTheme()
   const theme = useAppTheme()
   const { user } = useSelector(
     ({ auth }: RootStore) => ({
@@ -50,16 +49,17 @@ const InformationScreen = () => {
       <Header title="Thông tin" />
 
       <KeyboardAwareScrollView style={styles.scrollContainer}>
-        <View style={styles.container}>
-          <View style={{ justifyContent: 'center', width: '100%', flex: 1, alignItems: 'center' }}>
-            <AvatarSetting source={{ uri: undefined }} />
+        {isLoading ? (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 100 }}>
+            <ActivityIndicator />
           </View>
-
-          {isLoading ? (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <ActivityIndicator color={colors.primary} />
+        ) : (
+          <View style={styles.container}>
+            <View
+              style={{ justifyContent: 'center', width: '100%', flex: 1, alignItems: 'center' }}
+            >
+              <AvatarSetting source={{ uri: undefined }} />
             </View>
-          ) : (
             <View style={styles.containerInput}>
               <View>
                 <Controller
@@ -145,8 +145,8 @@ const InformationScreen = () => {
                 Cập nhật
               </Button>
             </View>
-          )}
-        </View>
+          </View>
+        )}
       </KeyboardAwareScrollView>
     </View>
   )
