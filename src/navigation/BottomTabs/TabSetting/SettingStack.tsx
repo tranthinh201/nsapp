@@ -1,5 +1,5 @@
 import { SCREENS_KEY } from '@/navigation/preset'
-import { ProfileScreen } from '@/screens/Profile'
+import { ChangePasswordScreen, InformationScreen, ListSetting } from '@/screens/Setting'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { SettingStackParams } from './SettingStackParams'
@@ -7,19 +7,24 @@ import { SettingStackParams } from './SettingStackParams'
 const SettingScreens = [
   {
     name: SCREENS_KEY.SETTING.INDEX,
-    component: ProfileScreen,
+    component: ListSetting,
     options: { headerShown: false },
   },
   {
-    name: SCREENS_KEY.SETTING.PROFILE,
-    component: ProfileScreen,
+    name: SCREENS_KEY.SETTING.CHANGE_PASSWORD,
+    component: ChangePasswordScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: SCREENS_KEY.SETTING.INFORMATION,
+    component: InformationScreen,
     options: { headerShown: false },
   },
 ]
 
 const HomeStack = createStackNavigator<SettingStackParams>()
 
-export function TabProfile() {
+export function TabSetting() {
   return (
     <HomeStack.Navigator>
       {SettingScreens.map((child) => (

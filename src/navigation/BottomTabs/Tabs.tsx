@@ -4,8 +4,8 @@ import ComingSoonFocusedSvg from '@/assets/svg/coming-soon-focused.svg'
 import ComingSoonSvg from '@/assets/svg/coming-soon.svg'
 import FoodFocusedSvg from '@/assets/svg/food-focused.svg'
 import FoodSvg from '@/assets/svg/food.svg'
-import ProfileFocusedSvg from '@/assets/svg/profile-focused.svg'
-import ProfileSvg from '@/assets/svg/profile.svg'
+import SettingFocusedSvg from '@/assets/svg/setting-focused.svg'
+import SettingSvg from '@/assets/svg/setting.svg'
 import { useAppTheme } from '@/libs/config/theme'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React from 'react'
@@ -14,7 +14,7 @@ import { MainBottomTabParamList } from './MainBottomTabParams'
 import { TabComingSoon } from './TabComingSoon'
 import { TabFood } from './TabFood'
 import { TabHome } from './TabHome'
-import { TabProfile } from './TabSetting'
+import { TabSetting } from './TabSetting'
 
 const Tab = createBottomTabNavigator<MainBottomTabParamList>()
 
@@ -35,9 +35,9 @@ const BottomTabs = () => {
         headerShown: false,
         tabBarIcon: ({ focused }: tabBarIconProps) =>
           focused ? (
-            <BillBoardFocusedSvg width={30} height={30} />
+            <BillBoardFocusedSvg width={20} height={20} />
           ) : (
-            <BillBoardSvg width={30} height={30} />
+            <BillBoardSvg width={20} height={20} />
           ),
       },
     },
@@ -49,9 +49,9 @@ const BottomTabs = () => {
         headerShown: false,
         tabBarIcon: ({ focused }: tabBarIconProps) =>
           focused ? (
-            <ComingSoonFocusedSvg width={30} height={30} />
+            <ComingSoonFocusedSvg width={20} height={20} />
           ) : (
-            <ComingSoonSvg width={30} height={30} />
+            <ComingSoonSvg width={20} height={20} />
           ),
       },
     },
@@ -62,20 +62,20 @@ const BottomTabs = () => {
         title: 'Food',
         headerShown: false,
         tabBarIcon: ({ focused }: tabBarIconProps) =>
-          focused ? <FoodFocusedSvg width={30} height={30} /> : <FoodSvg width={30} height={30} />,
+          focused ? <FoodFocusedSvg width={20} height={20} /> : <FoodSvg width={20} height={20} />,
       },
     },
     {
-      name: BOTTOM_TABS_KEY.TAB_PROFILE,
-      component: TabProfile,
+      name: BOTTOM_TABS_KEY.TAB_SETTING,
+      component: TabSetting,
       options: {
         title: 'Profile',
         headerShown: false,
         tabBarIcon: ({ focused }: tabBarIconProps) =>
           focused ? (
-            <ProfileFocusedSvg width={30} height={30} />
+            <SettingFocusedSvg width={20} height={20} />
           ) : (
-            <ProfileSvg width={30} height={30} />
+            <SettingSvg width={20} height={20} />
           ),
       },
     },
@@ -101,10 +101,6 @@ const BottomTabs = () => {
               fontSize: 14,
               fontWeight: 'bold',
               fontFamily: 'Itim-Regular',
-            },
-            tabBarStyle: {
-              backgroundColor: colors.backgroundMain,
-              borderTopColor: colors.backgroundMain,
             },
           }}
         />

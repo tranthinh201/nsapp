@@ -1,5 +1,5 @@
 import { getAccessToken } from '@/libs/asyncStorage'
-import { AvatarSetting, HeaderAuth } from '@/libs/components'
+import { AvatarSetting } from '@/libs/components'
 import { NavigationProp } from '@/navigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
@@ -27,7 +27,7 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.root}>
-      <HeaderAuth />
+      {/* <HeaderAuth /> */}
 
       <KeyboardAwareScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
@@ -35,7 +35,7 @@ const HomeScreen = () => {
             <Text style={{ color: 'white' }}>Home Screen</Text>
           </View>
 
-          <Button onPress={() => navigation.navigate('BottomTabs', { screen: 'TAB_PROFILE' })}>
+          <Button onPress={() => navigation.navigate('BottomTabs', { screen: 'TAB_SETTING' })}>
             CLICK NE
           </Button>
 
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     height: '100%',
-    backgroundColor: '#1F1D2B',
+    backgroundColor: '#FFF',
   },
   container: {
     paddingHorizontal: 29,

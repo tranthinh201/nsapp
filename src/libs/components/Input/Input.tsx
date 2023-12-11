@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     includeFontPadding: false,
-    fontFamily: 'Itim-Regular',
   },
 })
 

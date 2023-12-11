@@ -2,7 +2,7 @@ import { ForgotPasswordType, VerifyOtpType } from '@/screens/Auth/ForgotPassword
 import { ResetPasswordType } from '@/screens/Auth/ResetPassword'
 import { SignInResult, SignInType } from '@/screens/Auth/SignIn'
 import { SignUpType } from '@/screens/Auth/SignUp'
-import { ChangePasswordType } from '@/screens/Profile'
+import { ChangePasswordType } from '@/screens/Setting'
 import { ApiClient, ApiClientUnAuth } from '../config/react-query'
 
 export const signIn = async ({ email, password }: SignInType): Promise<SignInResult> => {

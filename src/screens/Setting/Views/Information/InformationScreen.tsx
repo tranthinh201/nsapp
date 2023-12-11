@@ -2,9 +2,7 @@ import { getMe } from '@/libs/api/user'
 import { AvatarSetting, Header, Input } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
 import { btnStyles, textStyles } from '@/libs/styles'
-import { NavigationProp } from '@/navigation'
 import { RootStore } from '@/store'
-import { useNavigation } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
 import { isEqual } from 'lodash'
 import React from 'react'
@@ -16,7 +14,6 @@ import { useSelector } from 'react-redux'
 import { InformationType } from './types'
 
 const InformationScreen = () => {
-  const navigation = useNavigation<NavigationProp>()
   const { colors } = useAppTheme()
   const theme = useAppTheme()
   const { user } = useSelector(
@@ -50,7 +47,7 @@ const InformationScreen = () => {
 
   return (
     <View style={styles.root}>
-      <Header title="Cập nhật thông tin" />
+      <Header title="Thông tin" />
 
       <KeyboardAwareScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
@@ -74,10 +71,10 @@ const InformationScreen = () => {
                       theme={theme}
                       value={value}
                       onChangeText={onChange}
-                      label="First name"
+                      label="Họ"
                       error={!!errors?.first_name?.message}
                       helperText={errors?.first_name?.message}
-                      placeholder="Enter your first name"
+                      placeholder="Họ của bạn"
                     />
                   )}
                   name="first_name"
@@ -94,10 +91,10 @@ const InformationScreen = () => {
                       theme={theme}
                       value={value}
                       onChangeText={onChange}
-                      label="Last name"
+                      label="Tên"
                       error={!!errors?.last_name?.message}
                       helperText={errors?.last_name?.message}
-                      placeholder="Enter your last name"
+                      placeholder="Tên của bạn"
                     />
                   )}
                   name="last_name"
@@ -114,11 +111,10 @@ const InformationScreen = () => {
                       theme={theme}
                       value={value}
                       onChangeText={onChange}
-                      secureTextEntry={true}
                       error={!!errors?.address?.message}
                       helperText={errors?.address?.message}
-                      label="Address"
-                      placeholder="Enter your address"
+                      label="Địa chỉ"
+                      placeholder="Địa chỉ của bạn"
                     />
                   )}
                   name="address"
@@ -135,9 +131,8 @@ const InformationScreen = () => {
                       theme={theme}
                       value={value}
                       onChangeText={onChange}
-                      secureTextEntry={true}
-                      error={!!errors?.address?.message}
-                      helperText={errors?.address?.message}
+                      error={!!errors?.phone_number?.message}
+                      helperText={errors?.phone_number?.message}
                       label="Sô điện thoại"
                       placeholder="Số điện thoại của bạn"
                     />
@@ -147,7 +142,7 @@ const InformationScreen = () => {
               </View>
 
               <Button style={[btnStyles.button, { marginTop: 20 }]} mode="contained">
-                Update
+                Cập nhật
               </Button>
             </View>
           )}

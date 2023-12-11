@@ -1,4 +1,4 @@
-import { InformationType } from '@/screens/Profile'
+import { InformationType } from '@/screens/Setting'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import { ApiClient } from '../config/react-query'

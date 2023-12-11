@@ -9,7 +9,7 @@ import { isEqual } from 'lodash'
 import { Controller, useForm } from 'react-hook-form'
 import { Alert, StyleSheet, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Button, Text } from 'react-native-paper'
+import { Button } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 import { ChangePasswordSchema, ChangePasswordType } from './types'
 
@@ -50,12 +50,10 @@ const ChangePasswordScreen = () => {
 
   return (
     <View style={styles.root}>
-      <Header />
+      <Header title="Thay đổi mật khẩu" />
 
       <KeyboardAwareScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
-          <Text style={{ ...textStyles.title, textAlign: 'center' }}>Change password</Text>
-
           <View style={styles.containerInput}>
             <View style={styles.marginInput}>
               <Controller
@@ -68,7 +66,7 @@ const ChangePasswordScreen = () => {
                     value={value}
                     onChangeText={onChange}
                     secureTextEntry={true}
-                    label="Current password"
+                    label="Mậ khẩu cũ"
                     error={!!errors?.password?.message}
                     helperText={errors?.password?.message}
                   />
@@ -88,7 +86,7 @@ const ChangePasswordScreen = () => {
                     value={value}
                     onChangeText={onChange}
                     secureTextEntry={true}
-                    label="New password"
+                    label="Mật khẩu mới"
                     error={!!errors?.new_password?.message}
                     helperText={errors?.new_password?.message}
                   />
@@ -110,7 +108,7 @@ const ChangePasswordScreen = () => {
                     secureTextEntry={true}
                     error={!!errors?.confirm_password?.message}
                     helperText={errors?.confirm_password?.message}
-                    label="Confirm password"
+                    label="Xác nhận mật khẩu"
                   />
                 )}
                 name="confirm_password"
@@ -121,10 +119,10 @@ const ChangePasswordScreen = () => {
           <Button
             mode="contained"
             loading={isLoading}
-            style={btnStyles.button}
+            style={[btnStyles.button]}
             onPress={handleSubmit(onSubmit)}
           >
-            <Text style={textStyles.text14}>Update</Text>
+            Cập nhật
           </Button>
         </View>
       </KeyboardAwareScrollView>

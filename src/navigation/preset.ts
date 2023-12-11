@@ -53,7 +53,8 @@ export const SCREENS_KEY = {
   },
   SETTING: {
     INDEX: 'SETTING_INDEX' as const,
-    PROFILE: 'SETTING_PROFILE' as const,
+    INFORMATION: 'SETTING_INFORMATION' as const,
+    CHANGE_PASSWORD: 'SETTING_CHANGE_PASSWORD' as const,
   },
   COMING_SOON: {
     INDEX: 'COMING_SOON_INDEX' as const,
@@ -70,7 +71,7 @@ export const SCREENS_KEY = {
 
 export const BOTTOM_TABS_KEY = {
   TAB_HOME: 'TAB_HOME' as const,
-  TAB_PROFILE: 'TAB_PROFILE' as const,
+  TAB_SETTING: 'TAB_SETTING' as const,
   TAB_COMING_SOON: 'TAB_COMING_SOON' as const,
   TAB_FOOD: 'TAB_FOOD' as const,
 }
