@@ -1,5 +1,6 @@
 import { InformationType } from '@/screens/Setting'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { ImagePickerAsset } from 'expo-image-picker'
 import { Alert } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { ApiClient } from '../config/react-query'
@@ -29,31 +30,44 @@ export const getMe = async (id: string): Promise<InformationType> => {
   }
 }
 
-export type NotificationType = {
-  member_id: string | number | undefined
-  notification: string | boolean | undefined | number
+type Upload = {
+  image: ImagePickerAsset
+  id: string
 }
 
-export const saveNotificationStatus = async (paramsNotification: NotificationType) => {
-  const url = '/members/notification'
+export const uploadAvatar = async ({ image, id }: Upload) => {
+  const url = `upload/avatar/${id}`
+
+  let formData = new FormData()
+  let file = {
+    uri: image.uri,
+    type: image.type,
+    name: image.fileName,
+  }
+
+  formData.append('image', file)
+
   try {
-    const response = await ApiClient.post(url, paramsNotification)
-    return response
+    const response = await ApiClient.post(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data; charset=utf-8;',
+      },
+    })
+
+    return response.data
   } catch (error) {
     throw error
   }
 }
 
-export const saveMemberDevice = async (payload: {
-  member_id: string
-  os: string
-  device_token: string
-  device_token_for_find: string
-}) => {
-  return await ApiClient.post('/members/member_devices', payload)
-}
+export const updateProfile = async ({ id, data }: { id: string; data: InformationType }) => {
+  const url = `profile/${id}`
 
-export const getNotificationStatus = async (member_id: number) => {
-  const response = await ApiClient.get(`/members/notification/${member_id}`)
-  return response.data.notification
+  try {
+    const response = await ApiClient.put(url, data)
+
+    return response.data
+  } catch (error) {
+    throw error
+  }
 }

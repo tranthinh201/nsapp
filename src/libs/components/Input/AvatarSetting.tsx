@@ -4,7 +4,6 @@ import { useAppTheme } from '@/libs/config/theme'
 import * as ImagePicker from 'expo-image-picker'
 import React, { useState } from 'react'
 import {
-  Image,
   ImageProps,
   ImageStyle,
   ImageURISource,
@@ -15,7 +14,7 @@ import {
 } from 'react-native'
 
 interface AvatarSettingProps extends ImageProps {
-  onChange?: (image: Image) => void
+  onChange?: (image: ImagePicker.ImagePickerAsset) => void
   source: ImageURISource
   styleCustom?: StyleProp<ImageStyle>
   hasCamera?: boolean
@@ -39,6 +38,7 @@ export const AvatarSetting: React.FC<AvatarSettingProps> = ({
 
     if (!result.canceled) {
       setImage(result.assets[0].uri)
+      props.onChange?.(result.assets[0])
     }
   }
 

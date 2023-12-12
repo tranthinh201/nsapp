@@ -1,13 +1,14 @@
-import { getMe } from '@/libs/api/user'
+import { getMe, updateProfile } from '@/libs/api/user'
 import { AvatarSetting, Header, Input } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
 import { btnStyles, textStyles } from '@/libs/styles'
 import { RootStore } from '@/store'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { ImagePickerAsset } from 'expo-image-picker'
 import { isEqual } from 'lodash'
-import React from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import React, { useState } from 'react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Button } from 'react-native-paper'
 import { useSelector } from 'react-redux'
@@ -21,13 +22,19 @@ const InformationScreen = () => {
     }),
     isEqual,
   )
+  const [imagePath, setImagePath] = useState<ImagePickerAsset>()
 
   const { data, isLoading } = useQuery(['user', user?.id], () => getMe(user?.id as string), {
     enabled: !!user?.id,
   })
 
+  const onAvatarChange = (image: ImagePickerAsset) => {
+    setImagePath(image)
+  }
+
   const {
     control,
+    handleSubmit,
     formState: { errors },
   } = useForm<InformationType>({
     values: {
@@ -44,6 +51,19 @@ const InformationScreen = () => {
     },
   })
 
+  const { mutate } = useMutation(updateProfile, {
+    onSuccess: () => {
+      Alert.alert('Thông báo', 'Cập nhật thông tin thành công!')
+    },
+    onError: () => {
+      Alert.alert('Thông báo', 'Cập nhật thất bại!')
+    },
+  })
+
+  const onSubmit: SubmitHandler<InformationType> = (data) => {
+    mutate({ id: user?.id as string, data })
+  }
+
   return (
     <View style={styles.root}>
       <Header title="Thông tin" />
@@ -58,7 +78,7 @@ const InformationScreen = () => {
             <View
               style={{ justifyContent: 'center', width: '100%', flex: 1, alignItems: 'center' }}
             >
-              <AvatarSetting source={{ uri: undefined }} />
+              <AvatarSetting source={{ uri: user?.avatar }} onChange={onAvatarChange} />
             </View>
             <View style={styles.containerInput}>
               <View>
@@ -141,7 +161,11 @@ const InformationScreen = () => {
                 />
               </View>
 
-              <Button style={[btnStyles.button, { marginTop: 20 }]} mode="contained">
+              <Button
+                style={[btnStyles.button, { marginTop: 20 }]}
+                onPress={handleSubmit(onSubmit)}
+                mode="contained"
+              >
                 Cập nhật
               </Button>
             </View>
