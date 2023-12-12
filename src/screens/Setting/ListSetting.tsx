@@ -1,10 +1,12 @@
 import { Header } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
 import { flexBoxStyles } from '@/libs/styles'
+import { AuthUser } from '@/libs/types/auth'
 import { SettingStackProps } from '@/navigation'
 import { SettingStackParams } from '@/navigation/BottomTabs/TabSetting/SettingStackParams'
 import { RootStore } from '@/store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { CommonActions } from '@react-navigation/native'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { isEqual } from 'lodash'
 import React from 'react'
@@ -25,8 +27,14 @@ const ListSetting = ({ navigation }: SettingStackProps) => {
   const { dispatch } = useDispatch()
 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('persist:root:auth')
-    dispatch.auth.setUser(null)
+    dispatch.auth.setUser(null as unknown as AuthUser)
+    await AsyncStorage.removeItem('accessToken')
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'BottomTabs' }],
+      }),
+    )
   }
 
   const renderItem: ListRenderItem<ItemSettingType> = ({ item }) => {
@@ -35,17 +43,17 @@ const ListSetting = ({ navigation }: SettingStackProps) => {
         navigation.navigate(item.screen_key as keyof SettingStackParams)
       }
 
-      if (item.openModal && item.key_name_modal) {
-        const title = 'Confirmation'
-        const message = 'Are you sure you want to log out?'
+      if (item.key_name_modal) {
+        const title = 'Xác nhận'
+        const message = 'Bạn có chắc chắn muốn đăng xuất?'
 
         const cancelButton = {
-          text: 'Cancel',
+          text: 'Không',
           onPress: () => console.log('Cancel Pressed'),
         }
 
         const logoutButton = {
-          text: 'Log Out',
+          text: 'Đăng xuất',
           onPress: handleLogout,
         }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { Animated, Dimensions, StyleSheet, View } from 'react-native'
 import { MovieDataType } from './data'
 
-const { width, height } = Dimensions.get('screen')
+const { width } = Dimensions.get('screen')
 
 const SlideItem = ({ item }: { item: MovieDataType }) => {
   return (
@@ -17,11 +17,12 @@ export default SlideItem
 const styles = StyleSheet.create({
   container: {
     width,
-    height,
+    height: 160,
     alignItems: 'center',
   },
   image: {
-    flex: 0.6,
+    flex: 1,
     width: '100%',
+    objectFit: 'cover',
   },
 })

@@ -22,6 +22,12 @@ export const AUTH_SCREEN = {
   },
 }
 
+export const MOVIE_SCREEN = {
+  MOVIE_DETAIL: {
+    INDEX: 'MOVIE_DETAIL' as const,
+  },
+}
+
 export const TUTORIAL = {
   TUTORIAL: {
     INDEX: 'TUTORIAL' as const,
@@ -67,6 +73,7 @@ export const SCREENS_KEY = {
   ...TUTORIAL,
   ...AUTH_SCREEN,
   ...INFORMATION_STACK,
+  ...MOVIE_SCREEN,
 }
 
 export const BOTTOM_TABS_KEY = {

@@ -8,6 +8,7 @@ import { Alert, Platform } from 'react-native'
 import { useSelector } from 'react-redux'
 import { AuthStack } from './AuthStack'
 import { BottomTabs } from './BottomTabs'
+import { MovieStack } from './MovieStack'
 import { RootStackParamList } from './RootStackParams'
 
 const RootStack = createStackNavigator<RootStackParamList>()
@@ -62,6 +63,7 @@ const Navigation = () => {
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false, presentation: 'card' }}>
       <RootStack.Screen name="BottomTabs" component={BottomTabs} />
+      <RootStack.Screen name="MovieStack" component={MovieStack} />
     </RootStack.Navigator>
   )
 }

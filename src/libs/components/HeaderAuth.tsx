@@ -3,7 +3,7 @@ import FavoriteSvg from '@/assets/svg/favorite.svg'
 import { RootStore } from '@/store'
 import { isEqual } from 'lodash'
 import React from 'react'
-import { Platform, StatusBar, StyleSheet, View } from 'react-native'
+import { Image, Platform, StatusBar, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
@@ -45,7 +45,11 @@ const HeaderAuth = () => {
           }}
         >
           <View style={{ flexDirection: 'row' }}>
-            <AvatarDefault width={40} height={40} />
+            {user?.avatar ? (
+              <Image source={{ uri: user.avatar }} />
+            ) : (
+              <AvatarDefault width={40} height={40} />
+            )}
 
             <View style={{ marginLeft: 20 }}>
               <Text
@@ -57,10 +61,6 @@ const HeaderAuth = () => {
                 }}
               >
                 Hello, {user?.name}
-              </Text>
-
-              <Text style={{ ...textStyles.text12_regular, color: colors.grey }}>
-                Let’s stream your favorite movie
               </Text>
             </View>
           </View>

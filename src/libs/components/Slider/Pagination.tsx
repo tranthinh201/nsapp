@@ -12,13 +12,13 @@ const Pagination = ({ data, scrollX }: { data: MovieDataType[]; scrollX: any; in
 
         const dotWidth = scrollX.interpolate({
           inputRange,
-          outputRange: [12, 30, 12],
+          outputRange: [5, 20, 5],
           extrapolate: 'clamp',
         })
 
         const backgroundColor = scrollX.interpolate({
           inputRange,
-          outputRange: ['#ccc', '#000', '#ccc'],
+          outputRange: ['#fff', '#38ada9', '#fff'],
           extrapolate: 'clamp',
         })
 
@@ -38,20 +38,20 @@ export { Pagination }
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    bottom: 35,
+    bottom: 10,
     flexDirection: 'row',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   dot: {
-    width: 12,
-    height: 12,
+    width: 4,
+    height: 4,
     borderRadius: 6,
     marginHorizontal: 3,
-    backgroundColor: '#ccc',
+    backgroundColor: '#fff',
   },
   dotActive: {
-    backgroundColor: '#000',
+    backgroundColor: '#38ada9',
   },
 })

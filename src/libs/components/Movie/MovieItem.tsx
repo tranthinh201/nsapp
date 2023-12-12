@@ -1,7 +1,10 @@
 import StarSvg from '@/assets/svg/star.svg'
 import { useAppTheme } from '@/libs/config/theme'
 import { textStyles } from '@/libs/styles'
+import { NavigationProp } from '@/navigation'
+import { useNavigation } from '@react-navigation/native'
 import { Image, View } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Button, Text } from 'react-native-paper'
 
 type MovieItemProps = {
@@ -15,9 +18,14 @@ type MovieItemProps = {
 
 const MovieItem = ({ image, name, category, rating, totalRating }: MovieItemProps) => {
   const { colors } = useAppTheme()
+  const navigation = useNavigation<NavigationProp>()
+
+  const handleMoveToDetail = () => {
+    navigation.navigate('MovieStack', { screen: 'MOVIE_DETAIL', params: { id: '1' } })
+  }
 
   return (
-    <View style={{ width: 160 }}>
+    <TouchableOpacity style={{ width: 160 }} onPress={handleMoveToDetail}>
       <Image
         source={{
           uri: image
@@ -65,7 +73,7 @@ const MovieItem = ({ image, name, category, rating, totalRating }: MovieItemProp
           ĐĂT VÉ
         </Button>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
