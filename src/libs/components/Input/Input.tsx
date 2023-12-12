@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
   },
   text: {
     includeFontPadding: false,
+    paddingBottom: 5,
     fontSize: 15,
-    color: '#000',
   },
   textMultiline: {
     includeFontPadding: false,

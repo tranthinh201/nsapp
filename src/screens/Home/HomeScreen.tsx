@@ -6,7 +6,8 @@ import { textStyles } from '@/libs/styles'
 import { NavigationProp } from '@/navigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
-import { Image, StyleSheet, View } from 'react-native'
+import * as React from 'react'
+import { Dimensions, Image, StyleSheet, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Button, Text } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
@@ -19,6 +20,8 @@ const HomeScreen = () => {
     const token = await getAccessToken()
     console.log(token)
   }
+
+  const width = Dimensions.get('window').width
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('persist:root:auth')

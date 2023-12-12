@@ -64,113 +64,112 @@ const InformationScreen = () => {
     mutate({ id: user?.id as string, data })
   }
 
+  if (isLoading)
+    return (
+      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
+
   return (
     <View style={styles.root}>
       <Header title="Thông tin" />
 
       <KeyboardAwareScrollView style={styles.scrollContainer}>
-        {isLoading ? (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', height: 100 }}>
-            <ActivityIndicator />
+        <View style={styles.container}>
+          <View style={{ justifyContent: 'center', width: '100%', flex: 1, alignItems: 'center' }}>
+            <AvatarSetting source={{ uri: user?.avatar }} onChange={onAvatarChange} />
           </View>
-        ) : (
-          <View style={styles.container}>
-            <View
-              style={{ justifyContent: 'center', width: '100%', flex: 1, alignItems: 'center' }}
+          <View style={styles.containerInput}>
+            <View>
+              <Controller
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    outlineColor={theme.colors.borderInput}
+                    styleInput={textStyles.text14}
+                    theme={theme}
+                    value={value}
+                    onChangeText={onChange}
+                    label="Họ"
+                    error={!!errors?.first_name?.message}
+                    helperText={errors?.first_name?.message}
+                    placeholder="Họ của bạn"
+                  />
+                )}
+                name="first_name"
+              />
+            </View>
+
+            <View style={styles.marginInput}>
+              <Controller
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    outlineColor={theme.colors.borderInput}
+                    styleInput={textStyles.text14}
+                    theme={theme}
+                    value={value}
+                    onChangeText={onChange}
+                    label="Tên"
+                    error={!!errors?.last_name?.message}
+                    helperText={errors?.last_name?.message}
+                    placeholder="Tên của bạn"
+                  />
+                )}
+                name="last_name"
+              />
+            </View>
+
+            <View style={styles.marginInput}>
+              <Controller
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    outlineColor={theme.colors.borderInput}
+                    styleInput={textStyles.text14}
+                    theme={theme}
+                    value={value}
+                    onChangeText={onChange}
+                    error={!!errors?.address?.message}
+                    helperText={errors?.address?.message}
+                    label="Địa chỉ"
+                    placeholder="Địa chỉ của bạn"
+                  />
+                )}
+                name="address"
+              />
+            </View>
+
+            <View style={styles.marginInput}>
+              <Controller
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Input
+                    outlineColor={theme.colors.borderInput}
+                    styleInput={textStyles.text14}
+                    theme={theme}
+                    value={value}
+                    onChangeText={onChange}
+                    error={!!errors?.phone_number?.message}
+                    helperText={errors?.phone_number?.message}
+                    label="Sô điện thoại"
+                    placeholder="Số điện thoại của bạn"
+                  />
+                )}
+                name="phone_number"
+              />
+            </View>
+
+            <Button
+              style={[btnStyles.button, { marginTop: 20 }]}
+              onPress={handleSubmit(onSubmit)}
+              mode="contained"
             >
-              <AvatarSetting source={{ uri: user?.avatar }} onChange={onAvatarChange} />
-            </View>
-            <View style={styles.containerInput}>
-              <View>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <Input
-                      outlineColor={theme.colors.borderInput}
-                      styleInput={textStyles.text14}
-                      theme={theme}
-                      value={value}
-                      onChangeText={onChange}
-                      label="Họ"
-                      error={!!errors?.first_name?.message}
-                      helperText={errors?.first_name?.message}
-                      placeholder="Họ của bạn"
-                    />
-                  )}
-                  name="first_name"
-                />
-              </View>
-
-              <View style={styles.marginInput}>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <Input
-                      outlineColor={theme.colors.borderInput}
-                      styleInput={textStyles.text14}
-                      theme={theme}
-                      value={value}
-                      onChangeText={onChange}
-                      label="Tên"
-                      error={!!errors?.last_name?.message}
-                      helperText={errors?.last_name?.message}
-                      placeholder="Tên của bạn"
-                    />
-                  )}
-                  name="last_name"
-                />
-              </View>
-
-              <View style={styles.marginInput}>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <Input
-                      outlineColor={theme.colors.borderInput}
-                      styleInput={textStyles.text14}
-                      theme={theme}
-                      value={value}
-                      onChangeText={onChange}
-                      error={!!errors?.address?.message}
-                      helperText={errors?.address?.message}
-                      label="Địa chỉ"
-                      placeholder="Địa chỉ của bạn"
-                    />
-                  )}
-                  name="address"
-                />
-              </View>
-
-              <View style={styles.marginInput}>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <Input
-                      outlineColor={theme.colors.borderInput}
-                      styleInput={textStyles.text14}
-                      theme={theme}
-                      value={value}
-                      onChangeText={onChange}
-                      error={!!errors?.phone_number?.message}
-                      helperText={errors?.phone_number?.message}
-                      label="Sô điện thoại"
-                      placeholder="Số điện thoại của bạn"
-                    />
-                  )}
-                  name="phone_number"
-                />
-              </View>
-
-              <Button
-                style={[btnStyles.button, { marginTop: 20 }]}
-                onPress={handleSubmit(onSubmit)}
-                mode="contained"
-              >
-                Cập nhật
-              </Button>
-            </View>
+              Cập nhật
+            </Button>
           </View>
-        )}
+        </View>
       </KeyboardAwareScrollView>
     </View>
   )
