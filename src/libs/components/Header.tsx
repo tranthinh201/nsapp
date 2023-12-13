@@ -37,11 +37,12 @@ const Header: React.FC<Props> = ({
           ios: insets.top,
           android: StatusBar.currentHeight,
         }),
+        backgroundColor: 'white',
         zIndex: 1000,
       }}
     >
       <View>
-        <FocusAwareStatusBar barStyle="light-content" translucent={true} />
+        <FocusAwareStatusBar barStyle="dark-content" translucent={true} />
 
         <View
           style={{

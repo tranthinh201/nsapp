@@ -2,7 +2,7 @@ import StarSvg from '@/assets/svg/star.svg'
 import WarnSvg from '@/assets/svg/warn.svg'
 import { Slider } from '@/libs/components'
 import { textStyles } from '@/libs/styles'
-import { Image, StyleSheet, View } from 'react-native'
+import { Dimensions, Image, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 
 const InfoDisplay = ({ title, value }: { title: string; value: string }) => (
@@ -16,6 +16,8 @@ const InfoDisplay = ({ title, value }: { title: string; value: string }) => (
 )
 
 const InfoMovie = () => {
+  const { height } = Dimensions.get('window')
+
   return (
     <>
       <Slider />
@@ -60,6 +62,16 @@ const InfoMovie = () => {
 
         <InfoDisplay title="Ngôn ngữ" value="Việt Nam" />
       </View>
+
+      <View style={{ padding: 10, marginTop: 10, backgroundColor: '#fff' }}>
+        <Text style={{ fontWeight: '700', marginBottom: 5 }}>Nội dung phim</Text>
+
+        <Text style={{ fontSize: 14 }}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quibusdam, rem
+          aspernatur ab tenetur maxime cum asperiores ex, vel saepe animi non velit consequuntur
+          neque fuga optio corrupti corporis adipisci.
+        </Text>
+      </View>
     </>
   )
 }
@@ -68,19 +80,20 @@ export { InfoMovie }
 
 const styles = StyleSheet.create({
   movie: {
-    marginTop: -14,
     paddingHorizontal: 10,
     flex: 1,
     flexDirection: 'row',
+    backgroundColor: '#fff',
   },
   image: {
     height: 140,
     width: 100,
     borderRadius: 8,
+    marginTop: -14,
   },
   detail: {
     marginLeft: 20,
-    marginTop: 20,
+    marginTop: 10,
     height: 'auto',
   },
   name: {
@@ -115,7 +128,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginTop: 15,
+    paddingVertical: 15,
+    backgroundColor: '#fff',
   },
   infoCenter: {
     padding: 10,

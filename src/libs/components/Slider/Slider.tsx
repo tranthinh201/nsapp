@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Animated, FlatList, View } from 'react-native'
 import { Pagination } from './Pagination'
-import SlideItem from './SliderItem'
+import { SlideItem } from './SliderItem'
 import { data } from './data'
 
 const Slider = () => {

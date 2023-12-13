@@ -1,5 +1,5 @@
 import { SCREENS_KEY } from '@/navigation/preset'
-import { HomeScreen } from '@/screens/Home'
+import { FoodScreen } from '@/screens/Food'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { FoodStackParams } from './FoodStackParams'
@@ -7,7 +7,7 @@ import { FoodStackParams } from './FoodStackParams'
 const FoodScreens = [
   {
     name: SCREENS_KEY.FOOD.INDEX,
-    component: HomeScreen,
+    component: FoodScreen,
     options: { headerShown: false },
   },
 ]

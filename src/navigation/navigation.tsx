@@ -31,6 +31,8 @@ const Navigation = () => {
   const registerPushNotification = async () => {
     try {
       const token = await registerForPushNotificationsAsync()
+      console.log('token', token)
+
       if (token) {
         const payload = {
           member_id: `${user?.id}`,

@@ -1,9 +1,14 @@
 export type MovieDataType = {
   id: number
-  img: string
+  img?: string
+  video?: string
 }
 
 const data: MovieDataType[] = [
+  {
+    id: 5,
+    video: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+  },
   {
     id: 1,
     img: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
@@ -18,10 +23,6 @@ const data: MovieDataType[] = [
   },
   {
     id: 4,
-    img: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-  },
-  {
-    id: 5,
     img: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
   },
 ]
