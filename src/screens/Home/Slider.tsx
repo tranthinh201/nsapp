@@ -1,5 +1,7 @@
+import { listMovie } from '@/libs/api/movie'
 import { NavigationProp } from '@/navigation'
 import { useNavigation } from '@react-navigation/native'
+import { useQuery } from '@tanstack/react-query'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import {
@@ -12,50 +14,7 @@ import {
   View,
 } from 'react-native'
 import { Text } from 'react-native-paper'
-
-const imagenes = [
-  'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-  'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcScUwXu7wznX70mqPhL4ZJx93F-YkMZyUaEllCS2kICBqUmHpzM',
-  'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=652&q=80',
-  'https://images.unsplash.com/photo-1525183995014-bd94c0750cd5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
-  'https://images.unsplash.com/photo-1488462237308-ecaa28b729d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=714&q=80',
-  'https://images.unsplash.com/photo-1503756234508-e32369269deb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80',
-  'https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=652&q=80',
-]
-
-type MovieDataType = {
-  id: number
-  name: string
-  img: string
-}
-
-const data: MovieDataType[] = [
-  {
-    id: 1,
-    name: 'The Flash',
-    img: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-  },
-  {
-    id: 2,
-    name: 'The Flash',
-    img: 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcScUwXu7wznX70mqPhL4ZJx93F-YkMZyUaEllCS2kICBqUmHpzM',
-  },
-  {
-    id: 3,
-    name: 'What If...?',
-    img: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-  },
-  {
-    id: 4,
-    name: 'Wonka',
-    img: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-  },
-  {
-    id: 5,
-    name: 'Doraemon',
-    img: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-  },
-]
+import { MovieType } from '../Movie'
 
 const { width, height } = Dimensions.get('window')
 const WIDTH = width * 0.7
@@ -63,7 +22,7 @@ const PADDING = (width - WIDTH) / 2
 const HORIZONTAL = 10
 const HEIGHT = height * 0.5
 
-function Backdrop({ scrollX }: { scrollX: Animated.Value }) {
+function Backdrop({ scrollX, data }: { scrollX: Animated.Value; data?: MovieType[] }) {
   return (
     <View
       style={[
@@ -76,7 +35,7 @@ function Backdrop({ scrollX }: { scrollX: Animated.Value }) {
         StyleSheet.absoluteFillObject,
       ]}
     >
-      {data.map((movie, index) => {
+      {data?.map((movie, index) => {
         const inputRange = [(index - 1) * WIDTH, index * WIDTH, (index + 1) * WIDTH]
 
         const opacity = scrollX.interpolate({
@@ -87,7 +46,7 @@ function Backdrop({ scrollX }: { scrollX: Animated.Value }) {
         return (
           <Animated.Image
             key={index}
-            source={{ uri: movie.img }}
+            source={{ uri: movie.movie_image.map((img) => img.path)[0] }}
             style={[{ width, height, opacity }, StyleSheet.absoluteFillObject]}
           />
         )
@@ -107,18 +66,16 @@ function Backdrop({ scrollX }: { scrollX: Animated.Value }) {
 
 const SliderHome = () => {
   const navigation = useNavigation<NavigationProp>()
-
-  const handleMoveToDetail = () => {
-    navigation.navigate('MovieStack', { screen: 'MOVIE_DETAIL', params: { id: '1' } })
-  }
-
   const scrollX = React.useRef(new Animated.Value(0)).current
+  const { data } = useQuery(['movies'], listMovie)
+
+  const handleMoveToDetail = (id: string) => {
+    navigation.navigate('MovieStack', { screen: 'MOVIE_DETAIL', params: { id } })
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <StatusBar hidden /> */}
-
-      <Backdrop scrollX={scrollX} />
+      <Backdrop scrollX={scrollX} data={data} />
 
       <Animated.FlatList
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
@@ -144,7 +101,7 @@ const SliderHome = () => {
             outputRange: [0, -50, 0],
           })
           return (
-            <TouchableOpacity style={{ width: WIDTH }} onPress={handleMoveToDetail}>
+            <TouchableOpacity style={{ width: WIDTH }} onPress={() => handleMoveToDetail(item.id)}>
               <Animated.View
                 style={{
                   marginHorizontal: HORIZONTAL,
@@ -155,7 +112,10 @@ const SliderHome = () => {
                   transform: [{ translateY: scrollY }],
                 }}
               >
-                <Image source={{ uri: item.img }} style={styles.posterImage} />
+                <Image
+                  source={{ uri: item.movie_image.map((it) => it.path)[0] }}
+                  style={styles.posterImage}
+                />
 
                 <Text style={{ fontWeight: 'bold', fontSize: 26 }}>{item.name}</Text>
               </Animated.View>

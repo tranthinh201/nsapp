@@ -8,6 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Button, Text } from 'react-native-paper'
 
 type MovieItemProps = {
+  id: string
   image: string
   name: string
   category: string
@@ -16,12 +17,12 @@ type MovieItemProps = {
   onPress: () => void
 }
 
-const MovieItem = ({ image, name, category, rating, totalRating }: MovieItemProps) => {
+const MovieItem = ({ image, name, category, rating, totalRating, id }: MovieItemProps) => {
   const { colors } = useAppTheme()
   const navigation = useNavigation<NavigationProp>()
 
   const handleMoveToDetail = () => {
-    navigation.navigate('MovieStack', { screen: 'MOVIE_DETAIL', params: { id: '1' } })
+    navigation.navigate('MovieStack', { screen: 'MOVIE_DETAIL', params: { id } })
   }
 
   return (

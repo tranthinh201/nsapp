@@ -1,143 +1,101 @@
+import { getMovieById } from '@/libs/api/movie'
 import { Header } from '@/libs/components'
-import { MovieDataType, data } from '@/libs/components/Slider/data'
+import { RouteMovieStackType } from '@/libs/route'
+import { useRoute } from '@react-navigation/native'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
+import { useQuery } from '@tanstack/react-query'
 import { ResizeMode, Video } from 'expo-av'
 import React from 'react'
-import { Animated, Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Animated, Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Text } from 'react-native-paper'
 import { InfoMovie } from './InfoMovie'
+import { PersonType } from './types'
+
+export type ListMediaType = {
+  type: 'image' | 'video'
+  path: string
+}
 
 const MovieDetail = () => {
-  const { width } = Dimensions.get('screen')
+  const route = useRoute<RouteMovieStackType<'MOVIE_DETAIL'>>()
+  const { data, isLoading } = useQuery(['movie'], () => getMovieById(route.params.id), {
+    enabled: !!route.params.id,
+  })
 
-  const listPerson = [
-    {
-      id: 1,
-      name: 'THINH',
-      avatar:
-        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-    },
-    {
-      id: 2,
-      name: 'THINH',
-      avatar:
-        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-    },
-    {
-      id: 3,
-      name: 'THINH',
-      avatar:
-        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-    },
-    {
-      id: 4,
-      name: 'THINH',
-      avatar:
-        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-    },
-    {
-      id: 5,
-      name: 'THINH',
-      avatar:
-        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-    },
-    {
-      id: 6,
-      name: 'THINH',
-      avatar:
-        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-    },
-    {
-      id: 7,
-      name: 'THINH',
-      avatar:
-        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-    },
-    {
-      id: 8,
-      name: 'THINH',
-      avatar:
-        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-    },
-    {
-      id: 9,
-      name: 'THINH',
-      avatar:
-        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
-    },
-  ]
+  let listMedia: ListMediaType[] = []
 
-  type PersonListType = {
-    id: number
-    name: string
-    avatar: string
+  if (data?.trailer_movie) {
+    listMedia.push({
+      type: 'video',
+      path: data.trailer_movie,
+    })
   }
 
-  const renderItem: ListRenderItem<PersonListType> = ({ item }) => {
-    return (
-      <TouchableOpacity style={{ display: 'flex', justifyContent: 'center', marginRight: 10 }}>
-        <Image
-          source={{ uri: item.avatar }}
-          style={{ width: 100, height: 120, borderRadius: 10 }}
-        />
+  if (data?.movie_image) {
+    const imageMedia = data.movie_image.map((item) => ({
+      type: 'image',
+      path: item.path,
+    }))
 
-        <Text style={{ textAlign: 'center', marginTop: 5 }}>{item.name}</Text>
-      </TouchableOpacity>
-    )
+    listMedia = [...listMedia, ...imageMedia] as ListMediaType[]
   }
 
-  const renderImageMovie: ListRenderItem<PersonListType> = ({ item }) => {
+  const renderItem: ListRenderItem<PersonType> = ({ item }) => {
     return (
-      <TouchableOpacity style={{ display: 'flex', justifyContent: 'center', marginRight: 10 }}>
-        <Image
-          source={{ uri: item.avatar }}
-          style={{ width: 100, height: 100, borderRadius: 10 }}
-        />
+      <TouchableOpacity
+        style={{ display: 'flex', justifyContent: 'center', marginRight: 10, width: 100 }}
+      >
+        <Image source={{ uri: item.avatar }} style={{ height: 120, borderRadius: 10 }} />
+
+        <Text style={{ textAlign: 'center', marginTop: 5, fontSize: 10 }}>{item.name}</Text>
       </TouchableOpacity>
     )
   }
 
   const video = React.useRef(null)
 
-  const renderList: ListRenderItem<MovieDataType> = ({ item }) => {
+  const renderList: ListRenderItem<ListMediaType> = ({ item }) => {
     return (
       <TouchableOpacity style={{ display: 'flex', justifyContent: 'center', marginRight: 10 }}>
-        {item.img ? (
-          <Animated.Image
-            source={{ uri: item.img }}
-            style={{ width: 100, height: 100, borderRadius: 10 }}
-          />
-        ) : (
+        {item.type === 'video' && (
           <Video
             ref={video}
-            style={{ width: 200, height: 100, borderRadius: 10 }}
+            style={{ width: 200, height: 100, borderRadius: 12, marginTop: 34.5 }}
             videoStyle={{ borderRadius: 10 }}
             source={{
-              uri: item.video as string,
+              uri: item.path,
             }}
             useNativeControls
             resizeMode={ResizeMode.CONTAIN}
-            isLooping
           />
         )}
+
+        <Animated.Image
+          source={{ uri: item.path }}
+          style={{ width: 100, height: 100, borderRadius: 10 }}
+        />
       </TouchableOpacity>
     )
   }
 
+  if (isLoading) {
+    return <Text>Loading...</Text>
+  }
+
   return (
     <>
-      <Header title="WONKA" />
+      <Header title={data?.name.toLocaleUpperCase()} />
 
       <ScrollView>
-        <InfoMovie />
+        {data && <InfoMovie movie={data} />}
 
         <View style={styles.list}>
           <Text style={styles.titleList}>Đạo diễn & diễn viên</Text>
 
-          {listPerson && (
+          {data?.persons && (
             <FlashList
-              data={listPerson}
+              data={data?.persons}
               renderItem={renderItem}
               estimatedItemSize={100}
               horizontal
@@ -151,7 +109,7 @@ const MovieDetail = () => {
 
           {data && (
             <FlashList
-              data={data}
+              data={listMedia}
               renderItem={renderList}
               estimatedItemSize={100}
               horizontal

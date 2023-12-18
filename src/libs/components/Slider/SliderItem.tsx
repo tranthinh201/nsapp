@@ -1,24 +1,24 @@
+import { ListMediaType } from '@/screens/Movie/MovieDetail'
 import { ResizeMode, Video } from 'expo-av'
 import React from 'react'
 import { Animated, Dimensions, StyleSheet, View } from 'react-native'
-import { MovieDataType } from './data'
 
 const { width } = Dimensions.get('screen')
 
-const SlideItem = ({ item }: { item: MovieDataType }) => {
+const SlideItem = ({ item }: { item: ListMediaType }) => {
   const video = React.useRef(null)
 
   return (
     <View style={styles.container}>
-      {item.img ? (
-        <Animated.Image source={{ uri: item.img }} style={styles.image} />
+      {item.type === 'image' ? (
+        <Animated.Image source={{ uri: item.path }} style={styles.image} />
       ) : (
-        item.video && (
+        item.type === 'video' && (
           <Video
             ref={video}
             style={styles.video}
             source={{
-              uri: item.video,
+              uri: item.path,
             }}
             useNativeControls
             resizeMode={ResizeMode.CONTAIN}

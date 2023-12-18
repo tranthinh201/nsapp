@@ -2,8 +2,10 @@ import StarSvg from '@/assets/svg/star.svg'
 import WarnSvg from '@/assets/svg/warn.svg'
 import { Slider } from '@/libs/components'
 import { textStyles } from '@/libs/styles'
-import { Dimensions, Image, StyleSheet, View } from 'react-native'
+import { format } from 'date-fns'
+import { Image, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
+import { MovieType } from './types'
 
 const InfoDisplay = ({ title, value }: { title: string; value: string }) => (
   <View style={{ flex: 1 }}>
@@ -15,25 +17,23 @@ const InfoDisplay = ({ title, value }: { title: string; value: string }) => (
   </View>
 )
 
-const InfoMovie = () => {
-  const { height } = Dimensions.get('window')
-
+const InfoMovie = ({ movie }: { movie: MovieType }) => {
   return (
     <>
-      <Slider />
+      <Slider movie={movie} />
 
       <View style={styles.movie}>
         <Image
           source={{
-            uri: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBDy4zhPNl66RocI1nkuUBh_Wxu3aJxcK0xy82NYOlMsNeVvo1',
+            uri: movie?.movie_image.map((img) => img.path)[0],
           }}
           style={styles.image}
         />
 
         <View style={styles.detail}>
-          <Text style={styles.name}>WONKA</Text>
+          <Text style={styles.name}>{movie.name}</Text>
 
-          <Text style={styles.genre}>Hài, Gia Đình, Giả Tưởng</Text>
+          <Text style={styles.genre}>{movie.movie_type.name}</Text>
 
           <View style={styles.rate}>
             <StarSvg width={14} height={14} style={{ marginTop: 2 }} />
@@ -54,23 +54,22 @@ const InfoMovie = () => {
       </View>
 
       <View style={styles.info}>
-        <InfoDisplay title="Ngày khởi chiếu" value="22/12/2001" />
+        <InfoDisplay
+          title="Ngày khởi chiếu"
+          value={format(new Date(movie.released_date), 'dd/MM/yyyy')}
+        />
 
         <View style={styles.infoCenter}>
-          <InfoDisplay title="Thời lượng" value="100 phút" />
+          <InfoDisplay title="Thời lượng" value={format(new Date(movie.time), 'dd/MM/yyyy')} />
         </View>
 
-        <InfoDisplay title="Ngôn ngữ" value="Việt Nam" />
+        <InfoDisplay title="Ngôn ngữ" value={movie.language_movie} />
       </View>
 
       <View style={{ padding: 10, marginTop: 10, backgroundColor: '#fff' }}>
         <Text style={{ fontWeight: '700', marginBottom: 5 }}>Nội dung phim</Text>
 
-        <Text style={{ fontSize: 14 }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quibusdam, rem
-          aspernatur ab tenetur maxime cum asperiores ex, vel saepe animi non velit consequuntur
-          neque fuga optio corrupti corporis adipisci.
-        </Text>
+        <Text style={{ fontSize: 14 }}>{movie.brief_movie}</Text>
       </View>
     </>
   )

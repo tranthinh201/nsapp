@@ -1,10 +1,30 @@
+import { MovieType } from '@/screens/Movie'
+import { ListMediaType } from '@/screens/Movie/MovieDetail'
 import React, { useRef, useState } from 'react'
 import { Animated, FlatList, View } from 'react-native'
 import { Pagination } from './Pagination'
 import { SlideItem } from './SliderItem'
 import { data } from './data'
 
-const Slider = () => {
+const Slider = ({ movie }: { movie: MovieType }) => {
+  let listMedia: ListMediaType[] = []
+
+  if (movie.trailer_movie) {
+    listMedia.push({
+      type: 'video',
+      path: movie.trailer_movie,
+    })
+  }
+
+  if (movie.movie_image) {
+    const imageMedia = movie.movie_image.map((item) => ({
+      type: 'image',
+      path: item.path,
+    }))
+
+    listMedia = [...listMedia, ...imageMedia] as ListMediaType[]
+  }
+
   const [index, setIndex] = useState(0)
   const scrollX = useRef(new Animated.Value(0)).current
 
@@ -36,7 +56,7 @@ const Slider = () => {
   return (
     <View>
       <FlatList
-        data={data}
+        data={listMedia}
         renderItem={({ item }) => <SlideItem item={item} />}
         horizontal
         pagingEnabled
