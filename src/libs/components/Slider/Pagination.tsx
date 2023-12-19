@@ -1,11 +1,11 @@
 import { useAppTheme } from '@/libs/config/theme'
+import { ListMediaType } from '@/screens/Movie/MovieDetail'
 import React from 'react'
 import { Animated, Dimensions, StyleSheet, View } from 'react-native'
-import { MovieDataType } from './data'
 
 const { width } = Dimensions.get('screen')
 
-const Pagination = ({ data, scrollX }: { data: MovieDataType[]; scrollX: any; index: number }) => {
+const Pagination = ({ data, scrollX }: { data: ListMediaType[]; scrollX: any }) => {
   const { colors } = useAppTheme()
 
   return (

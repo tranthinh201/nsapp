@@ -1,7 +1,8 @@
 import { getMovieById } from '@/libs/api/movie'
 import { Header } from '@/libs/components'
 import { RouteMovieStackType } from '@/libs/route'
-import { useRoute } from '@react-navigation/native'
+import { NavigationProp } from '@/navigation'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useQuery } from '@tanstack/react-query'
 import { ResizeMode, Video } from 'expo-av'
@@ -22,6 +23,7 @@ const MovieDetail = () => {
   const { data, isLoading } = useQuery(['movie'], () => getMovieById(route.params.id), {
     enabled: !!route.params.id,
   })
+  const navigation = useNavigation<NavigationProp>()
 
   let listMedia: ListMediaType[] = []
 
@@ -83,6 +85,15 @@ const MovieDetail = () => {
     return <Text>Loading...</Text>
   }
 
+  const handleMoveToCinema = () => {
+    navigation.navigate('MovieStack', {
+      screen: 'MOVIE_CINEMA',
+      params: {
+        movie_id: data?.id as string,
+      },
+    })
+  }
+
   return (
     <>
       <Header title={data?.name.toLocaleUpperCase()} />
@@ -120,8 +131,8 @@ const MovieDetail = () => {
       </ScrollView>
 
       <View style={styles.button}>
-        <Button mode="contained" style={{ borderRadius: 10 }}>
-          DAT VE
+        <Button mode="contained" style={{ borderRadius: 10 }} onPress={handleMoveToCinema}>
+          ĐẶT VÉ
         </Button>
       </View>
     </>

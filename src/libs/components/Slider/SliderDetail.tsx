@@ -5,7 +5,7 @@ import { Animated, FlatList, View } from 'react-native'
 import { Pagination } from './Pagination'
 import { SlideItem } from './SliderItem'
 
-const Slider = ({ movie }: { movie: MovieType }) => {
+const SliderCore = ({ movie }: { movie: MovieType }) => {
   let listMedia: ListMediaType[] = []
 
   if (movie.trailer_movie) {
@@ -71,4 +71,4 @@ const Slider = ({ movie }: { movie: MovieType }) => {
   )
 }
 
-export { Slider }
+export { SliderCore }

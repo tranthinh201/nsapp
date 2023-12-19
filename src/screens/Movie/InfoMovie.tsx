@@ -7,7 +7,7 @@ import { Image, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { MovieType } from './types'
 
-const InfoDisplay = ({ title, value }: { title: string; value: string }) => (
+const InfoDisplay = ({ title, value }: { title: string; value: string | number }) => (
   <View style={{ flex: 1 }}>
     <Text style={{ textAlign: 'center', fontSize: 12, color: '#8F8F8F' }}>{title}</Text>
 
@@ -60,7 +60,7 @@ const InfoMovie = ({ movie }: { movie: MovieType }) => {
         />
 
         <View style={styles.infoCenter}>
-          <InfoDisplay title="Thời lượng" value={format(new Date(movie.time), 'dd/MM/yyyy')} />
+          <InfoDisplay title="Thời lượng" value={movie.duration} />
         </View>
 
         <InfoDisplay title="Ngôn ngữ" value={movie.language_movie} />

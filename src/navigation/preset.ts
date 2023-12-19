@@ -26,6 +26,9 @@ export const MOVIE_SCREEN = {
   MOVIE_DETAIL: {
     INDEX: 'MOVIE_DETAIL' as const,
   },
+  MOVIE_CINEMA: {
+    INDEX: 'MOVIE_CINEMA' as const,
+  },
 }
 
 export const TUTORIAL = {

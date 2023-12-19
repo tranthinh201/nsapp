@@ -1,3 +1,4 @@
+import { CinemaMovieScreen } from '@/screens/Movie'
 import { MovieDetail } from '@/screens/Movie/MovieDetail'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
@@ -8,6 +9,11 @@ const MovieScreens = [
   {
     name: SCREENS_KEY.MOVIE_DETAIL.INDEX,
     component: MovieDetail,
+    options: { headerShown: false },
+  },
+  {
+    name: SCREENS_KEY.MOVIE_CINEMA.INDEX,
+    component: CinemaMovieScreen,
     options: { headerShown: false },
   },
 ]

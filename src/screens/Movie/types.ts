@@ -25,7 +25,7 @@ export const MovieSchema = z.object({
   national: z.string(),
   released_date: z.date(),
   language_movie: z.string(),
-  time: z.date(),
+  duration: z.number(),
   limit_age: z.string(),
   brief_movie: z.string(),
   trailer_movie: z.string(),
@@ -42,6 +42,16 @@ export const MovieSchema = z.object({
   created_at: z.date(),
   updated_at: z.date(),
 })
+
+export type MovieCinema = {
+  id: string
+  name: string
+  address: string
+  phone_number: string
+  image: string
+  created_at: Date
+  updated_at: Date
+}
 
 export type MovieType = z.infer<typeof MovieSchema>
 export type PersonType = z.infer<typeof PersonSchema>
