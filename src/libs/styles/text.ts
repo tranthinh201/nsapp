@@ -1,6 +1,11 @@
 import { StyleSheet } from 'react-native'
 
 export const textStyles = StyleSheet.create({
+  text10: {
+    fontSize: 10,
+    includeFontPadding: false,
+    lineHeight: 16,
+  },
   textUnderline: {
     textDecorationLine: 'underline',
     includeFontPadding: false,

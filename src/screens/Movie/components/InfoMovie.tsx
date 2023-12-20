@@ -5,7 +5,7 @@ import { textStyles } from '@/libs/styles'
 import { format } from 'date-fns'
 import { Image, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
-import { MovieType } from './types'
+import { MovieType } from '../types'
 
 const InfoDisplay = ({ title, value }: { title: string; value: string | number }) => (
   <View style={{ flex: 1 }}>

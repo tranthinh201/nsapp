@@ -10,7 +10,7 @@ import React from 'react'
 import { Animated, Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Text } from 'react-native-paper'
-import { InfoMovie } from './InfoMovie'
+import { InfoMovie } from './components/InfoMovie'
 import { PersonType } from './types'
 
 export type ListMediaType = {
@@ -90,6 +90,7 @@ const MovieDetail = () => {
       screen: 'MOVIE_CINEMA',
       params: {
         movie_id: data?.id as string,
+        name_movie: data?.name as string,
       },
     })
   }

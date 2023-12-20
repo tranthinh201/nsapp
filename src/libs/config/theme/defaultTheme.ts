@@ -23,6 +23,7 @@ export const defaultTheme = {
     grey: '#92929D',
     backgroundMain: '#1F1D2B',
     borderColor: '#252836',
+    textGrey: '#9B9B9B',
   },
 }
 

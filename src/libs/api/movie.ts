@@ -1,20 +1,35 @@
-import { MovieCinema, MovieType } from '@/screens/Movie'
+import { CinemaMovieType, MovieType } from '@/screens/Movie'
 import { ApiClientUnAuth } from '../config/react-query'
 
 export const listMovie = async (): Promise<MovieType[]> => {
-  const response = await ApiClientUnAuth.get('movie')
+  try {
+    const response = await ApiClientUnAuth.get('movie')
 
-  return response.data
+    return response.data
+  } catch (error) {
+    throw error
+  }
 }
 
 export const getMovieById = async (id: string): Promise<MovieType> => {
-  const response = await ApiClientUnAuth.get(`movie/${id}`)
+  try {
+    const response = await ApiClientUnAuth.get(`movie/${id}`)
 
-  return response.data
+    return response.data
+  } catch (error) {
+    throw error
+  }
 }
 
-export const getCinemaByMovieId = async (id: string): Promise<MovieCinema[]> => {
-  const response = await ApiClientUnAuth.get(`cinema/${id}/movie`)
+export const getCinemaByMovieId = async (
+  id: string,
+  start_time: string,
+): Promise<CinemaMovieType> => {
+  try {
+    const response = await ApiClientUnAuth.get(`cinema/by-time/${id}/${start_time}`)
 
-  return response.data
+    return response.data
+  } catch (error) {
+    throw error
+  }
 }
