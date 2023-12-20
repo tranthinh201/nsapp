@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     flexWrap: 'wrap',
   },
   schedule: {
