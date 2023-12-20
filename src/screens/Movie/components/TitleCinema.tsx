@@ -2,19 +2,20 @@ import ArrowDown from '@/assets/svg/arrow-down.svg'
 import ArrowUp from '@/assets/svg/arrow-up.svg'
 import { useAppTheme } from '@/libs/config/theme'
 import { textStyles } from '@/libs/styles'
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, Pressable, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { CinemaType } from '../types'
 
 type TitleCinemaProps = {
   cinema: CinemaType
   expanded: boolean
+  handlePressExpand: () => void
 }
-const TitleCinema = ({ cinema, expanded }: TitleCinemaProps) => {
+const TitleCinema = ({ cinema, expanded, handlePressExpand }: TitleCinemaProps) => {
   const { colors } = useAppTheme()
 
   return (
-    <View style={styles.root}>
+    <Pressable style={styles.root} onPress={handlePressExpand}>
       <View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
@@ -46,7 +47,7 @@ const TitleCinema = ({ cinema, expanded }: TitleCinemaProps) => {
       </View>
 
       {expanded ? <ArrowUp /> : <ArrowDown />}
-    </View>
+    </Pressable>
   )
 }
 

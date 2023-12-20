@@ -2,7 +2,7 @@ import TildeSvg from '@/assets/svg/tilde.svg'
 import { useAppTheme } from '@/libs/config/theme'
 import { format } from 'date-fns'
 import { useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { CinemaType } from '../types'
 import { TitleCinema } from './TitleCinema'
@@ -23,8 +23,8 @@ const CinemaItem = ({ cinema, movie_format }: CinemaItemProps) => {
   const { colors } = useAppTheme()
 
   return (
-    <Pressable onPress={handlePressExpand}>
-      <TitleCinema cinema={cinema} expanded={expanded} />
+    <View>
+      <TitleCinema cinema={cinema} expanded={expanded} handlePressExpand={handlePressExpand} />
 
       {expanded && (
         <>
@@ -55,7 +55,7 @@ const CinemaItem = ({ cinema, movie_format }: CinemaItemProps) => {
           </View>
         </>
       )}
-    </Pressable>
+    </View>
   )
 }
 
