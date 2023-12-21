@@ -17,7 +17,7 @@ const InfoDisplay = ({ title, value }: { title: string; value: string | number }
   </View>
 )
 
-const InfoMovie = ({ movie }: { movie: MovieType }) => {
+const InformationMovie = ({ movie }: { movie: MovieType }) => {
   return (
     <>
       <Slider movie={movie} />
@@ -75,7 +75,7 @@ const InfoMovie = ({ movie }: { movie: MovieType }) => {
   )
 }
 
-export { InfoMovie }
+export { InformationMovie }
 
 const styles = StyleSheet.create({
   movie: {

@@ -7,8 +7,8 @@ import { useEffect } from 'react'
 import { Alert, Platform } from 'react-native'
 import { useSelector } from 'react-redux'
 import { AuthStack } from './AuthStack'
+import { BookingStack } from './BookingStack'
 import { BottomTabs } from './BottomTabs'
-import { MovieStack } from './MovieStack'
 import { RootStackParamList } from './RootStackParams'
 
 const RootStack = createStackNavigator<RootStackParamList>()
@@ -58,6 +58,7 @@ const Navigation = () => {
       <RootStack.Navigator screenOptions={{ headerShown: false, presentation: 'card' }}>
         <RootStack.Screen name="BottomTabs" component={BottomTabs} />
         <RootStack.Screen name="AuthStack" component={AuthStack} />
+        <RootStack.Screen name="BookingStack" component={BookingStack} />
       </RootStack.Navigator>
     )
   }
@@ -65,7 +66,7 @@ const Navigation = () => {
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false, presentation: 'card' }}>
       <RootStack.Screen name="BottomTabs" component={BottomTabs} />
-      <RootStack.Screen name="MovieStack" component={MovieStack} />
+      <RootStack.Screen name="BookingStack" component={BookingStack} />
     </RootStack.Navigator>
   )
 }

@@ -22,12 +22,15 @@ export const AUTH_SCREEN = {
   },
 }
 
-export const MOVIE_SCREEN = {
-  MOVIE_DETAIL: {
-    INDEX: 'MOVIE_DETAIL' as const,
+export const BOOKING_SCREEN = {
+  BOOKING_MOVIE_DETAIL: {
+    INDEX: 'BOOKING_MOVIE_DETAIL' as const,
   },
-  MOVIE_CINEMA: {
-    INDEX: 'MOVIE_CINEMA' as const,
+  BOOKING_LIST_CINEMA: {
+    INDEX: 'BOOKING_LIST_CINEMA' as const,
+  },
+  BOOKING_SEAT: {
+    INDEX: 'BOOKING_SEAT' as const,
   },
 }
 
@@ -76,7 +79,7 @@ export const SCREENS_KEY = {
   ...TUTORIAL,
   ...AUTH_SCREEN,
   ...INFORMATION_STACK,
-  ...MOVIE_SCREEN,
+  ...BOOKING_SCREEN,
 }
 
 export const BOTTOM_TABS_KEY = {

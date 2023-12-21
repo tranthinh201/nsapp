@@ -1,5 +1,4 @@
-import { MovieType } from '@/screens/Movie'
-import { ListMediaType } from '@/screens/Movie/MovieDetail'
+import { ListMediaType, MovieType } from '@/screens/Booking'
 import React, { useRef, useState } from 'react'
 import { Animated, FlatList, View } from 'react-native'
 import { Pagination } from './Pagination'

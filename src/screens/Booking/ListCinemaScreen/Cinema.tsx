@@ -1,24 +1,24 @@
 import TildeSvg from '@/assets/svg/tilde.svg'
 import { useAppTheme } from '@/libs/config/theme'
-import { format } from 'date-fns'
+import { NavigationProp } from '@/navigation'
+import { convertDateToHour } from '@/utils/date'
+import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { CinemaType } from '../types'
-import { TitleCinema } from './TitleCinema'
+import { TitleCinema } from './Title'
 
-type CinemaItemProps = {
+type CinemaProps = {
   cinema: CinemaType
   movie_format: string
 }
 
-const CinemaItem = ({ cinema, movie_format }: CinemaItemProps) => {
+const Cinema = ({ cinema, movie_format }: CinemaProps) => {
   const [expanded, setExpanded] = useState(false)
   const handlePressExpand = () => setExpanded(!expanded)
-  const convertDateToHour = (date: string | Date | number) => {
-    const time = new Date(date)
-    return format(time, 'HH:mm')
-  }
+
+  const navigation = useNavigation<NavigationProp>()
 
   const { colors } = useAppTheme()
 
@@ -32,7 +32,13 @@ const CinemaItem = ({ cinema, movie_format }: CinemaItemProps) => {
 
           <View style={styles.container}>
             {cinema.schedule.map((showtime) => (
-              <View
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('BookingStack', {
+                    screen: 'BOOKING_SEAT',
+                    params: { schedule_id: showtime.id, name_cinema: showtime.screen.cinema_id },
+                  })
+                }
                 style={[
                   styles.schedule,
                   {
@@ -50,7 +56,7 @@ const CinemaItem = ({ cinema, movie_format }: CinemaItemProps) => {
                 <Text style={{ fontSize: 11, color: colors.textGrey }}>
                   {convertDateToHour(showtime.end_time)}
                 </Text>
-              </View>
+              </Pressable>
             ))}
           </View>
         </>
@@ -59,7 +65,7 @@ const CinemaItem = ({ cinema, movie_format }: CinemaItemProps) => {
   )
 }
 
-export { CinemaItem }
+export { Cinema }
 
 const styles = StyleSheet.create({
   container: {

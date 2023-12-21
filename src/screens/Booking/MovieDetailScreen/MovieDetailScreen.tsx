@@ -1,6 +1,6 @@
 import { getMovieById } from '@/libs/api/movie'
 import { Header } from '@/libs/components'
-import { RouteMovieStackType } from '@/libs/route'
+import { RouteBookingStackType } from '@/libs/route'
 import { NavigationProp } from '@/navigation'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
@@ -10,16 +10,16 @@ import React from 'react'
 import { Animated, Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Text } from 'react-native-paper'
-import { InfoMovie } from './components/InfoMovie'
-import { PersonType } from './types'
+import { PersonType } from '../types'
+import { InformationMovie } from './InformationMovie'
 
 export type ListMediaType = {
   type: 'image' | 'video'
   path: string
 }
 
-const MovieDetail = () => {
-  const route = useRoute<RouteMovieStackType<'MOVIE_DETAIL'>>()
+const MovieDetailScreen = () => {
+  const route = useRoute<RouteBookingStackType<'BOOKING_MOVIE_DETAIL'>>()
   const { data, isLoading } = useQuery(['movie'], () => getMovieById(route.params.id), {
     enabled: !!route.params.id,
   })
@@ -86,8 +86,8 @@ const MovieDetail = () => {
   }
 
   const handleMoveToCinema = () => {
-    navigation.navigate('MovieStack', {
-      screen: 'MOVIE_CINEMA',
+    navigation.navigate('BookingStack', {
+      screen: 'BOOKING_LIST_CINEMA',
       params: {
         movie_id: data?.id as string,
         name_movie: data?.name as string,
@@ -100,7 +100,7 @@ const MovieDetail = () => {
       <Header title={data?.name.toLocaleUpperCase()} />
 
       <ScrollView>
-        {data && <InfoMovie movie={data} />}
+        {data && <InformationMovie movie={data} />}
 
         <View style={styles.list}>
           <Text style={styles.titleList}>Đạo diễn & diễn viên</Text>
@@ -140,7 +140,7 @@ const MovieDetail = () => {
   )
 }
 
-export { MovieDetail }
+export { MovieDetailScreen }
 
 const styles = StyleSheet.create({
   list: {

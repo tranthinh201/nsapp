@@ -1,5 +1,5 @@
 import { AuthStackParams } from '@/navigation/AuthStack'
-import { MovieStackParams } from '@/navigation/MovieStack'
+import { BookingStackParams } from '@/navigation/BookingStack'
 import { RouteProp } from '@react-navigation/native'
 
 export type RouteAuthStackType<KEY_SCREEN extends keyof AuthStackParams> = RouteProp<
@@ -7,7 +7,7 @@ export type RouteAuthStackType<KEY_SCREEN extends keyof AuthStackParams> = Route
   KEY_SCREEN
 >
 
-export type RouteMovieStackType<KEY_SCREEN extends keyof MovieStackParams> = RouteProp<
-  MovieStackParams,
+export type RouteBookingStackType<KEY_SCREEN extends keyof BookingStackParams> = RouteProp<
+  BookingStackParams,
   KEY_SCREEN
 >

@@ -22,7 +22,7 @@ const MovieItem = ({ image, name, category, rating, totalRating, id }: MovieItem
   const navigation = useNavigation<NavigationProp>()
 
   const handleMoveToDetail = () => {
-    navigation.navigate('MovieStack', { screen: 'MOVIE_DETAIL', params: { id } })
+    navigation.navigate('BookingStack', { screen: 'BOOKING_MOVIE_DETAIL', params: { id } })
   }
 
   return (

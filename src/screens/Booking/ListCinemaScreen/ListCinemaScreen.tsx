@@ -1,17 +1,18 @@
 import { getCinemaByMovieId } from '@/libs/api/movie'
 import { Header } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
-import { RouteMovieStackType } from '@/libs/route'
+import { RouteBookingStackType } from '@/libs/route'
 import { useRoute } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { useState } from 'react'
-import { ScrollView, StyleSheet, View } from 'react-native'
-import { ActivityIndicator, Text } from 'react-native-paper'
-import { ChooseCalender, ListCinema } from './components'
+import { ScrollView, View } from 'react-native'
+import { ActivityIndicator } from 'react-native-paper'
+import { ChooseCalender } from './ChooseCalender'
+import { ListCinema } from './ListCinema'
 
-const CinemaMovieScreen = () => {
-  const route = useRoute<RouteMovieStackType<'MOVIE_CINEMA'>>()
+const ListCinemaScreen = () => {
+  const route = useRoute<RouteBookingStackType<'BOOKING_LIST_CINEMA'>>()
   const { colors } = useAppTheme()
   const [currentDay, setCurrentDay] = useState(0)
   const [startTime, setStartTime] = useState(format(new Date(), 'yyyy-MM-dd'))
@@ -39,27 +40,16 @@ const CinemaMovieScreen = () => {
           handleChooseCalender={handleChooseCalender}
           date={10}
         />
-
-        {isFetching && <ActivityIndicator />}
-
-        {data?.cinema ? (
-          <View style={styles.root}>
-            <ListCinema data={data} />
+        {isFetching ? (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator />
           </View>
         ) : (
-          <View>
-            <Text>NO DATA</Text>
-          </View>
+          <>{data?.cinema && <ListCinema data={data} />}</>
         )}
       </ScrollView>
     </>
   )
 }
 
-export { CinemaMovieScreen }
-
-const styles = StyleSheet.create({
-  root: {
-    padding: 10,
-  },
-})
+export { ListCinemaScreen }

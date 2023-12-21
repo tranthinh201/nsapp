@@ -1,5 +1,5 @@
 import { useAppTheme } from '@/libs/config/theme'
-import { ListMediaType } from '@/screens/Movie/MovieDetail'
+import { ListMediaType } from '@/screens/Booking/MovieDetail'
 import React from 'react'
 import { Animated, Dimensions, StyleSheet, View } from 'react-native'
 

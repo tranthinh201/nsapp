@@ -14,7 +14,7 @@ import {
   View,
 } from 'react-native'
 import { Text } from 'react-native-paper'
-import { MovieType } from '../Movie'
+import { MovieType } from '../Booking'
 
 const { width, height } = Dimensions.get('window')
 const WIDTH = width * 0.7
@@ -70,7 +70,7 @@ const SliderHome = () => {
   const { data } = useQuery(['movies'], listMovie)
 
   const handleMoveToDetail = (id: string) => {
-    navigation.navigate('MovieStack', { screen: 'MOVIE_DETAIL', params: { id } })
+    navigation.navigate('BookingStack', { screen: 'BOOKING_MOVIE_DETAIL', params: { id } })
   }
 
   return (

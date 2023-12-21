@@ -1,4 +1,4 @@
-import { ListMediaType } from '@/screens/Movie/MovieDetail'
+import { ListMediaType } from '@/screens/Booking/MovieDetail'
 import { ResizeMode, Video } from 'expo-av'
 import React from 'react'
 import { Animated, Dimensions, StyleSheet, View } from 'react-native'
