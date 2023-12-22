@@ -23,7 +23,7 @@ const Cinema = ({ cinema, movie_format }: CinemaProps) => {
   const { colors } = useAppTheme()
 
   return (
-    <View>
+    <View style={{ padding: 10 }}>
       <TitleCinema cinema={cinema} expanded={expanded} handlePressExpand={handlePressExpand} />
 
       {expanded && (

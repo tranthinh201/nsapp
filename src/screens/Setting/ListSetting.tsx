@@ -1,22 +1,23 @@
-import { Header } from '@/libs/components'
+import Banner from '@/assets/img/banner.png'
+import AvatarDefault from '@/assets/img/user.png'
+import CommentSvg from '@/assets/svg/comment.svg'
+import EyeSvg from '@/assets/svg/eye-movie.svg'
+import StarSvg from '@/assets/svg/star-one.svg'
+import TicketSvg from '@/assets/svg/ticket.svg'
 import { useAppTheme } from '@/libs/config/theme'
-import { flexBoxStyles } from '@/libs/styles'
-import { AuthUser } from '@/libs/types/auth'
-import { SettingStackProps } from '@/navigation'
-import { SettingStackParams } from '@/navigation/BottomTabs/TabSetting/SettingStackParams'
+import { textStyles } from '@/libs/styles'
 import { RootStore } from '@/store'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { CommonActions } from '@react-navigation/native'
-import { FlashList, ListRenderItem } from '@shopify/flash-list'
+import { FlashList } from '@shopify/flash-list'
 import { isEqual } from 'lodash'
+import { View } from 'moti'
 import React from 'react'
-import { Alert, StyleSheet, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Dimensions, Image, StyleSheet } from 'react-native'
 import { Text } from 'react-native-paper'
-import { useDispatch, useSelector } from 'react-redux'
-import { ItemSettingType, listSetting } from './list-setting'
+import Animated from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useSelector } from 'react-redux'
 
-const ListSetting = ({ navigation }: SettingStackProps) => {
+const ListSetting = () => {
   const { colors } = useAppTheme()
   const { user } = useSelector(
     ({ auth }: RootStore) => ({
@@ -24,107 +25,99 @@ const ListSetting = ({ navigation }: SettingStackProps) => {
     }),
     isEqual,
   )
-  const { dispatch } = useDispatch()
 
-  const handleLogout = async () => {
-    dispatch.auth.setUser(null as unknown as AuthUser)
-    await AsyncStorage.removeItem('accessToken')
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: 'BottomTabs' }],
-      }),
-    )
-  }
-
-  const renderItem: ListRenderItem<ItemSettingType> = ({ item }) => {
-    const handlePress = () => {
-      if (item.screen_key) {
-        navigation.navigate(item.screen_key as keyof SettingStackParams)
-      }
-
-      if (item.key_name_modal) {
-        const title = 'Xác nhận'
-        const message = 'Bạn có chắc chắn muốn đăng xuất?'
-
-        const cancelButton = {
-          text: 'Không',
-          onPress: () => console.log('Cancel Pressed'),
-        }
-
-        const logoutButton = {
-          text: 'Đăng xuất',
-          onPress: handleLogout,
-        }
-
-        const buttons = [cancelButton, logoutButton]
-
-        Alert.alert(title, message, buttons)
-      }
-    }
-
-    return (
-      <TouchableOpacity onPress={handlePress}>
-        <View style={[styles.item, { borderBottomColor: colors.divider }]}>
-          <Text style={styles.text}>{item.name}</Text>
-        </View>
-      </TouchableOpacity>
-    )
-  }
+  const insets = useSafeAreaInsets()
+  const dimensions = Dimensions.get('window')
 
   return (
-    <View style={flexBoxStyles.root}>
-      <Header title="Cài đặt" hideHeaderLeft />
+    <Animated.ScrollView>
+      <View style={{ zIndex: -1 }}>
+        <Image
+          source={Banner}
+          style={{
+            width: dimensions.width,
+            height: 200,
+            resizeMode: 'cover',
+          }}
+        />
+      </View>
 
-      {user && listSetting && (
-        <FlashList data={listSetting} renderItem={renderItem} estimatedItemSize={100} />
-      )}
-    </View>
+      <View
+        style={{
+          borderTopEndRadius: 20,
+          borderTopStartRadius: 20,
+          width: dimensions.width,
+          backgroundColor: colors.background,
+          marginTop: -20,
+          minHeight: dimensions.height - 200 - insets.top,
+        }}
+      >
+        <View>
+          <View style={{ display: 'flex', alignItems: 'center', marginTop: -40 }}>
+            <Image
+              style={[styles.avatar]}
+              source={user?.avatar ? { uri: user.avatar } : AvatarDefault}
+            />
+
+            <Text style={[textStyles.text16, { fontWeight: '700' }]}>{user?.name}</Text>
+          </View>
+
+          <View style={{ height: 300, padding: 20 }}>
+            <FlashList
+              data={[
+                {
+                  title: 'Vé đã mua',
+                  icon: <TicketSvg width={25} height={25} />,
+                  route: 'Order',
+                },
+                {
+                  title: 'Phim đã xem',
+                  icon: <EyeSvg width={25} height={25} />,
+                  route: 'Order',
+                },
+                {
+                  title: 'Đánh giá',
+                  icon: <StarSvg width={25} height={25} />,
+                  route: 'Order',
+                },
+                {
+                  title: 'Bình luận',
+                  icon: <CommentSvg width={25} height={25} />,
+                  route: 'Order',
+                },
+              ]}
+              renderItem={({ item }) => {
+                return (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      width: dimensions.width / 4 - 20,
+                      marginRight: 10,
+                    }}
+                  >
+                    {item.icon}
+
+                    <Text style={textStyles.text12}>{item.title}</Text>
+                  </View>
+                )
+              }}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              estimatedItemSize={100}
+            />
+          </View>
+        </View>
+      </View>
+    </Animated.ScrollView>
   )
 }
 
 export { ListSetting }
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    justifyContent: 'center',
-    height: '100%',
-    backgroundColor: '#fff',
-  },
-  container: {
-    paddingHorizontal: 29,
-  },
-  scrollContainer: {
-    paddingBottom: 20,
-  },
-  touch: {
-    flexDirection: 'row',
-    borderRadius: 12,
-    borderWidth: 1,
-    padding: 16,
-    alignItems: 'center',
-    marginTop: 18,
-    borderColor: '#545454',
-  },
   avatar: {
-    width: 40,
-    height: 40,
+    width: 80,
+    height: 80,
     borderRadius: 100,
-  },
-  item: {
-    paddingLeft: 17,
-    paddingVertical: 20,
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-  },
-  text: {
-    fontSize: 12,
-  },
-  textModal: {
-    fontSize: 20,
-    lineHeight: 29,
-    includeFontPadding: false,
-    color: '#000',
   },
 })

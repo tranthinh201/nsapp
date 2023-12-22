@@ -4,12 +4,12 @@ import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Divider, Text } from 'react-native-paper'
 import { SeatTypeData } from '../constant'
-import { SeatType } from '../types'
+import { SeatType, SelectSeatType } from '../types'
 
 type SeatProps = {
   seatData?: SeatType[][]
-  seats: string[]
-  handleSelectSeat: (seat: string) => void
+  seats: SelectSeatType[]
+  handleSelectSeat: (seat: SelectSeatType) => void
 }
 
 const Seat = ({ seatData, seats, handleSelectSeat }: SeatProps) => {
@@ -29,12 +29,24 @@ const Seat = ({ seatData, seats, handleSelectSeat }: SeatProps) => {
                     style={[
                       styles.seat,
                       {
-                        backgroundColor: seats.includes(item.id) ? '#000' : '#FFF',
+                        backgroundColor: seats.find((seat) => seat.id === item.id)
+                          ? '#000'
+                          : '#FFF',
                       },
                     ]}
-                    onPress={() => handleSelectSeat(item.id)}
+                    onPress={() =>
+                      handleSelectSeat({
+                        id: item.id,
+                        name: item.name,
+                        price: item.price,
+                      })
+                    }
                   >
-                    <Text style={{ color: seats.includes(item.id) ? '#fff' : '#000' }}>
+                    <Text
+                      style={{
+                        color: seats.find((seat) => seat.id === item.id) ? '#fff' : '#000',
+                      }}
+                    >
                       {item.name}
                     </Text>
                   </TouchableOpacity>

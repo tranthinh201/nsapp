@@ -1,4 +1,5 @@
 import { ListCinemaScreen, MovieDetailScreen } from '@/screens/Booking'
+import { ConfirmScreen } from '@/screens/Booking/ConfirmScreen'
 import { SeatScreen } from '@/screens/Booking/SeatScreen'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
@@ -19,6 +20,11 @@ const BookingScreens = [
   {
     name: SCREENS_KEY.BOOKING_SEAT.INDEX,
     component: SeatScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: SCREENS_KEY.BOOKING_CONFIRM.INDEX,
+    component: ConfirmScreen,
     options: { headerShown: false },
   },
 ]

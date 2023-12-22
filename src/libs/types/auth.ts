@@ -3,6 +3,8 @@ export type AuthUser = {
   email: string
   name: string
   avatar: string
+  phone_number: string
+  last_name: string
 }
 
 export type AuthState = {
@@ -10,4 +12,6 @@ export type AuthState = {
   email: string
   name: string
   avatar: string
+  phone_number: string
+  last_name: string
 }

@@ -15,6 +15,11 @@ export const textStyles = StyleSheet.create({
     includeFontPadding: false,
     lineHeight: 20,
   },
+  text16: {
+    fontSize: 16,
+    includeFontPadding: false,
+    lineHeight: 20,
+  },
   text12: {
     fontSize: 12,
     includeFontPadding: false,

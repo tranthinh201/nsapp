@@ -17,6 +17,8 @@ export type UserType = {
   email: string
   email_verified?: Date
   avatar: string
+  phone_number: string
+  last_name: string
 }
 
 export type PayloadType = {

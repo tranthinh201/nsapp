@@ -1,13 +1,13 @@
 import { getCinemaByMovieId } from '@/libs/api/movie'
 import { Header } from '@/libs/components'
+import { SkeletonCinema } from '@/libs/components/Skeleton/Cinema'
 import { useAppTheme } from '@/libs/config/theme'
 import { RouteBookingStackType } from '@/libs/route'
 import { useRoute } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { useState } from 'react'
-import { ScrollView, View } from 'react-native'
-import { ActivityIndicator } from 'react-native-paper'
+import { ScrollView } from 'react-native'
 import { ChooseCalender } from './ChooseCalender'
 import { ListCinema } from './ListCinema'
 
@@ -40,13 +40,7 @@ const ListCinemaScreen = () => {
           handleChooseCalender={handleChooseCalender}
           date={10}
         />
-        {isFetching ? (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator />
-          </View>
-        ) : (
-          <>{data?.cinema && <ListCinema data={data} />}</>
-        )}
+        {isFetching ? <SkeletonCinema length={7} /> : data?.cinema && <ListCinema data={data} />}
       </ScrollView>
     </>
   )

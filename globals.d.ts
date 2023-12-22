@@ -52,3 +52,7 @@ declare module '*.bmp' {
 
   export default content
 }
+
+declare namespace global {
+  function __reanimatedWorkletInit(): void
+}

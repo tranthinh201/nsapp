@@ -45,7 +45,7 @@ const SignInScreen = () => {
 
   const { isLoading, mutate } = useMutation(signIn, {
     onSuccess: (response, { email }) => {
-      const { id, email_verified, first_name, avatar } = response.user
+      const { id, email_verified, first_name, avatar, phone_number, last_name } = response.user
 
       if (response) {
         if (email_verified) {
@@ -56,6 +56,8 @@ const SignInScreen = () => {
             email,
             name: first_name,
             avatar,
+            phone_number,
+            last_name,
           })
 
           dispatch.auth.setUser({
