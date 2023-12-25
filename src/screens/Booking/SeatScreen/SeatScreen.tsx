@@ -7,7 +7,8 @@ import { NavigationProp } from '@/navigation'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
 import React, { useState } from 'react'
-import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, Alert, Platform, StyleSheet, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Snackbar, Text } from 'react-native-paper'
 import { SelectSeatType } from '../types'
 import { InformationMovie } from './InformationMovie'
@@ -77,6 +78,8 @@ const SeatScreen = () => {
     })
   }
 
+  const totalPrice = seats.reduce((total, seat) => total + seat.price, 0).toLocaleString('vi-VN')
+
   return (
     <>
       {!data || isLoading ? (
@@ -84,18 +87,24 @@ const SeatScreen = () => {
           <ActivityIndicator />
         </View>
       ) : (
-        <>
+        <ScrollView>
           <View>
             <Header title={data?.cinema.name} />
 
             <View style={styles.list}>
               <Screen />
 
-              <Seat seatData={data?.seats} seats={seats} handleSelectSeat={handleSelectSeat} />
+              <Seat data={data} seats={seats} handleSelectSeat={handleSelectSeat} />
             </View>
 
             <View style={styles.button}>
               <InformationMovie schedule={data?.schedule} />
+
+              <View style={styles.price}>
+                <Text>Tạm tính:</Text>
+
+                <Text style={{ fontWeight: '700' }}>{totalPrice} đ</Text>
+              </View>
 
               <Button mode="contained" style={{ borderRadius: 10 }} onPress={handleMoveToConfirm}>
                 TIẾP TỤC
@@ -119,7 +128,7 @@ const SeatScreen = () => {
           </View>
 
           <Modal openModal={openModal} hideModal={hideModal} handleConfirm={handleConfirm} />
-        </>
+        </ScrollView>
       )}
     </>
   )
@@ -129,26 +138,24 @@ const styles = StyleSheet.create({
   list: {
     padding: 10,
     backgroundColor: '#FFF',
-    marginBottom: 10,
   },
   button: {
-    bottom: 0,
     zIndex: 100,
     backgroundColor: '#fff',
-    left: 0,
-    right: 0,
     paddingHorizontal: 10,
     paddingTop: 10,
-    paddingBottom: 22,
+    paddingBottom: Platform.OS === 'ios' ? 22 : 10,
+    marginTop: 10,
+    gap: 10,
   },
-  snackBar: { marginBottom: 100 },
+  snackBar: { marginBottom: 120 },
   snackBarView: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     columnGap: 10,
-    backgroundColor: 'rgba(1 1 1 / 0.4)',
   },
+  price: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between' },
 })
 
 export { SeatScreen }

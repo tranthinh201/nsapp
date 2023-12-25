@@ -27,6 +27,7 @@ const Movie = z.object({
   is_deleted: z.boolean(),
   movie_type_id: z.string(),
   movie_format_id: z.string(),
+  ticket_price: z.number(),
   movie_image: z.array(
     z.object({
       id: z.string(),
@@ -80,6 +81,7 @@ export const MovieSchema = z.object({
   movie_format_id: z.string(),
   movie_image: MovieImageSchema.array(),
   persons: PersonSchema.array(),
+  ticket_price: z.number(),
   created_at: z.date(),
   updated_at: z.date(),
 })
@@ -138,7 +140,7 @@ const Seat = z.object({
   row: z.number(),
   column: z.string(),
   is_active: z.boolean(),
-  price: z.string(),
+  price: z.number(),
   name: z.string(),
   screen_id: z.string(),
   seat_type: z.string(),
@@ -162,7 +164,7 @@ const BookingSchema = z.object({
 
 export type SelectSeatType = {
   id: string
-  price: string
+  price: number
   name: string
 }
 

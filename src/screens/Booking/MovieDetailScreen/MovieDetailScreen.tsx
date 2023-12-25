@@ -7,7 +7,7 @@ import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useQuery } from '@tanstack/react-query'
 import { ResizeMode, Video } from 'expo-av'
 import React from 'react'
-import { Animated, Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Animated, Image, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Text } from 'react-native-paper'
 import { PersonType } from '../types'
@@ -160,6 +160,6 @@ const styles = StyleSheet.create({
     right: 0,
     paddingHorizontal: 10,
     paddingTop: 10,
-    paddingBottom: 22,
+    paddingBottom: Platform.OS === 'ios' ? 22 : 10,
   },
 })

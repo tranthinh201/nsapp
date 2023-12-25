@@ -42,7 +42,7 @@ export { InformationMovie }
 
 const styles = StyleSheet.create({
   root: {
-    height: 60,
+    height: 40,
   },
   container: { display: 'flex', flexDirection: 'row', alignItems: 'center', columnGap: 5 },
   time: {

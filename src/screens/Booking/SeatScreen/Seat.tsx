@@ -1,22 +1,29 @@
 import { textStyles } from '@/libs/styles'
 import { FlashList } from '@shopify/flash-list'
-import { StyleSheet, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Divider, Text } from 'react-native-paper'
 import { SeatTypeData } from '../constant'
-import { SeatType, SelectSeatType } from '../types'
+import { BookingType, SeatType, SelectSeatType } from '../types'
 
 type SeatProps = {
-  seatData?: SeatType[][]
+  data: BookingType
   seats: SelectSeatType[]
   handleSelectSeat: (seat: SelectSeatType) => void
 }
 
-const Seat = ({ seatData, seats, handleSelectSeat }: SeatProps) => {
+const Seat = ({ data, seats, handleSelectSeat }: SeatProps) => {
+  const filterSeatTypeStyle = (seat: SeatType, styleType: 'bg' | 'text') => {
+    if (seats.find((item) => item.id === seat.id)) {
+      return styleType === 'bg' ? { backgroundColor: '#ED4C67' } : { color: '#fff' }
+    }
+
+    return SeatTypeData.find((item) => item.type === seat.seat_type)?.style
+  }
+
   return (
     <View>
       <View style={{ marginBottom: 30 }}>
-        {seatData?.map((item, index) => {
+        {data?.seats.map((item, index) => {
           return (
             <View
               key={index}
@@ -29,22 +36,24 @@ const Seat = ({ seatData, seats, handleSelectSeat }: SeatProps) => {
                     style={[
                       styles.seat,
                       {
-                        backgroundColor: seats.find((seat) => seat.id === item.id)
-                          ? '#000'
-                          : '#FFF',
+                        ...filterSeatTypeStyle(item, 'bg'),
                       },
                     ]}
                     onPress={() =>
                       handleSelectSeat({
                         id: item.id,
                         name: item.name,
-                        price: item.price,
+                        price:
+                          item.seat_type === 'NORMAL'
+                            ? data.schedule.movie.ticket_price
+                            : 10000 + data.schedule.movie.ticket_price,
                       })
                     }
                   >
                     <Text
                       style={{
-                        color: seats.find((seat) => seat.id === item.id) ? '#fff' : '#000',
+                        ...filterSeatTypeStyle(item, 'text'),
+                        fontSize: 12,
                       }}
                     >
                       {item.name}
@@ -88,11 +97,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderStyle: 'dotted',
     margin: 3,
+    borderRadius: 6,
   },
-  seatTypeContainer: { height: 100, width: '100%', padding: 10 },
+  seatTypeContainer: { height: 80, width: '100%', padding: 10 },
   seatType: {
     display: 'flex',
     flexDirection: 'row',

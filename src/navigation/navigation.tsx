@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import { AuthStack } from './AuthStack'
 import { BookingStack } from './BookingStack'
 import { BottomTabs } from './BottomTabs'
+import { ProfileStack } from './ProfileStack'
 import { RootStackParamList } from './RootStackParams'
 
 const RootStack = createStackNavigator<RootStackParamList>()
@@ -67,6 +68,7 @@ const Navigation = () => {
     <RootStack.Navigator screenOptions={{ headerShown: false, presentation: 'card' }}>
       <RootStack.Screen name="BottomTabs" component={BottomTabs} />
       <RootStack.Screen name="BookingStack" component={BookingStack} />
+      <RootStack.Screen name="ProfileStack" component={ProfileStack} />
     </RootStack.Navigator>
   )
 }

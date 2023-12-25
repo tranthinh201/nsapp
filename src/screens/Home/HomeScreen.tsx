@@ -1,6 +1,7 @@
 import { getAccessToken } from '@/libs/asyncStorage'
 import { useAppTheme } from '@/libs/config/theme'
 import { NavigationProp } from '@/navigation'
+import { Dispatch } from '@/store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import * as React from 'react'
@@ -10,7 +11,7 @@ import { SliderHome } from './Slider'
 
 const HomeScreen = () => {
   const navigation = useNavigation<NavigationProp>()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<Dispatch>()
   const { colors } = useAppTheme()
   const handleGetToken = async () => {
     const token = await getAccessToken()
@@ -21,7 +22,7 @@ const HomeScreen = () => {
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('persist:root:auth')
-    dispatch.auth.setUser(null)
+    dispatch.auth.setUser(null as never)
   }
 
   const handleLogIn = async () => {

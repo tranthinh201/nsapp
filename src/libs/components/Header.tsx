@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     paddingVertical: Platform.OS === 'ios' ? 10 : 0,
     paddingLeft: 10,
     paddingRight: 30,
-    paddingBottom: Platform.OS === 'ios' ? 30 : 0,
+    paddingBottom: Platform.OS === 'ios' ? 12 : 0,
     alignItems: 'center',
     position: 'absolute',
     left: 0,

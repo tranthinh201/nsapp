@@ -1,2 +1,2 @@
-export * from './ListSetting'
+export * from './SettingScreen'
 export * from './Views'

@@ -3,13 +3,6 @@ import { createModel } from '@rematch/core'
 import { Dispatch } from '..'
 import { RootModel } from './root'
 
-export type ChangePasswordParam = {
-  authentication_type: string
-  authentication_id: string
-  password_now: string
-  password: string
-  password_check: string
-}
 interface AuthProps {
   user: AuthUser | null
   isFirstTime: boolean

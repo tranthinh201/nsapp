@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, Dimensions, Pressable, StyleSheet, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Button, TextInput as TextInputPaper } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
@@ -26,6 +26,7 @@ const SignInScreen = () => {
   const [isHidePassword, setIsHidePassword] = useState<boolean>(true)
   const { colors } = useAppTheme()
   const navigation = useNavigation<NavigationProp>()
+  const width = Dimensions.get('screen').width
   const handleHidePassword = () => {
     setIsHidePassword((prevState) => !prevState)
   }
@@ -61,11 +62,15 @@ const SignInScreen = () => {
           })
 
           dispatch.auth.setUser({
+            id,
             email,
-            id: id,
             name: first_name,
             avatar,
+            phone_number,
+            last_name,
           })
+
+          navigation.navigate('BottomTabs', { screen: 'TAB_HOME' })
         } else {
           navigation.navigate('AuthStack', {
             screen: 'VERIFICATION_ACCOUNT',
@@ -78,7 +83,7 @@ const SignInScreen = () => {
     },
     onSettled(data) {
       if (!data) {
-        Alert.alert('Error', 'Email or password is incorrect')
+        Alert.alert('Lỗi đăng nhập', 'Email hoặc mật khẩu không đúng')
       }
     },
   })
@@ -94,7 +99,7 @@ const SignInScreen = () => {
       <KeyboardAwareScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           <View style={styles.title}>
-            <Text style={textStyles.title}>Welcome back! NsTeam to see you, Again!</Text>
+            <Text style={textStyles.title}>Chào mừng bạn đã quay trở lại</Text>
           </View>
 
           <View style={styles.containerInput}>
@@ -111,7 +116,7 @@ const SignInScreen = () => {
                     onChangeText={onChange}
                     error={!!errors?.email?.message}
                     helperText={errors?.email?.message}
-                    placeholder="Enter your email"
+                    placeholder="Nhập email của bạn"
                   />
                 )}
                 name="email"
@@ -125,14 +130,14 @@ const SignInScreen = () => {
                   <Input
                     outlineColor={theme.colors.borderInput}
                     styleInput={textStyles.text14}
-                    label="Password"
+                    label="Mật khẩu"
                     theme={theme}
                     value={value}
                     onChangeText={onChange}
                     secureTextEntry={isHidePassword}
                     error={!!errors?.password?.message}
                     helperText={errors?.password?.message}
-                    placeholder="Enter your password"
+                    placeholder="Nhập mật khẩu của bạn"
                     right={
                       <TextInputPaper.Icon
                         forceTextInputFocus={false}
@@ -152,24 +157,23 @@ const SignInScreen = () => {
           </View>
 
           <View style={styles.textForgotPassword}>
-            <Text
-              style={{ ...textStyles.text14, color: colors.textForgot }}
+            <Pressable
               onPress={() => navigation.navigate('AuthStack', { screen: 'FORGOT_PASSWORD' })}
             >
-              Forgot password?
-            </Text>
+              <Text style={{ ...textStyles.text14, color: colors.textForgot }}>Quên mật khẩu?</Text>
+            </Pressable>
           </View>
 
           <View style={styles.socialList}>
-            <View style={styles.socialItem}>
+            <View style={[styles.socialItem, { width: width / 3 - 25 }]}>
               <FaceBookIcon />
             </View>
 
-            <View style={styles.socialItem}>
+            <View style={[styles.socialItem, { width: width / 3 - 25 }]}>
               <GoogleIcon />
             </View>
 
-            <View style={styles.socialItem}>
+            <View style={[styles.socialItem, { width: width / 3 - 25 }]}>
               <AppleIcon />
             </View>
           </View>
@@ -180,7 +184,7 @@ const SignInScreen = () => {
             style={btnStyles.button}
             onPress={handleSubmit(onSubmit)}
           >
-            <Text style={{ fontSize: 14 }}>Login</Text>
+            <Text style={{ fontSize: 14 }}>Đăng nhập</Text>
           </Button>
         </View>
       </KeyboardAwareScrollView>
@@ -220,13 +224,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   socialList: {
-    flex: 1,
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
   },
   socialItem: {
-    width: 105,
     height: 56,
     borderRadius: 10,
     borderWidth: 1,

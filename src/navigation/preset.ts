@@ -49,15 +49,12 @@ export const SEARCH = {
   },
 }
 
-export const INFORMATION_STACK = {
+export const PROFILE_STACK = {
   INFORMATION: {
     INDEX: 'INFORMATION' as const,
   },
   CHANGE_PASSWORD: {
     INDEX: 'CHANGE_PASSWORD' as const,
-  },
-  ABOUT_APP: {
-    INDEX: 'ABOUT_APP' as const,
   },
 }
 
@@ -81,7 +78,7 @@ export const SCREENS_KEY = {
   ...SEARCH,
   ...TUTORIAL,
   ...AUTH_SCREEN,
-  ...INFORMATION_STACK,
+  ...PROFILE_STACK,
   ...BOOKING_SCREEN,
 }
 

@@ -1,7 +1,6 @@
 import { getCinemaByMovieId } from '@/libs/api/movie'
 import { Header } from '@/libs/components'
 import { SkeletonCinema } from '@/libs/components/Skeleton/Cinema'
-import { useAppTheme } from '@/libs/config/theme'
 import { RouteBookingStackType } from '@/libs/route'
 import { useRoute } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
@@ -13,7 +12,6 @@ import { ListCinema } from './ListCinema'
 
 const ListCinemaScreen = () => {
   const route = useRoute<RouteBookingStackType<'BOOKING_LIST_CINEMA'>>()
-  const { colors } = useAppTheme()
   const [currentDay, setCurrentDay] = useState(0)
   const [startTime, setStartTime] = useState(format(new Date(), 'yyyy-MM-dd'))
 
@@ -22,6 +20,7 @@ const ListCinemaScreen = () => {
     () => getCinemaByMovieId(route.params.movie_id, startTime),
     {
       enabled: !!route.params.movie_id,
+      keepPreviousData: true,
     },
   )
 

@@ -8,7 +8,7 @@ import { ImagePickerAsset } from 'expo-image-picker'
 import { isEqual } from 'lodash'
 import React, { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Button } from 'react-native-paper'
 import { useSelector } from 'react-redux'
@@ -24,7 +24,7 @@ const InformationScreen = () => {
   )
   const [imagePath, setImagePath] = useState<ImagePickerAsset>()
 
-  const { data, isLoading } = useQuery(['user', user?.id], () => getMe(user?.id as string), {
+  const { data, isFetching } = useQuery(['user', user?.id], () => getMe(user?.id as string), {
     enabled: !!user?.id,
   })
 
@@ -38,10 +38,10 @@ const InformationScreen = () => {
     formState: { errors },
   } = useForm<InformationType>({
     values: {
-      first_name: data?.first_name as string,
-      last_name: data?.last_name as string,
-      phone_number: data?.phone_number as string,
-      address: data?.address,
+      first_name: user?.name as string,
+      last_name: user?.last_name as string,
+      phone_number: user?.phone_number as string,
+      address: user?.phone_number,
     },
     defaultValues: {
       first_name: data?.first_name,
@@ -63,13 +63,6 @@ const InformationScreen = () => {
   const onSubmit: SubmitHandler<InformationType> = (data) => {
     mutate({ id: user?.id as string, data })
   }
-
-  if (isLoading)
-    return (
-      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
-        <ActivityIndicator size="large" />
-      </View>
-    )
 
   return (
     <View style={styles.root}>

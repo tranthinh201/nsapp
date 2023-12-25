@@ -60,7 +60,7 @@ const InformationMovie = ({ movie }: { movie: MovieType }) => {
         />
 
         <View style={styles.infoCenter}>
-          <InfoDisplay title="Thời lượng" value={movie.duration} />
+          <InfoDisplay title="Thời lượng" value={`${movie.duration} phút`} />
         </View>
 
         <InfoDisplay title="Ngôn ngữ" value={movie.language_movie} />

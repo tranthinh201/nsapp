@@ -2,8 +2,7 @@ import { useAppTheme } from '@/libs/config/theme'
 import { FlashList } from '@shopify/flash-list'
 import { format } from 'date-fns'
 import { isEqual } from 'lodash'
-import { Animated, Dimensions, StyleSheet, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Animated, Dimensions, Pressable, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 
 const generateDates = (days: number) => {
@@ -43,7 +42,7 @@ const ChooseCalender = ({ currentDay, date, handleChooseCalender }: ChooseCalend
       <FlashList
         data={dates}
         renderItem={({ item, index }) => (
-          <TouchableOpacity
+          <Pressable
             style={{
               ...styles.touch,
               borderColor:
@@ -82,7 +81,7 @@ const ChooseCalender = ({ currentDay, date, handleChooseCalender }: ChooseCalend
                 {item.getDate().toLocaleString()}
               </Text>
             </View>
-          </TouchableOpacity>
+          </Pressable>
         )}
         estimatedItemSize={200}
         horizontal

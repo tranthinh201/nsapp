@@ -1,14 +1,14 @@
 const SeatTypeData = [
   {
-    name: 'GHE THUONG',
+    name: 'Ghế thường',
     type: 'NORMAL',
     style: {
-      backgroundColor: 'blue',
+      backgroundColor: '#9980FA',
       color: '#fff',
     },
   },
   {
-    name: 'GHE VIP',
+    name: 'Ghế Vip',
     type: 'VIP',
     style: {
       backgroundColor: 'red',
@@ -16,7 +16,7 @@ const SeatTypeData = [
     },
   },
   {
-    name: 'GET DA DAT',
+    name: 'Đã đặt',
     type: 'BOOKED',
     style: {
       backgroundColor: 'gray',
@@ -24,18 +24,10 @@ const SeatTypeData = [
     },
   },
   {
-    name: 'GHE DA CHON',
+    name: 'Ghế bạn chọn',
     type: 'SELECTED',
     style: {
-      backgroundColor: 'yellow',
-      color: '#fff',
-    },
-  },
-  {
-    name: 'GHE SWEET BOX',
-    type: 'SWEET_BOX',
-    style: {
-      backgroundColor: 'pink',
+      backgroundColor: '#ED4C67',
       color: '#fff',
     },
   },

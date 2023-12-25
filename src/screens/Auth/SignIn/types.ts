@@ -4,9 +4,9 @@ export const SignInSchema = z.object({
   email: z
     .string()
     .trim()
-    .min(1, { message: 'Email is field required!' })
-    .email({ message: 'Email is not valid!' }),
-  password: z.string().trim().min(1, { message: 'Password is field required!' }),
+    .min(1, { message: 'Email là trường bắt buộc.' })
+    .email({ message: 'Email không đúng định dạng.' }),
+  password: z.string().trim().min(1, { message: 'Password là trường bắt buộc.' }),
 })
 
 export type SignInType = z.infer<typeof SignInSchema>

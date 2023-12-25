@@ -1,6 +1,7 @@
 import { AuthStackParams } from './AuthStack/AuthStackParams'
 import { BookingStackParams } from './BookingStack'
 import { MainBottomTabParamList } from './BottomTabs/MainBottomTabParams'
+import { ProfileStackParams } from './ProfileStack/ProfileStackParams'
 
 type NestedNavigatorParams<ParamList> = {
   [K in keyof ParamList]: undefined extends ParamList[K]
@@ -12,4 +13,5 @@ export type RootStackParamList = {
   AuthStack: NestedNavigatorParams<AuthStackParams>
   BottomTabs: NestedNavigatorParams<MainBottomTabParamList>
   BookingStack: NestedNavigatorParams<BookingStackParams>
+  ProfileStack: NestedNavigatorParams<ProfileStackParams>
 }

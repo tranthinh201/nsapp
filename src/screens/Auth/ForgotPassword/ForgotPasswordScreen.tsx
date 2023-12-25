@@ -38,13 +38,13 @@ const ForgotPasswordScreen = () => {
 
         console.log(response)
         if (response.code === 200) {
-          Alert.alert('Success', 'Please check your email to get password')
+          Alert.alert('Success', 'Làm ơn kiểm tra email của bạn')
           navigate('AuthStack', {
             screen: 'VERIFICATION',
             params: { email },
           })
         } else if (response.code === 404) {
-          Alert.alert('Email not found')
+          Alert.alert('Email không tồn tại!')
         }
       },
     })
@@ -57,7 +57,7 @@ const ForgotPasswordScreen = () => {
       <KeyboardAwareScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           <View style={styles.title}>
-            <Text style={textStyles.title}>Password will be sent to your register email</Text>
+            <Text style={textStyles.title}>Mã thay đổi mật khẩu sẽ được gửi đến email của bạn</Text>
           </View>
 
           <View style={styles.containerInput}>
@@ -90,7 +90,7 @@ const ForgotPasswordScreen = () => {
               style={btnStyles.button}
               onPress={handleSubmit(onSubmit)}
             >
-              <Text style={{ fontSize: 14, color: theme.colors.text }}>Next</Text>
+              <Text style={{ fontSize: 14, color: theme.colors.text }}>Tiếp theo</Text>
             </Button>
           </View>
         </View>

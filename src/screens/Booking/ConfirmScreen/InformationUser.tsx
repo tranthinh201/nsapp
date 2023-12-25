@@ -34,7 +34,7 @@ const InformationUser = () => {
           <Text style={{ fontWeight: '700' }}>{fullName}</Text>
 
           <Text style={[{ color: colors.textGrey }, textStyles.text12]}>
-            {user?.phone_number}-{user?.email}
+            {user?.phone_number ? user?.phone_number : '0987654321'} - {user?.email}
           </Text>
         </View>
       </View>

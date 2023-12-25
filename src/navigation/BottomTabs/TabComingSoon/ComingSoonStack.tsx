@@ -1,5 +1,5 @@
 import { SCREENS_KEY } from '@/navigation/preset'
-import { HomeScreen } from '@/screens/Home'
+import { ComingScreen } from '@/screens/Coming'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { ComingSoonStackParams } from './ComingSoonStackParams'
@@ -7,7 +7,7 @@ import { ComingSoonStackParams } from './ComingSoonStackParams'
 const ComingSoonScreens = [
   {
     name: SCREENS_KEY.COMING_SOON.INDEX,
-    component: HomeScreen,
+    component: ComingScreen,
     options: { headerShown: false },
   },
 ]

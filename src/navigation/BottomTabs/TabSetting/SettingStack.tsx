@@ -1,5 +1,5 @@
 import { SCREENS_KEY } from '@/navigation/preset'
-import { ChangePasswordScreen, InformationScreen, ListSetting } from '@/screens/Setting'
+import { SettingScreen } from '@/screens/Setting'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { SettingStackParams } from './SettingStackParams'
@@ -7,17 +7,7 @@ import { SettingStackParams } from './SettingStackParams'
 const SettingScreens = [
   {
     name: SCREENS_KEY.SETTING.INDEX,
-    component: ListSetting,
-    options: { headerShown: false },
-  },
-  {
-    name: SCREENS_KEY.SETTING.CHANGE_PASSWORD,
-    component: ChangePasswordScreen,
-    options: { headerShown: false },
-  },
-  {
-    name: SCREENS_KEY.SETTING.INFORMATION,
-    component: InformationScreen,
+    component: SettingScreen,
     options: { headerShown: false },
   },
 ]
