@@ -41,48 +41,55 @@ const ChooseCalender = ({ currentDay, date, handleChooseCalender }: ChooseCalend
     <View style={styles.root}>
       <FlashList
         data={dates}
-        renderItem={({ item, index }) => (
-          <Pressable
-            style={{
-              ...styles.touch,
-              borderColor:
-                currentDay === index ? colors.primary : days[item.getDay()].backgroundColor,
-            }}
-            onPress={() => handleChooseCalender(index, format(item, 'yyyy-MM-dd'))}
-          >
-            <View
-              style={{
-                height: '40%',
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <Animated.Text
-                style={{ fontSize: 10, color: currentDay === index ? colors.primary : 'black' }}
-              >
-                {isEqual(new Date().getDate(), item.getDate()) ? 'H.nay' : days[item.getDay()].text}
-              </Animated.Text>
-            </View>
+        renderItem={({ item, index }) => {
+          const isEndItem = index === dates.length - 1
 
-            <View
+          return (
+            <Pressable
               style={{
-                ...styles.calender,
-                backgroundColor:
+                ...styles.touch,
+                borderColor:
                   currentDay === index ? colors.primary : days[item.getDay()].backgroundColor,
+                marginRight: isEndItem ? 10 : 0,
               }}
+              onPress={() => handleChooseCalender(index, format(item, 'yyyy-MM-dd'))}
             >
-              <Text
+              <View
                 style={{
-                  fontSize: 18,
-                  fontWeight: '700',
-                  color: currentDay === index ? 'white' : days[item.getDay()].color,
+                  height: '40%',
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
-                {item.getDate().toLocaleString()}
-              </Text>
-            </View>
-          </Pressable>
-        )}
+                <Animated.Text
+                  style={{ fontSize: 10, color: currentDay === index ? colors.primary : 'black' }}
+                >
+                  {isEqual(new Date().getDate(), item.getDate())
+                    ? 'H.nay'
+                    : days[item.getDay()].text}
+                </Animated.Text>
+              </View>
+
+              <View
+                style={{
+                  ...styles.calender,
+                  backgroundColor:
+                    currentDay === index ? colors.primary : days[item.getDay()].backgroundColor,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: '700',
+                    color: currentDay === index ? 'white' : days[item.getDay()].color,
+                  }}
+                >
+                  {item.getDate().toLocaleString()}
+                </Text>
+              </View>
+            </Pressable>
+          )
+        }}
         estimatedItemSize={200}
         horizontal
         pagingEnabled
@@ -101,7 +108,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width,
     backgroundColor: '#fff',
     paddingVertical: 20,
-    paddingLeft: 10,
   },
   touch: {
     width: 45,
@@ -110,7 +116,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 10,
+    marginLeft: 10,
     backgroundColor: '#fff',
     borderRadius: 8,
   },

@@ -16,7 +16,7 @@ const ComingScreen = () => {
 
   const renderItem = ({ item }: { item: MovieType }) => {
     return (
-      <View style={{ gap: 4, paddingBottom: 20, marginTop: 10, marginRight: 10 }}>
+      <View style={{ gap: 4, paddingBottom: 20, marginTop: 10, marginLeft: 10 }}>
         <Image source={{ uri: item.movie_image.map((img) => img.path)[0] }} style={styles.image} />
 
         <Text style={{ fontSize: 11, fontWeight: '700' }}>
@@ -41,7 +41,7 @@ const ComingScreen = () => {
           <>
             {data?.map((item) => (
               <View style={styles.main} key={item.id}>
-                <Text style={{ fontWeight: '700' }}>Tháng 12/2023</Text>
+                <Text style={styles.title}>Tháng 12/2023</Text>
 
                 <FlashList
                   data={data}
@@ -75,9 +75,9 @@ const styles = StyleSheet.create({
   main: {
     height: 300,
     backgroundColor: '#fff',
-    paddingHorizontal: 20,
     paddingVertical: 10,
     marginBottom: 10,
   },
   image: { width: 140, height: 180, borderRadius: 10 },
+  title: { fontWeight: '700', marginLeft: 10 },
 })

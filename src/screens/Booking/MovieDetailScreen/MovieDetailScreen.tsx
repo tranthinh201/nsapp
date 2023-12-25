@@ -43,10 +43,18 @@ const MovieDetailScreen = () => {
     listMedia = [...listMedia, ...imageMedia] as ListMediaType[]
   }
 
-  const renderItem: ListRenderItem<PersonType> = ({ item }) => {
+  const renderItem: ListRenderItem<PersonType> = ({ item, index }) => {
+    const isLastItem = index === data?.persons?.length || 0 - 1
+
     return (
       <TouchableOpacity
-        style={{ display: 'flex', justifyContent: 'center', marginRight: 10, width: 100 }}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginLeft: 10,
+          width: 100,
+          marginRight: isLastItem ? 10 : 0,
+        }}
       >
         <Image source={{ uri: item.avatar }} style={{ height: 120, borderRadius: 10 }} />
 
@@ -57,9 +65,18 @@ const MovieDetailScreen = () => {
 
   const video = React.useRef(null)
 
-  const renderList: ListRenderItem<ListMediaType> = ({ item }) => {
+  const renderList: ListRenderItem<ListMediaType> = ({ item, index }) => {
+    const isEndItem = index === listMedia.length - 1
+
     return (
-      <TouchableOpacity style={{ display: 'flex', justifyContent: 'center', marginRight: 10 }}>
+      <TouchableOpacity
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginLeft: 10,
+          marginRight: isEndItem ? 10 : 0,
+        }}
+      >
         {item.type === 'video' && (
           <Video
             ref={video}
@@ -144,13 +161,14 @@ export { MovieDetailScreen }
 
 const styles = StyleSheet.create({
   list: {
-    padding: 10,
+    paddingVertical: 10,
     marginTop: 10,
     backgroundColor: '#FFF',
   },
   titleList: {
     fontWeight: '700',
     marginBottom: 10,
+    marginLeft: 10,
   },
   button: {
     bottom: 0,
