@@ -44,16 +44,19 @@ const MovieDetailScreen = () => {
   }
 
   const renderItem: ListRenderItem<PersonType> = ({ item, index }) => {
-    const isLastItem = index === data?.persons?.length || 0 - 1
+    let isLastItem
+    if (data?.persons.length) {
+      isLastItem = index === data?.persons.length - 1
+    }
 
     return (
       <TouchableOpacity
         style={{
           display: 'flex',
           justifyContent: 'center',
-          marginLeft: 10,
           width: 100,
           marginRight: isLastItem ? 10 : 0,
+          marginLeft: 10,
         }}
       >
         <Image source={{ uri: item.avatar }} style={{ height: 120, borderRadius: 10 }} />
@@ -66,7 +69,7 @@ const MovieDetailScreen = () => {
   const video = React.useRef(null)
 
   const renderList: ListRenderItem<ListMediaType> = ({ item, index }) => {
-    const isEndItem = index === listMedia.length - 1
+    const isLastItem = index === listMedia.length - 1
 
     return (
       <TouchableOpacity
@@ -74,7 +77,7 @@ const MovieDetailScreen = () => {
           display: 'flex',
           justifyContent: 'center',
           marginLeft: 10,
-          marginRight: isEndItem ? 10 : 0,
+          marginRight: isLastItem ? 10 : 0,
         }}
       >
         {item.type === 'video' && (
