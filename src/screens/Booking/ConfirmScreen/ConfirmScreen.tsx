@@ -1,7 +1,8 @@
 import { getSeatMovie } from '@/libs/api/movie'
 import { Header } from '@/libs/components'
 import { RouteBookingStackType } from '@/libs/route'
-import { useRoute } from '@react-navigation/native'
+import { NavigationProp } from '@/navigation'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
 import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -12,6 +13,7 @@ import { ListFood } from './ListFood'
 
 const ConfirmScreen = () => {
   const route = useRoute<RouteBookingStackType<'BOOKING_CONFIRM'>>()
+  const navigation = useNavigation<NavigationProp>()
 
   const { data, isLoading } = useQuery(
     ['schedule', route.params.schedule_id],
@@ -21,6 +23,16 @@ const ConfirmScreen = () => {
       keepPreviousData: true,
     },
   )
+
+  const handleMoveToPayment = () => {
+    navigation.navigate('BookingStack', {
+      screen: 'BOOKING_PAYMENT',
+      params: {
+        schedule_id: route.params.schedule_id,
+        seats: route.params.seats,
+      },
+    })
+  }
 
   return (
     <>
@@ -41,7 +53,7 @@ const ConfirmScreen = () => {
           </ScrollView>
 
           <View style={styles.button}>
-            <Button mode="contained" style={{ borderRadius: 10 }}>
+            <Button mode="contained" style={{ borderRadius: 10 }} onPress={handleMoveToPayment}>
               TIẾP TỤC
             </Button>
           </View>

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { TypeOf, z } from 'zod'
 
 const MovieType = z.object({
   id: z.string(),
@@ -168,6 +168,17 @@ export type SelectSeatType = {
   name: string
 }
 
+export const CreateTransactionSchema = z.object({
+  user_id: z.string(),
+  schedule_id: z.string(),
+  price: z.number(),
+  food_id: z.string().optional(),
+  status: z.enum(['PENDING', 'SUCCESS', 'FAILED', 'CANCLED']),
+  payment_type: z.string(),
+  seats: z.array(z.string()),
+})
+
+export type CreateTransactionType = TypeOf<typeof CreateTransactionSchema>
 export type MovieType = z.infer<typeof MovieSchema>
 export type PersonType = z.infer<typeof PersonSchema>
 export type MovieImageType = z.infer<typeof MovieImageSchema>

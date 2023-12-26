@@ -1,3 +1,4 @@
+import { useAppTheme } from '@/libs/config/theme'
 import { textStyles } from '@/libs/styles'
 import { FlashList } from '@shopify/flash-list'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -20,6 +21,8 @@ const Seat = ({ data, seats, handleSelectSeat }: SeatProps) => {
     return SeatTypeData.find((item) => item.type === seat.seat_type)?.style
   }
 
+  const { colors } = useAppTheme()
+
   return (
     <View>
       <View style={{ marginBottom: 30 }}>
@@ -31,34 +34,49 @@ const Seat = ({ data, seats, handleSelectSeat }: SeatProps) => {
             >
               {item?.map((item) => {
                 return (
-                  <TouchableOpacity
-                    key={item.id}
-                    style={[
-                      styles.seat,
-                      {
-                        ...filterSeatTypeStyle(item, 'bg'),
-                      },
-                    ]}
-                    onPress={() =>
-                      handleSelectSeat({
-                        id: item.id,
-                        name: item.name,
-                        price:
-                          item.seat_type === 'NORMAL'
-                            ? data.schedule.movie.ticket_price
-                            : 10000 + data.schedule.movie.ticket_price,
-                      })
-                    }
-                  >
-                    <Text
-                      style={{
-                        ...filterSeatTypeStyle(item, 'text'),
-                        fontSize: 12,
-                      }}
-                    >
-                      {item.name}
-                    </Text>
-                  </TouchableOpacity>
+                  <>
+                    {item.is_booked ? (
+                      <View key={item.id} style={[styles.seat, { backgroundColor: 'gray' }]}>
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            color: colors.background,
+                          }}
+                        >
+                          {item.name}
+                        </Text>
+                      </View>
+                    ) : (
+                      <TouchableOpacity
+                        key={item.id}
+                        style={[
+                          styles.seat,
+                          {
+                            ...filterSeatTypeStyle(item, 'bg'),
+                          },
+                        ]}
+                        onPress={() =>
+                          handleSelectSeat({
+                            id: item.id,
+                            name: item.name,
+                            price:
+                              item.seat_type === 'NORMAL'
+                                ? data.schedule.movie.ticket_price
+                                : 10000 + data.schedule.movie.ticket_price,
+                          })
+                        }
+                      >
+                        <Text
+                          style={{
+                            ...filterSeatTypeStyle(item, 'text'),
+                            fontSize: 12,
+                          }}
+                        >
+                          {item.name}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                  </>
                 )
               })}
             </View>

@@ -115,6 +115,14 @@ const MovieDetailScreen = () => {
     })
   }
 
+  const isReleaseDate = () => {
+    if (!data?.released_date) return true
+    const releaseDate = new Date(data?.released_date)
+    const currentDate = new Date()
+
+    return releaseDate > currentDate
+  }
+
   return (
     <>
       <Header title={data?.name.toLocaleUpperCase()} />
@@ -151,11 +159,13 @@ const MovieDetailScreen = () => {
         </View>
       </ScrollView>
 
-      <View style={styles.button}>
-        <Button mode="contained" style={{ borderRadius: 10 }} onPress={handleMoveToCinema}>
-          ĐẶT VÉ
-        </Button>
-      </View>
+      {!isReleaseDate() && (
+        <View style={styles.button}>
+          <Button mode="contained" style={{ borderRadius: 10 }} onPress={handleMoveToCinema}>
+            ĐẶT VÉ
+          </Button>
+        </View>
+      )}
     </>
   )
 }

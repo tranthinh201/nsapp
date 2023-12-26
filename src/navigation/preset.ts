@@ -35,6 +35,9 @@ export const BOOKING_SCREEN = {
   BOOKING_CONFIRM: {
     INDEX: 'BOOKING_CONFIRM' as const,
   },
+  BOOKING_PAYMENT: {
+    INDEX: 'BOOKING_PAYMENT' as const,
+  },
 }
 
 export const TUTORIAL = {

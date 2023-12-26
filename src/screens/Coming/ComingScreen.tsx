@@ -2,10 +2,12 @@ import { listMovie } from '@/libs/api/movie'
 import { Header } from '@/libs/components'
 import { SkeletonListComing } from '@/libs/components/Skeleton/ListComing'
 import { useAppTheme } from '@/libs/config/theme'
+import { NavigationProp } from '@/navigation'
+import { useNavigation } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, Pressable, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Text } from 'react-native-paper'
 import { MovieType } from '../Booking'
@@ -13,10 +15,16 @@ import { MovieType } from '../Booking'
 const ComingScreen = () => {
   const { data, isFetching } = useQuery(['coming'], listMovie)
   const { colors } = useAppTheme()
+  const navigation = useNavigation<NavigationProp>()
+  const handleMoveToDetail = (id: string) =>
+    navigation.navigate('BookingStack', { screen: 'BOOKING_MOVIE_DETAIL', params: { id } })
 
   const renderItem = ({ item }: { item: MovieType }) => {
     return (
-      <View style={{ gap: 4, paddingBottom: 20, marginTop: 10, marginLeft: 10 }}>
+      <Pressable
+        style={{ gap: 4, paddingBottom: 20, marginTop: 10, marginLeft: 10 }}
+        onPress={() => handleMoveToDetail(item.id)}
+      >
         <Image source={{ uri: item.movie_image.map((img) => img.path)[0] }} style={styles.image} />
 
         <Text style={{ fontSize: 11, fontWeight: '700' }}>
@@ -26,7 +34,7 @@ const ComingScreen = () => {
         <Text style={{ fontWeight: '700' }}>{item.name}</Text>
 
         <Text style={{ fontSize: 11, color: colors.textGrey }}>{item.movie_type.name}</Text>
-      </View>
+      </Pressable>
     )
   }
 

@@ -12,9 +12,10 @@ import { TitleCinema } from './Title'
 type CinemaProps = {
   cinema: CinemaType
   movie_format: string
+  isLastElement: boolean
 }
 
-const Cinema = ({ cinema, movie_format }: CinemaProps) => {
+const Cinema = ({ cinema, movie_format, isLastElement }: CinemaProps) => {
   const [expanded, setExpanded] = useState(false)
   const handlePressExpand = () => setExpanded(!expanded)
 
@@ -23,7 +24,9 @@ const Cinema = ({ cinema, movie_format }: CinemaProps) => {
   const { colors } = useAppTheme()
 
   return (
-    <View style={{ padding: 10 }}>
+    <View
+      style={{ padding: 10, borderBottomWidth: isLastElement ? 0 : 1, borderColor: colors.divider }}
+    >
       <TitleCinema cinema={cinema} expanded={expanded} handlePressExpand={handlePressExpand} />
 
       {expanded && (

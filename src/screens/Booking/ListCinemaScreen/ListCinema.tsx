@@ -42,9 +42,18 @@ const ListCinema = ({ data }: ListCinemaProps) => {
             Rạp đề xuất ({data.cinema.length})
           </Text>
 
-          {data.cinema.map((cinema, index) => (
-            <Cinema cinema={cinema} movie_format={data.movie.movie_format.name} key={index} />
-          ))}
+          {data.cinema.map((cinema, index) => {
+            const isLastElement = index === data.cinema.length - 1
+
+            return (
+              <Cinema
+                cinema={cinema}
+                movie_format={data.movie.movie_format.name}
+                key={cinema.id}
+                isLastElement={isLastElement}
+              />
+            )
+          })}
         </View>
       )}
     </>

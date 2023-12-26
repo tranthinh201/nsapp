@@ -87,48 +87,48 @@ const SeatScreen = () => {
           <ActivityIndicator />
         </View>
       ) : (
-        <ScrollView>
-          <View>
-            <Header title={data?.cinema.name} />
+        <View style={{ flex: 1 }}>
+          <Header title={data?.cinema.name} />
 
+          <ScrollView>
             <View style={styles.list}>
               <Screen />
 
               <Seat data={data} seats={seats} handleSelectSeat={handleSelectSeat} />
             </View>
+          </ScrollView>
 
-            <View style={styles.button}>
-              <InformationMovie schedule={data?.schedule} />
+          <View style={styles.button}>
+            <InformationMovie schedule={data?.schedule} />
 
-              <View style={styles.price}>
-                <Text>Tạm tính:</Text>
+            <View style={styles.price}>
+              <Text>Tạm tính:</Text>
 
-                <Text style={{ fontWeight: '700' }}>{totalPrice} đ</Text>
-              </View>
-
-              <Button mode="contained" style={{ borderRadius: 10 }} onPress={handleMoveToConfirm}>
-                TIẾP TỤC
-              </Button>
+              <Text style={{ fontWeight: '700' }}>{totalPrice} đ</Text>
             </View>
 
-            <Snackbar
-              visible={visible}
-              onDismiss={onDismissSnackBar}
-              style={styles.snackBar}
-              duration={1000}
-            >
-              <View style={styles.snackBarView}>
-                <WarnSvg />
-
-                <Text style={{ color: colors.background }}>
-                  Bạn lòng chọn số lượng ghế tối thiếu là 1!
-                </Text>
-              </View>
-            </Snackbar>
+            <Button mode="contained" style={{ borderRadius: 10 }} onPress={handleMoveToConfirm}>
+              TIẾP TỤC
+            </Button>
           </View>
 
+          <Snackbar
+            visible={visible}
+            onDismiss={onDismissSnackBar}
+            style={styles.snackBar}
+            duration={1000}
+          >
+            <View style={styles.snackBarView}>
+              <WarnSvg />
+
+              <Text style={{ color: colors.background }}>
+                Bạn lòng chọn số lượng ghế tối thiếu là 1!
+              </Text>
+            </View>
+          </Snackbar>
+
           <Modal openModal={openModal} hideModal={hideModal} handleConfirm={handleConfirm} />
-        </ScrollView>
+        </View>
       )}
     </>
   )
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
   list: {
     padding: 10,
     backgroundColor: '#FFF',
+    minHeight: '70%',
   },
   button: {
     zIndex: 100,
@@ -147,6 +148,10 @@ const styles = StyleSheet.create({
     paddingBottom: Platform.OS === 'ios' ? 22 : 10,
     marginTop: 10,
     gap: 10,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   snackBar: { marginBottom: 120 },
   snackBarView: {

@@ -5,7 +5,7 @@ import { Dispatch } from '@/store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import * as React from 'react'
-import { Dimensions, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { SliderHome } from './Slider'
 
@@ -17,8 +17,6 @@ const HomeScreen = () => {
     const token = await getAccessToken()
     console.log(token)
   }
-
-  const width = Dimensions.get('window').width
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('persist:root:auth')

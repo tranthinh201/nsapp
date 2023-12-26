@@ -47,7 +47,6 @@ const VerificationScreen = () => {
                 { token: code },
                 {
                   onSuccess: (response) => {
-                    console.log(response.status)
                     if (response.status === 201) {
                       navigation.navigate('AuthStack', {
                         screen: 'RESET_PASSWORD',
