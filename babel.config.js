@@ -10,6 +10,12 @@ module.exports = function (api) {
         },
       ],
       'react-native-reanimated/plugin',
+      [
+        '@stripe/stripe-react-native',
+        {
+          enableGooglePay: true,
+        },
+      ],
     ],
   }
 }

@@ -11,6 +11,7 @@ import { Animated, Image, Platform, StyleSheet, TouchableOpacity, View } from 'r
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Text } from 'react-native-paper'
 import { PersonType } from '../types'
+import { Comment } from './Comment'
 import { InformationMovie } from './InformationMovie'
 
 export type ListMediaType = {
@@ -157,6 +158,8 @@ const MovieDetailScreen = () => {
             />
           )}
         </View>
+
+        <Comment />
       </ScrollView>
 
       {!isReleaseDate() && (

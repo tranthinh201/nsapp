@@ -4,11 +4,12 @@ import { Header } from '@/libs/components'
 import { PaymentSkeleton } from '@/libs/components/Skeleton/Payment'
 import { useAppTheme } from '@/libs/config/theme'
 import { RouteBookingStackType } from '@/libs/route'
+import { NavigationProp } from '@/navigation'
 import { RootStore } from '@/store'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { isEqual } from 'lodash'
-import { StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Text } from 'react-native-paper'
 import { useSelector } from 'react-redux'
@@ -24,9 +25,17 @@ const PaymentScreen = () => {
     }),
     isEqual,
   )
+  const navigation = useNavigation<NavigationProp>()
   const mutate = useMutation(createTransaction, {
     onSuccess: () => {
-      console.log('Success')
+      Alert.alert('Thông báo', 'Đặt vé thành công!', [
+        {
+          text: 'OK',
+          onPress: () => {
+            navigation.navigate('BottomTabs', { screen: 'TAB_HOME' })
+          },
+        },
+      ])
     },
     onError: () => {
       console.log('Error')
@@ -47,14 +56,14 @@ const PaymentScreen = () => {
     .toLocaleString('vi-VN')
 
   const handleTransaction = () => {
-    // mutate.mutate({
-    //   schedule_id: route.params.schedule_id,
-    //   seats: route.params.seats.map((seat) => seat.id),
-    //   user_id: user?.id as string,
-    //   payment_type: 'STRIPE',
-    //   price: route.params.seats.reduce((total, seat) => total + seat.price, 0),
-    //   status: 'SUCCESS',
-    // })
+    mutate.mutate({
+      schedule_id: route.params.schedule_id,
+      seats: route.params.seats.map((seat) => seat.id),
+      user_id: user?.id as string,
+      payment_type: 'STRIPE',
+      price: route.params.seats.reduce((total, seat) => total + seat.price, 0),
+      status: 'SUCCESS',
+    })
 
     console.log({
       schedule_id: route.params.schedule_id,

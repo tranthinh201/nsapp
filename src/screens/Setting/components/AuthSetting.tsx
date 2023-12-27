@@ -1,5 +1,4 @@
 import Banner from '@/assets/img/banner.png'
-import AvatarDefault from '@/assets/img/user.png'
 import CommentSvg from '@/assets/svg/comment.svg'
 import EyeSvg from '@/assets/svg/eye-movie.svg'
 import StarSvg from '@/assets/svg/star-one.svg'
@@ -13,10 +12,10 @@ import { isEqual } from 'lodash'
 import { View } from 'moti'
 import React, { useState } from 'react'
 import { Dimensions, Image, Pressable, StyleSheet } from 'react-native'
-import { Button, Text } from 'react-native-paper'
+import { Avatar, Button, Text } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 import { ModalSignOut } from './ModalSignOut'
-import { MyMovieNotFound } from './MyMovieNotFound'
+import { MyTicket } from './MyTicket'
 
 type DataType = {
   title: string
@@ -80,6 +79,8 @@ const AuthSetting = () => {
     )
   }
 
+  const fullName = `${user?.last_name[0]}${user?.name[0]}`
+
   return (
     <View>
       <Image source={Banner} style={styles.bannerImage} />
@@ -88,10 +89,11 @@ const AuthSetting = () => {
         <View>
           <View style={{ display: 'flex', alignItems: 'center', marginTop: -40, gap: 5 }}>
             <Pressable onPress={handleToUpdateProfile}>
-              <Image
-                style={[styles.avatar]}
-                source={user?.avatar ? { uri: user.avatar } : AvatarDefault}
-              />
+              {user?.avatar ? (
+                <Image style={[styles.avatar]} source={{ uri: user.avatar }} />
+              ) : (
+                <Avatar.Text size={80} label={fullName} />
+              )}
             </Pressable>
 
             <Text style={[textStyles.text16, { fontWeight: '700' }]}>
@@ -112,7 +114,14 @@ const AuthSetting = () => {
       </View>
 
       <View style={styles.myMovie}>
-        <MyMovieNotFound />
+        <MyTicket />
+
+        {/* <MyMovieNotFound
+          title="Bạn chưa có hoạt đông nào trên NsCinema trong năm nay."
+          buttonTitle="Chọn phim"
+          subtitle="Hãy đánh giá, bình luận và đặt vé để xây"
+          isNoMovie={true}
+        /> */}
       </View>
 
       <View style={styles.logOutContainer}>

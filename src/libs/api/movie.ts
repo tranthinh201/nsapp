@@ -43,3 +43,13 @@ export const getSeatMovie = async (id: string): Promise<BookingType> => {
     throw error
   }
 }
+
+export const getMyMovie = async (id: string): Promise<MovieType[]> => {
+  try {
+    const response = await ApiClientUnAuth.get(`movie/user/${id}`)
+
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}

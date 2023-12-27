@@ -5,7 +5,14 @@ import { useNavigation } from '@react-navigation/native'
 import { Image, StyleSheet, View } from 'react-native'
 import { Button, Text } from 'react-native-paper'
 
-const MyMovieNotFound = () => {
+type MyMovieNotFoundType = {
+  title: string
+  subtitle: string
+  buttonTitle: string
+  isNoMovie: boolean
+}
+
+const MyMovieNotFound = ({ buttonTitle, isNoMovie, subtitle, title }: MyMovieNotFoundType) => {
   const { colors } = useAppTheme()
   const navigation = useNavigation<NavigationProp>()
   const handleToHome = () => {
@@ -16,20 +23,20 @@ const MyMovieNotFound = () => {
     <View style={styles.root}>
       <Image source={CinemaPng} style={styles.image} />
 
-      <Text style={styles.title}>Bạn chưa có hoạt đông nào trên NsCinema trong năm nay.</Text>
+      <Text style={styles.title}>{title}</Text>
 
       <View style={{ alignItems: 'center' }}>
-        <Text style={{ color: colors.textGrey, fontSize: 12 }}>
-          Hãy đánh giá, bình luận và đặt vé để xây
-        </Text>
+        <Text style={{ color: colors.textGrey, fontSize: 12 }}>{subtitle}</Text>
 
-        <Text style={{ color: colors.textGrey, fontSize: 12 }}>
-          Trang phim của bạn thật hoành tránh nhé.
-        </Text>
+        {isNoMovie && (
+          <Text style={{ color: colors.textGrey, fontSize: 12 }}>
+            Trang phim của bạn thật hoành tránh nhé.
+          </Text>
+        )}
       </View>
 
       <Button mode="contained" style={styles.button} onPress={handleToHome}>
-        Chọn phim
+        {buttonTitle}
       </Button>
     </View>
   )
