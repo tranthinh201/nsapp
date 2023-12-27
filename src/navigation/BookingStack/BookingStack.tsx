@@ -1,4 +1,5 @@
 import { ListCinemaScreen, MovieDetailScreen } from '@/screens/Booking'
+import { CommentScreen } from '@/screens/Booking/CommentScreen'
 import { ConfirmScreen } from '@/screens/Booking/ConfirmScreen'
 import { PaymentScreen } from '@/screens/Booking/PaymentScreen'
 import { SeatScreen } from '@/screens/Booking/SeatScreen'
@@ -31,6 +32,11 @@ const BookingScreens = [
   {
     name: SCREENS_KEY.BOOKING_PAYMENT.INDEX,
     component: PaymentScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: SCREENS_KEY.COMMENT.INDEX,
+    component: CommentScreen,
     options: { headerShown: false },
   },
 ]

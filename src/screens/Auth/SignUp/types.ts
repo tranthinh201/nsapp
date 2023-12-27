@@ -2,17 +2,17 @@ import { z } from 'zod'
 
 export const SignUpSchema = z
   .object({
-    first_name: z.string().min(1, { message: 'First name must be at least 1 characters' }),
-    last_name: z.string().min(1, { message: 'Last name must be at least 1 characters' }),
+    first_name: z.string().min(1, { message: 'Tên phải có ít nhất 1 ký tự' }),
+    last_name: z.string().min(1, { message: 'Họ phải có ít nhất 1 ký tự' }),
     email: z
       .string()
-      .min(1, { message: 'Email must be at least 1 characters' })
-      .email({ message: 'Email is invalid' }),
-    password: z.string().min(8, { message: 'Password must be at least 8 characters' }),
-    confirm_password: z.string().min(8, { message: 'Password must be at least 8 characters' }),
+      .min(1, { message: 'Email phải có ít nhất 1 ký tự' })
+      .email({ message: 'Email không hợp lệ' }),
+    password: z.string().min(8, { message: 'Mật khẩu phải có ít nhất 8 ký tự' }),
+    confirm_password: z.string().min(8, { message: 'Mật khẩu phải có ít nhất 8 ký tự' }),
   })
   .refine((data) => data.password === data.confirm_password, {
-    message: 'Password and confirm password must be the same',
+    message: 'Mật khẩu và xác nhận mật khẩu phải giống nhau',
     path: ['confirm_password'],
   })
 

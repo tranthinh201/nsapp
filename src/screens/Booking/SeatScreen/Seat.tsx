@@ -1,6 +1,7 @@
 import { useAppTheme } from '@/libs/config/theme'
 import { textStyles } from '@/libs/styles'
 import { FlashList } from '@shopify/flash-list'
+import { Fragment } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Divider, Text } from 'react-native-paper'
 import { SeatTypeData } from '../constant'
@@ -34,9 +35,9 @@ const Seat = ({ data, seats, handleSelectSeat }: SeatProps) => {
             >
               {item?.map((item) => {
                 return (
-                  <>
+                  <Fragment key={item.id}>
                     {item.is_booked ? (
-                      <View key={item.id} style={[styles.seat, { backgroundColor: 'gray' }]}>
+                      <View style={[styles.seat, { backgroundColor: 'gray' }]}>
                         <Text
                           style={{
                             fontSize: 12,
@@ -48,7 +49,6 @@ const Seat = ({ data, seats, handleSelectSeat }: SeatProps) => {
                       </View>
                     ) : (
                       <TouchableOpacity
-                        key={item.id}
                         style={[
                           styles.seat,
                           {
@@ -76,7 +76,7 @@ const Seat = ({ data, seats, handleSelectSeat }: SeatProps) => {
                         </Text>
                       </TouchableOpacity>
                     )}
-                  </>
+                  </Fragment>
                 )
               })}
             </View>

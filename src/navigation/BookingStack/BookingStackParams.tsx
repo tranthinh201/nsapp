@@ -9,4 +9,5 @@ export type BookingStackParams = {
     seats: SelectSeatType[]
   }
   BOOKING_PAYMENT: { schedule_id: string; seats: SelectSeatType[] }
+  COMMENT: { movie_id: string }
 }

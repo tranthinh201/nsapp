@@ -1,22 +1,25 @@
 import StarSvg from '@/assets/svg/star.svg'
 import { useAppTheme } from '@/libs/config/theme'
 import { textStyles } from '@/libs/styles'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { NavigationProp } from '@/navigation'
+import { useNavigation } from '@react-navigation/native'
+import { StyleSheet, View } from 'react-native'
 import { Avatar, Text } from 'react-native-paper'
 
 const Comment = () => {
   const { colors } = useAppTheme()
+  const navigation = useNavigation<NavigationProp>()
+  const handleMoveToComment = () =>
+    navigation.navigate('BookingStack', { screen: 'COMMENT', params: { movie_id: 'SOLAS' } })
 
   return (
     <View style={styles.root}>
-      <View style={{ gap: 10, paddingHorizontal: 10 }}>
+      <View style={styles.container}>
         <Text style={[textStyles.content16, { fontWeight: '700', marginBottom: 3 }]}>
           Cộng đồng xem phim nghĩ gì?
         </Text>
 
-        <View
-          style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end' }}
-        >
+        <View style={styles.label}>
           <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
             <StarSvg width={20} height={20} />
 
@@ -25,9 +28,9 @@ const Comment = () => {
             <Text style={{ color: colors.textGrey }}> (120 đánh giá)</Text>
           </View>
 
-          <Pressable>
-            <Text style={{ fontWeight: '700', color: colors.primary }}>Viết đánh giá</Text>
-          </Pressable>
+          <Text style={{ fontWeight: '700', color: colors.primary }} onPress={handleMoveToComment}>
+            Viết đánh giá
+          </Text>
         </View>
 
         <View style={{ borderWidth: 1, borderRadius: 6, borderColor: colors.divider }}>
@@ -69,4 +72,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 15,
   },
+  container: { gap: 10, paddingHorizontal: 10 },
+  label: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end' },
 })

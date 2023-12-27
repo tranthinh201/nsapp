@@ -9,6 +9,7 @@ type PaymentSkeletonProps = {
 
 const PaymentSkeleton = ({ length }: PaymentSkeletonProps) => {
   const width = Dimensions.get('screen').width
+
   return (
     <View style={styles.root}>
       <MotiView

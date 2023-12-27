@@ -38,6 +38,9 @@ export const BOOKING_SCREEN = {
   BOOKING_PAYMENT: {
     INDEX: 'BOOKING_PAYMENT' as const,
   },
+  COMMENT: {
+    INDEX: 'COMMENT' as const,
+  },
 }
 
 export const TUTORIAL = {

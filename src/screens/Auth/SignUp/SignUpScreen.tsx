@@ -51,7 +51,9 @@ const SignUpScreen = () => {
       <KeyboardAwareScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           <View style={styles.title}>
-            <Text style={textStyles.title}>Welcome back! NsTeam to see you, Again!</Text>
+            <Text style={textStyles.title}>
+              Đăng ký tài khoản <Text style={{ color: theme.colors.primary }}>NS Movie</Text>
+            </Text>
           </View>
 
           <View style={styles.containerInput}>
@@ -71,7 +73,7 @@ const SignUpScreen = () => {
                     onChangeText={onChange}
                     error={!!errors?.email?.message}
                     helperText={errors?.email?.message}
-                    placeholder="Enter your email"
+                    placeholder="Nhập email của bạn"
                   />
                 )}
                 name="email"
@@ -88,14 +90,14 @@ const SignUpScreen = () => {
                       fontFamily: theme.fonts.default.fontFamily,
                       fontSize: 14,
                     }}
-                    label="Password"
+                    label="Mật khẩu"
                     theme={theme}
                     value={value}
                     secureTextEntry={true}
                     onChangeText={onChange}
                     error={!!errors?.password?.message}
                     helperText={errors?.password?.message}
-                    placeholder="Enter your password"
+                    placeholder="Nhập mật khẩu của bạn"
                   />
                 )}
                 name="password"
@@ -112,14 +114,14 @@ const SignUpScreen = () => {
                       fontFamily: theme.fonts.default.fontFamily,
                       fontSize: 14,
                     }}
-                    label="Confirm Password"
+                    label="Xác nhận mật khẩu"
                     theme={theme}
                     value={value}
                     secureTextEntry={true}
                     onChangeText={onChange}
                     error={!!errors?.confirm_password?.message}
                     helperText={errors?.confirm_password?.message}
-                    placeholder="Enter your confirm password"
+                    placeholder="Nhập lại mật khẩu của bạn"
                   />
                 )}
                 name="confirm_password"
@@ -136,13 +138,13 @@ const SignUpScreen = () => {
                       fontFamily: theme.fonts.default.fontFamily,
                       fontSize: 14,
                     }}
-                    label="First name"
+                    label="Họ"
                     theme={theme}
                     value={value}
                     onChangeText={onChange}
                     error={!!errors?.first_name?.message}
                     helperText={errors?.first_name?.message}
-                    placeholder="Enter your first name"
+                    placeholder="Nhập họ của bạn"
                   />
                 )}
                 name="first_name"
@@ -159,13 +161,13 @@ const SignUpScreen = () => {
                       fontFamily: theme.fonts.default.fontFamily,
                       fontSize: 14,
                     }}
-                    label="Last name"
+                    label="Tên"
                     theme={theme}
                     value={value}
                     onChangeText={onChange}
                     error={!!errors?.last_name?.message}
                     helperText={errors?.last_name?.message}
-                    placeholder="Enter your password"
+                    placeholder="Nhập tên của bạn"
                   />
                 )}
                 name="last_name"
@@ -179,7 +181,7 @@ const SignUpScreen = () => {
             style={btnStyles.button}
             onPress={handleSubmit(onSubmit)}
           >
-            <Text style={{ fontSize: 14 }}>Sign up</Text>
+            <Text style={{ fontSize: 14 }}>Đăng ký</Text>
           </Button>
         </View>
       </KeyboardAwareScrollView>
@@ -201,7 +203,7 @@ const styles = StyleSheet.create({
   },
   containerInput: {
     marginTop: 32,
-    marginBottom: 10,
+    marginBottom: 15,
   },
   scrollContainer: {
     paddingBottom: 20,

@@ -21,9 +21,13 @@ export type ListMediaType = {
 
 const MovieDetailScreen = () => {
   const route = useRoute<RouteBookingStackType<'BOOKING_MOVIE_DETAIL'>>()
-  const { data, isLoading } = useQuery(['movie'], () => getMovieById(route.params.id), {
-    enabled: !!route.params.id,
-  })
+  const { data, isLoading } = useQuery(
+    ['movie-detail', route.params.id],
+    () => getMovieById(route.params.id),
+    {
+      enabled: !!route.params.id,
+    },
+  )
   const navigation = useNavigation<NavigationProp>()
 
   let listMedia: ListMediaType[] = []

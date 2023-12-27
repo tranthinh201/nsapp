@@ -187,6 +187,18 @@ const SignInScreen = () => {
             <Text style={{ fontSize: 14 }}>Đăng nhập</Text>
           </Button>
         </View>
+
+        <View style={{ alignItems: 'center', marginTop: 10 }}>
+          <Text>
+            Bạn chưa có tài khoản?{' '}
+            <Text
+              style={{ ...textStyles.text14, color: colors.primary }}
+              onPress={() => navigation.navigate('AuthStack', { screen: 'SIGN_UP' })}
+            >
+              Đăng ký ngay
+            </Text>
+          </Text>
+        </View>
       </KeyboardAwareScrollView>
     </View>
   )
