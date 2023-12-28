@@ -163,7 +163,7 @@ const MovieDetailScreen = () => {
           )}
         </View>
 
-        <Comment />
+        {!isReleaseDate() && data && <Comment movie={data} />}
       </ScrollView>
 
       {!isReleaseDate() && (

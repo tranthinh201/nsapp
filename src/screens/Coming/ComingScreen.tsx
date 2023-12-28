@@ -1,4 +1,4 @@
-import { listMovie } from '@/libs/api/movie'
+import { getListComingSoon } from '@/libs/api/movie'
 import { Header } from '@/libs/components'
 import { SkeletonListComing } from '@/libs/components/Skeleton/ListComing'
 import { useAppTheme } from '@/libs/config/theme'
@@ -13,7 +13,7 @@ import { Text } from 'react-native-paper'
 import { MovieType } from '../Booking'
 
 const ComingScreen = () => {
-  const { data, isFetching } = useQuery(['coming'], listMovie)
+  const { data, isFetching } = useQuery(['coming'], getListComingSoon)
   const { colors } = useAppTheme()
   const navigation = useNavigation<NavigationProp>()
   const handleMoveToDetail = (id: string) =>
@@ -47,12 +47,14 @@ const ComingScreen = () => {
           <SkeletonListComing length={3} />
         ) : (
           <>
-            {data?.map((item) => (
-              <View style={styles.main} key={item.id}>
-                <Text style={styles.title}>Tháng 12/2023</Text>
+            {data?.map((item, index) => (
+              <View style={styles.main} key={index}>
+                <Text style={styles.title}>
+                  Tháng {format(new Date(item[0].released_date), 'MM/yyyy')}
+                </Text>
 
                 <FlashList
-                  data={data}
+                  data={item}
                   estimatedItemSize={100}
                   horizontal
                   renderItem={renderItem}

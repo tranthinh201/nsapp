@@ -61,6 +61,18 @@ export const MovieImageSchema = z.object({
   updated_at: z.date(),
 })
 
+export const Comment = z.object({
+  id: z.string(),
+  user_id: z.string(),
+  movie_id: z.string(),
+  content: z.string(),
+  star: z.number().min(1).max(10),
+  image: z.string().array().optional(),
+  feeling: z.string().array().optional(),
+  created_at: z.date(),
+  updated_at: z.date(),
+})
+
 export const MovieSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -82,6 +94,7 @@ export const MovieSchema = z.object({
   movie_image: MovieImageSchema.array(),
   persons: PersonSchema.array(),
   ticket_price: z.number(),
+  comment: Comment.array(),
   created_at: z.date(),
   updated_at: z.date(),
 })

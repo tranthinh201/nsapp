@@ -53,3 +53,13 @@ export const getMyMovie = async (id: string): Promise<MovieType[]> => {
     throw error
   }
 }
+
+export const getListComingSoon = async (): Promise<[MovieType[]]> => {
+  try {
+    const response = await ApiClientUnAuth.get(`movie/coming-soon`)
+
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
