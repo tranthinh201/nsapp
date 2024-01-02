@@ -1,46 +1,22 @@
-import { createTransaction } from '@/libs/api/booking'
 import { getSeatMovie } from '@/libs/api/movie'
 import { Header } from '@/libs/components'
 import { PaymentSkeleton } from '@/libs/components/Skeleton/Payment'
-import { useAppTheme } from '@/libs/config/theme'
 import { RouteBookingStackType } from '@/libs/route'
-import { NavigationProp } from '@/navigation'
-import { RootStore } from '@/store'
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { isEqual } from 'lodash'
-import { Alert, StyleSheet, View } from 'react-native'
+import { useRoute } from '@react-navigation/native'
+import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Text } from 'react-native-paper'
-import { useSelector } from 'react-redux'
 import { DetailPayment } from './DetailPayment'
-import { ListPayment } from './ListPayment'
+import { ModalPayment } from './ModalPayment'
 
 const PaymentScreen = () => {
   const route = useRoute<RouteBookingStackType<'BOOKING_CONFIRM'>>()
-  const { colors } = useAppTheme()
-  const { user } = useSelector(
-    ({ auth }: RootStore) => ({
-      user: auth.user,
-    }),
-    isEqual,
-  )
-  const navigation = useNavigation<NavigationProp>()
-  const mutate = useMutation(createTransaction, {
-    onSuccess: () => {
-      Alert.alert('Thông báo', 'Đặt vé thành công!', [
-        {
-          text: 'OK',
-          onPress: () => {
-            navigation.navigate('BottomTabs', { screen: 'TAB_HOME' })
-          },
-        },
-      ])
-    },
-    onError: () => {
-      console.log('Error')
-    },
-  })
+  const [openModal, setModal] = useState(false)
+  const totalPriceString = route.params.seats
+    .reduce((total, seat) => total + seat.price, 0)
+    .toLocaleString('vi-VN')
 
   const { data, isFetching } = useQuery(
     ['schedule', route.params.schedule_id],
@@ -51,30 +27,6 @@ const PaymentScreen = () => {
     },
   )
 
-  const totalPrice = route.params.seats
-    .reduce((total, seat) => total + seat.price, 0)
-    .toLocaleString('vi-VN')
-
-  const handleTransaction = () => {
-    mutate.mutate({
-      schedule_id: route.params.schedule_id,
-      seats: route.params.seats.map((seat) => seat.id),
-      user_id: user?.id as string,
-      payment_type: 'STRIPE',
-      price: route.params.seats.reduce((total, seat) => total + seat.price, 0),
-      status: 'SUCCESS',
-    })
-
-    console.log({
-      schedule_id: route.params.schedule_id,
-      seats: route.params.seats.map((seat) => seat.id),
-      user_id: user?.id as string,
-      payment_type: 'STRIPE',
-      price: route.params.seats.reduce((total, seat) => total + seat.price, 0),
-      status: 'SUCCESS',
-    })
-  }
-
   return (
     <>
       <Header title="Thanh toán" />
@@ -83,23 +35,21 @@ const PaymentScreen = () => {
         <PaymentSkeleton length={10} />
       ) : (
         <>
-          <ScrollView style={styles.root}>
-            <ListPayment />
-
-            {data && <DetailPayment data={data} />}
-          </ScrollView>
+          <ScrollView style={styles.root}>{data && <DetailPayment data={data} />}</ScrollView>
 
           <View style={styles.button}>
             <View style={styles.price}>
               <Text>Tổng tiền:</Text>
 
-              <Text style={{ fontWeight: '700' }}>{totalPrice} đ</Text>
+              <Text style={{ fontWeight: '700' }}>{totalPriceString} đ</Text>
             </View>
 
-            <Button mode="contained" style={{ borderRadius: 10 }} onPress={handleTransaction}>
+            <Button mode="contained" style={{ borderRadius: 10 }} onPress={() => setModal(true)}>
               XÁC NHẬN
             </Button>
           </View>
+
+          <ModalPayment openModal={openModal} hideModal={() => setModal(false)} />
         </>
       )}
     </>

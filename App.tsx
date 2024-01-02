@@ -3,6 +3,7 @@ import { defaultTheme } from '@/libs/config/theme'
 import { Navigation, navigationRef } from '@/navigation'
 import Gate from '@/store/Gate'
 import { NavigationContainer } from '@react-navigation/native'
+import { StripeProvider } from '@stripe/stripe-react-native'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { registerRootComponent } from 'expo'
 import { useFonts } from 'expo-font'
@@ -37,6 +38,9 @@ export default function App() {
     )
   }
 
+  const STRIPE_KEY =
+    'pk_test_51OCfUJH0CBe8HDnMz61JfQrmv4IHvjIJfvdcQJNZn3SoD4iU0pM7jDe0eMoWUHyYG2UzT6ucu7ULbx3ETY4seIeH00OdsgGGUt'
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={defaultTheme}>
@@ -48,7 +52,9 @@ export default function App() {
             ref={navigationRef}
           >
             <Gate>
-              <Navigation />
+              <StripeProvider publishableKey={STRIPE_KEY}>
+                <Navigation />
+              </StripeProvider>
             </Gate>
           </NavigationContainer>
         </GestureHandlerRootView>

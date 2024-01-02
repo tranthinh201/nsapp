@@ -1,15 +1,13 @@
 import { MotiView, View } from 'moti'
 import { Skeleton } from 'moti/skeleton'
 import React from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 type PaymentSkeletonProps = {
   length: number
 }
 
 const PaymentSkeleton = ({ length }: PaymentSkeletonProps) => {
-  const width = Dimensions.get('screen').width
-
   return (
     <View style={styles.root}>
       <MotiView
