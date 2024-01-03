@@ -62,6 +62,9 @@ export const PROFILE_STACK = {
   CHANGE_PASSWORD: {
     INDEX: 'CHANGE_PASSWORD' as const,
   },
+  TICKET_DETAIL: {
+    INDEX: 'TICKET_DETAIL' as const,
+  },
 }
 
 export const SCREENS_KEY = {

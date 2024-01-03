@@ -77,15 +77,6 @@ const CommentScreen = () => {
   })
 
   const onSubmit = (data: CommentInput) => {
-    console.log({
-      content: data.content,
-      feeling: felling,
-      image: data.image,
-      movie_id: route.params.movie_id,
-      star: rating,
-      user_id: user?.id as string,
-    })
-
     mutation.mutate({
       content: data.content,
       feeling: felling,
@@ -239,7 +230,6 @@ const styles = StyleSheet.create({
   mainFeel: {
     paddingVertical: 20,
     gap: 10,
-
     borderBottomWidth: 1,
   },
   feel: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, columnGap: 10 },

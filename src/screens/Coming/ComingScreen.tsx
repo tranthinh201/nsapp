@@ -12,6 +12,8 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { Text } from 'react-native-paper'
 import { MovieType } from '../Booking'
 
+
+
 const ComingScreen = () => {
   const { data, isFetching } = useQuery(['coming'], getListComingSoon)
   const { colors } = useAppTheme()

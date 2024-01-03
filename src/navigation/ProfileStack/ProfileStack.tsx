@@ -1,4 +1,4 @@
-import { ChangePasswordScreen, InformationScreen } from '@/screens/Setting'
+import { ChangePasswordScreen, InformationScreen, TicketDetailScreen } from '@/screens/Setting'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { SCREENS_KEY } from '../preset'
@@ -13,6 +13,11 @@ const ProfileScreens = [
   {
     name: SCREENS_KEY.CHANGE_PASSWORD.INDEX,
     component: ChangePasswordScreen,
+    options: { headerShown: false },
+  },
+  {
+    name: SCREENS_KEY.TICKET_DETAIL.INDEX,
+    component: TicketDetailScreen,
     options: { headerShown: false },
   },
 ]

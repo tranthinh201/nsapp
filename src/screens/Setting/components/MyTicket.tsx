@@ -1,4 +1,3 @@
-import QrCode from '@/assets/img/qr-code.png'
 import { getUnCheckTicket } from '@/libs/api/ticket'
 import { useAppTheme } from '@/libs/config/theme'
 import { textStyles } from '@/libs/styles'
@@ -8,8 +7,9 @@ import { convertDateToHour } from '@/utils/date'
 import { FlashList } from '@shopify/flash-list'
 import { useQuery } from '@tanstack/react-query'
 import { isEqual } from 'lodash'
-import { Image, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
+import QRCode from 'react-native-qrcode-svg'
 import { useSelector } from 'react-redux'
 import { MyMovieNotFound } from './MyMovieNotFound'
 
@@ -31,9 +31,16 @@ const MyTicket = () => {
   )
 
   const renderItem = ({ item }: { item: Ticket }) => {
+    const qrCodeValue = JSON.stringify({
+      ticket_id: item.id,
+      user_id: user?.id,
+      schedule_id: item.schedule_id,
+      seat_id: item.seats,
+    })
+
     return (
       <View style={styles.ticket}>
-        <Image source={QrCode} style={{ width: 100, height: 100 }} />
+        <QRCode value={qrCodeValue} />
 
         <View>
           <Text style={{ fontWeight: '700' }}>{item.schedule.movie.name}</Text>

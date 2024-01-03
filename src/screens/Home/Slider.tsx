@@ -2,18 +2,19 @@ import { listMovie } from '@/libs/api/movie'
 import { NavigationProp } from '@/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
+import { format } from 'date-fns'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import {
   Animated,
   Dimensions,
   Image,
+  Pressable,
   SafeAreaView,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Button, Text } from 'react-native-paper'
 import { MovieType } from '../Booking'
 
 const { width, height } = Dimensions.get('window')
@@ -85,7 +86,7 @@ const SliderHome = () => {
         horizontal={true}
         snapToAlignment="start"
         contentContainerStyle={{
-          paddingTop: 200,
+          paddingTop: 150,
           paddingHorizontal: PADDING,
         }}
         snapToInterval={WIDTH}
@@ -101,12 +102,12 @@ const SliderHome = () => {
             outputRange: [0, -50, 0],
           })
           return (
-            <TouchableOpacity style={{ width: WIDTH }} onPress={() => handleMoveToDetail(item.id)}>
+            <Pressable style={{ width: WIDTH }} onPress={() => handleMoveToDetail(item.id)}>
               <Animated.View
                 style={{
                   marginHorizontal: HORIZONTAL,
-                  padding: HORIZONTAL,
-                  borderRadius: 34,
+                  padding: 4,
+                  borderRadius: 18,
                   backgroundColor: '#fff',
                   alignItems: 'center',
                   transform: [{ translateY: scrollY }],
@@ -117,9 +118,29 @@ const SliderHome = () => {
                   style={styles.posterImage}
                 />
 
-                <Text style={{ fontWeight: 'bold', fontSize: 26 }}>{item.name}</Text>
+                <Text style={{ fontSize: 20, textTransform: 'uppercase' }}>{item.name}</Text>
+
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ fontSize: 11 }}>{item.duration} phút </Text>
+
+                  <Text style={{ fontSize: 11 }}>
+                    {format(new Date(item.released_date), 'dd/MM/yyyy')}
+                  </Text>
+                </View>
+
+                <Text style={{ color: 'grey' }}>
+                  - - - - - - - - - - - - - - - - - - - - - - - -
+                </Text>
+
+                <Button
+                  mode="contained"
+                  onPress={() => handleMoveToDetail(item.id)}
+                  style={styles.button}
+                >
+                  Đặt vé
+                </Button>
               </Animated.View>
-            </TouchableOpacity>
+            </Pressable>
           )
         }}
       />
@@ -139,7 +160,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: WIDTH * 1.2,
     resizeMode: 'cover',
-    borderRadius: 24,
+    borderRadius: 18,
     margin: 0,
     marginBottom: 10,
   },
@@ -152,5 +173,10 @@ const styles = StyleSheet.create({
     height: WIDTH * 1.2,
     backgroundColor: 'rgba(0,0,0,0.3)',
     borderRadius: 24,
+  },
+  button: {
+    borderRadius: 6,
+    marginVertical: 10,
+    width: 200,
   },
 })
