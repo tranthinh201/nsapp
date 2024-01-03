@@ -12,15 +12,17 @@ import { Image } from 'moti'
 import { useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { ActivityIndicator, Text } from 'react-native-paper'
+import { ActivityIndicator, Button, Text } from 'react-native-paper'
 import QRCode from 'react-native-qrcode-svg'
 import { useSelector } from 'react-redux'
 import { DividerTicket } from './components'
+import { ModalCancellationTicket } from './components/ModalCancellationTicket'
 import { ModalQrCode } from './components/ModalQrCode'
 
 const TicketDetailScreen = () => {
   const route = useRoute<RouteProfileStackType<'TICKET_DETAIL'>>()
-  const [modal, openModal] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
+  const [openModalTicket, setOpenModalTicket] = useState(false)
   const { colors } = useAppTheme()
   const { user } = useSelector(
     ({ auth }: RootStore) => ({
@@ -31,7 +33,7 @@ const TicketDetailScreen = () => {
 
   const { data, isFetching } = useQuery({
     queryKey: ['ticketDetail', route.params.id, user?.id],
-    queryFn: () => getDetailTicket({ id: route.params.id, user_id: user?.id as string }),
+    queryFn: () => getDetailTicket({ id: route.params.id }),
   })
 
   const qrCodeValue = JSON.stringify({
@@ -43,14 +45,22 @@ const TicketDetailScreen = () => {
     }),
   })
 
+  const isStartTimeBefore24hour = () => {
+    const now = new Date()
+    const startTime = new Date(data?.schedule.start_time as string)
+    const diff = startTime.getTime() - now.getTime()
+    const diffHours = Math.ceil(diff / (1000 * 60 * 60))
+    return diffHours < 24
+  }
+
   return (
     <View style={{ backgroundColor: colors.background, flex: 1, paddingBottom: 20 }}>
       <Header title="Thông tin vé xem phim" />
 
-      <ScrollView>
-        {isFetching ? (
-          <ActivityIndicator />
-        ) : (
+      {isFetching ? (
+        <ActivityIndicator />
+      ) : (
+        <ScrollView>
           <View style={styles.container}>
             <View style={styles.header}>
               <Image source={{ uri: data?.schedule.movie_image }} width={30} height={30} />
@@ -95,7 +105,7 @@ const TicketDetailScreen = () => {
                 <View>
                   <Pressable
                     style={{ backgroundColor: colors.background, padding: 10, borderRadius: 8 }}
-                    onPress={() => openModal(true)}
+                    onPress={() => setOpenModal(true)}
                   >
                     <QRCode value={qrCodeValue} />
                   </Pressable>
@@ -207,10 +217,35 @@ const TicketDetailScreen = () => {
               </View>
             </View>
           </View>
-        )}
-      </ScrollView>
 
-      <ModalQrCode openModal={modal} hideModal={() => openModal(false)} dataQrCode={qrCodeValue} />
+          {isStartTimeBefore24hour() ? (
+            <View style={{ paddingHorizontal: 15 }}>
+              <Text style={{ textAlign: 'center', color: colors.textGray, fontSize: 12 }}>
+                Bạn không thể huỷ vé trước 24h so với thời gian chiếu
+              </Text>
+            </View>
+          ) : (
+            <Button
+              mode="outlined"
+              style={{ borderRadius: 10, marginHorizontal: 15 }}
+              onPress={() => setOpenModalTicket(true)}
+            >
+              Huỷ vé
+            </Button>
+          )}
+        </ScrollView>
+      )}
+
+      <ModalQrCode
+        openModal={openModal}
+        hideModal={() => setOpenModal(false)}
+        dataQrCode={qrCodeValue}
+      />
+      <ModalCancellationTicket
+        openModal={openModalTicket}
+        hideModal={() => setOpenModal(false)}
+        ticket_id={data?.id as string}
+      />
     </View>
   )
 }

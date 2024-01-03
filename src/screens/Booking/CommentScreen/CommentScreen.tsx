@@ -7,7 +7,7 @@ import { textStyles } from '@/libs/styles'
 import { NavigationProp } from '@/navigation'
 import { RootStore } from '@/store'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isEqual } from 'lodash'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -29,6 +29,7 @@ const CommentScreen = () => {
   const [rating, setRating] = React.useState(0)
   const [felling, setFelling] = React.useState<string[]>([])
   const navigation = useNavigation<NavigationProp>()
+  const queryClient = useQueryClient()
   const isUnRated = rating === 0
   const { user } = useSelector(
     ({ auth }: RootStore) => ({
@@ -64,6 +65,7 @@ const CommentScreen = () => {
 
   const mutation = useMutation(createComment, {
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['movie-detail'] })
       navigation.navigate('BookingStack', {
         screen: 'BOOKING_MOVIE_DETAIL',
         params: {

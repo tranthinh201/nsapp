@@ -1,25 +1,20 @@
 import { BillingType } from '@/screens/Setting/types'
 import { ApiClient } from '../config/react-query'
 
-export const getUnCheckTicket = async ({ id }: { id: string }): Promise<BillingType[]> => {
+export const getUnCheckTicket = async (): Promise<BillingType[]> => {
   try {
-    const response = await ApiClient.get(`ticket/un-check/${id}`)
+    const response = await ApiClient.get(`ticket/un-check`)
 
+    console.log('response', response)
     return response.data
   } catch (error) {
     throw error
   }
 }
 
-export const getDetailTicket = async ({
-  id,
-  user_id,
-}: {
-  id: string
-  user_id: string
-}): Promise<BillingType> => {
+export const getDetailTicket = async ({ id }: { id: string }): Promise<BillingType> => {
   try {
-    const response = await ApiClient.get(`ticket/${id}/${user_id}`)
+    const response = await ApiClient.get(`ticket/${id}`)
 
     return response.data
   } catch (error) {

@@ -25,13 +25,9 @@ const MyTicket = () => {
     isEqual,
   )
 
-  const { data, isFetching } = useQuery(
-    ['myTicket'],
-    () => getUnCheckTicket({ id: user?.id as string }),
-    {
-      enabled: !!user?.id,
-    },
-  )
+  const { data, isFetching } = useQuery(['myTicket'], getUnCheckTicket, {
+    enabled: !!user?.id,
+  })
 
   const renderItem = ({ item }: { item: BillingType }) => {
     const qrCodeValue = JSON.stringify({

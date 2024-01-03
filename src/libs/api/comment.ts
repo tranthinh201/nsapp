@@ -1,5 +1,5 @@
 import { CommentInput } from '@/screens/Booking/CommentScreen/type'
-import { ApiClientUnAuth } from '../config/react-query'
+import { ApiClient } from '../config/react-query'
 
 export const createComment = async ({
   content,
@@ -10,7 +10,7 @@ export const createComment = async ({
   image,
 }: CommentInput) => {
   try {
-    const response = await ApiClientUnAuth.post('comment', {
+    const response = await ApiClient.post('comment', {
       content,
       movie_id,
       star,
