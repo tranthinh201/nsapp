@@ -2,15 +2,15 @@ import { createTransaction } from '@/libs/api/booking'
 import { createIntent } from '@/libs/api/payment'
 import { RouteBookingStackType } from '@/libs/route'
 import { NavigationProp } from '@/navigation'
-import { Dispatch, RootStore } from '@/store'
+import { RootStore } from '@/store'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { CardField, useStripe } from '@stripe/stripe-react-native'
+import { CardField, useConfirmPayment } from '@stripe/stripe-react-native'
 import { useMutation } from '@tanstack/react-query'
 import { isEqual } from 'lodash'
 import { View } from 'moti'
 import { Alert, StyleSheet } from 'react-native'
 import { Button, Modal as ModalPaper, Portal, Text } from 'react-native-paper'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 type ModalProps = {
   openModal: boolean
@@ -18,7 +18,6 @@ type ModalProps = {
 }
 
 const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
-  const dispatch = useDispatch<Dispatch>()
   const route = useRoute<RouteBookingStackType<'BOOKING_CONFIRM'>>()
   const { user } = useSelector(
     ({ auth }: RootStore) => ({
@@ -50,37 +49,39 @@ const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
     },
   })
 
-  const { initPaymentSheet } = useStripe()
+  const { confirmPayment, loading } = useConfirmPayment()
 
   const onCheckout = async () => {
     const totalPrice = route.params.seats.reduce((total, seat) => total + seat.price, 0)
-    //1. Create payment intent on the server
-    const { data: clientSecret } = await createPaymentIntent.mutateAsync({
+
+    const { paymentIntent: clientSecret } = await createPaymentIntent.mutateAsync({
       amount: totalPrice,
     })
 
-    //2. Initialize the payment sheet
-    const { error, paymentOption } = await initPaymentSheet({
-      paymentIntentClientSecret: clientSecret,
-      merchantDisplayName: 'Movie App',
+    const { error, paymentIntent } = await confirmPayment(clientSecret, {
+      paymentMethodType: 'Card',
+      paymentMethodData: {
+        billingDetails: {
+          email: user?.email,
+          name: user?.name,
+        },
+      },
     })
 
     if (error) {
-      console.log('initResponse.error', error)
+      // console.log('initResponse.error', error)
       Alert.alert('Thông báo', 'Thanh toán thất bại!')
       return
     }
 
-    console.log('initResponse', paymentOption)
-
-    // mutate.mutate({
-    //   schedule_id: route.params.schedule_id,
-    //   seats: route.params.seats.map((seat) => seat.id),
-    //   user_id: user?.id as string,
-    //   payment_type: 'STRIPE',
-    //   price: totalPrice,
-    //   status: 'SUCCESS',
-    // })
+    mutate.mutate({
+      schedule_id: route.params.schedule_id,
+      seats: route.params.seats.map((seat) => seat.id),
+      user_id: user?.id as string,
+      payment_type: paymentIntent.paymentMethod?.Card?.brand as 'VISA' | 'MASTER_CARD',
+      price: paymentIntent.amount,
+      status: 'SUCCESS',
+    })
   }
 
   return (
@@ -108,7 +109,7 @@ const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
             ĐÓNG
           </Button>
 
-          <Button mode="contained" style={styles.button}>
+          <Button mode="contained" style={styles.button} onPress={onCheckout} loading={loading}>
             THANH TOÁN
           </Button>
         </View>
