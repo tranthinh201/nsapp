@@ -181,14 +181,16 @@ export type SelectSeatType = {
   name: string
 }
 
+export const paymentEnum = z.enum(['SUCCESS', 'FAILED', 'REFUNDED'])
+
 export const CreateTransactionSchema = z.object({
   user_id: z.string(),
   schedule_id: z.string(),
   price: z.number(),
-  food_id: z.string().optional(),
-  status: z.enum(['PENDING', 'SUCCESS', 'FAILED', 'CANCLED']),
-  payment_type: z.string(),
+  foods: z.array(z.string()).optional(),
+  payment_status: paymentEnum,
   seats: z.array(z.string()),
+  payment_intent_id: z.string().nonempty(),
 })
 
 export type CreateTransactionType = TypeOf<typeof CreateTransactionSchema>

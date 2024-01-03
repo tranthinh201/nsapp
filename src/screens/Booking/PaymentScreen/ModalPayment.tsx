@@ -77,9 +77,9 @@ const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
       schedule_id: route.params.schedule_id,
       seats: route.params.seats.map((seat) => seat.id),
       user_id: user?.id as string,
-      payment_type: paymentIntent.paymentMethod?.Card?.brand as 'VISA' | 'MASTER_CARD',
       price: paymentIntent.amount,
-      status: 'SUCCESS',
+      payment_status: 'SUCCESS',
+      payment_intent_id: clientSecret,
     })
   }
 

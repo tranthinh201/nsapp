@@ -110,9 +110,10 @@ const PaymentScreen = () => {
       schedule_id: route.params.schedule_id,
       seats: route.params.seats.map((seat) => seat.id),
       user_id: user?.id as string,
-      payment_type: 'VISA',
       price: totalPrice,
-      status: 'SUCCESS',
+      payment_status: 'SUCCESS',
+      payment_intent_id: clientSecret,
+      foods: [],
     })
   }
 
