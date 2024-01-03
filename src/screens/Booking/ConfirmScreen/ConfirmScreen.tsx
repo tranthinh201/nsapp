@@ -6,7 +6,8 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
 import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button, Text } from 'react-native-paper'
+import { ActivityIndicator, Button } from 'react-native-paper'
+import { WarnPayment } from '../PaymentScreen/components'
 import { InformationMovie } from './InformationMovie'
 import { InformationUser } from './InformationUser'
 import { ListFood } from './ListFood'
@@ -39,9 +40,7 @@ const ConfirmScreen = () => {
       <Header title="Thông tin thanh toán" />
 
       {isLoading ? (
-        <View>
-          <Text>JJJSS</Text>
-        </View>
+        <ActivityIndicator />
       ) : (
         <>
           <ScrollView>
@@ -50,6 +49,8 @@ const ConfirmScreen = () => {
             <ListFood />
 
             <InformationUser />
+
+            <WarnPayment />
           </ScrollView>
 
           <View style={styles.button}>

@@ -10,6 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Text } from 'react-native-paper'
 import { DetailPayment } from './DetailPayment'
 import { ModalPayment } from './ModalPayment'
+import { WarnPayment } from './components'
 
 const PaymentScreen = () => {
   const route = useRoute<RouteBookingStackType<'BOOKING_CONFIRM'>>()
@@ -27,6 +28,14 @@ const PaymentScreen = () => {
     },
   )
 
+  const handleOpenModal = () => {
+    setModal(true)
+  }
+
+  const handleCloseModal = () => {
+    setModal(false)
+  }
+
   return (
     <>
       <Header title="Thanh toán" />
@@ -35,7 +44,11 @@ const PaymentScreen = () => {
         <PaymentSkeleton length={10} />
       ) : (
         <>
-          <ScrollView style={styles.root}>{data && <DetailPayment data={data} />}</ScrollView>
+          <ScrollView style={styles.root}>
+            {data && <DetailPayment data={data} />}
+
+            <WarnPayment />
+          </ScrollView>
 
           <View style={styles.button}>
             <View style={styles.price}>
@@ -44,12 +57,12 @@ const PaymentScreen = () => {
               <Text style={{ fontWeight: '700' }}>{totalPriceString} đ</Text>
             </View>
 
-            <Button mode="contained" style={{ borderRadius: 10 }} onPress={() => setModal(true)}>
+            <Button mode="contained" style={{ borderRadius: 10 }} onPress={handleOpenModal}>
               XÁC NHẬN
             </Button>
           </View>
 
-          <ModalPayment openModal={openModal} hideModal={() => setModal(false)} />
+          <ModalPayment openModal={openModal} hideModal={handleCloseModal} />
         </>
       )}
     </>
@@ -72,9 +85,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 10,
     paddingBottom: 22,
-    gap: 6,
+    gap: 10,
     borderTopColor: '#D4D4D4',
     borderTopWidth: 0.5,
   },
-  price: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between' },
+  price: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 })

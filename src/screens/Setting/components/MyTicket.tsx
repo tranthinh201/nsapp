@@ -1,20 +1,23 @@
 import { getUnCheckTicket } from '@/libs/api/ticket'
 import { useAppTheme } from '@/libs/config/theme'
 import { textStyles } from '@/libs/styles'
-import { Ticket } from '@/libs/types/movie'
+import { NavigationProp } from '@/navigation'
 import { RootStore } from '@/store'
 import { convertDateToHour } from '@/utils/date'
+import { useNavigation } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 import { useQuery } from '@tanstack/react-query'
 import { isEqual } from 'lodash'
-import { StyleSheet, View } from 'react-native'
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import QRCode from 'react-native-qrcode-svg'
 import { useSelector } from 'react-redux'
+import { BillingType } from '../types'
 import { MyMovieNotFound } from './MyMovieNotFound'
 
 const MyTicket = () => {
   const { colors } = useAppTheme()
+  const navigation = useNavigation<NavigationProp>()
   const { user } = useSelector(
     ({ auth }: RootStore) => ({
       user: auth.user,
@@ -30,20 +33,27 @@ const MyTicket = () => {
     },
   )
 
-  const renderItem = ({ item }: { item: Ticket }) => {
+  const renderItem = ({ item }: { item: BillingType }) => {
     const qrCodeValue = JSON.stringify({
       ticket_id: item.id,
       user_id: user?.id,
       schedule_id: item.schedule_id,
-      seat_id: item.seats,
+      seat_id: item.tickets.map((ticket) => {
+        return { id: ticket.ticket_id, name: ticket.seat_name }
+      }),
     })
 
     return (
-      <View style={styles.ticket}>
+      <Pressable
+        style={styles.ticket}
+        onPress={() =>
+          navigation.navigate('ProfileStack', { screen: 'TICKET_DETAIL', params: { id: item.id } })
+        }
+      >
         <QRCode value={qrCodeValue} />
 
         <View>
-          <Text style={{ fontWeight: '700' }}>{item.schedule.movie.name}</Text>
+          <Text style={{ fontWeight: '700' }}>{item.schedule.movie_name}</Text>
 
           <View style={{ flexDirection: 'row' }}>
             <Text>{convertDateToHour(item.schedule.start_time)}</Text>
@@ -51,13 +61,19 @@ const MyTicket = () => {
             <Text>{convertDateToHour(item.schedule.end_time)}</Text>
           </View>
 
-          <Text>{item.schedule.screen.name}</Text>
+          <Text>{item.schedule.screen_name}</Text>
+
+          <Text>{item.schedule.cinema_address}</Text>
         </View>
-      </View>
+      </Pressable>
     )
   }
 
-  const loading = <Text>Loading...</Text>
+  const loading = (
+    <View style={{ height: 130, justifyContent: 'center', alignItems: 'center' }}>
+      <ActivityIndicator size="small" />
+    </View>
+  )
 
   const flashList = (
     <View style={{ height: 130 }}>

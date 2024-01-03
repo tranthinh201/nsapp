@@ -47,7 +47,7 @@ export { ListFood }
 
 const styles = StyleSheet.create({
   root: {
-    paddingLeft: 20,
+    paddingLeft: 15,
     gap: 10,
   },
   item: {

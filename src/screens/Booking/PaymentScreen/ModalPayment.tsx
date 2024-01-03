@@ -18,6 +18,8 @@ type ModalProps = {
 }
 
 const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
+  const { confirmPayment, loading } = useConfirmPayment()
+  const navigation = useNavigation<NavigationProp>()
   const route = useRoute<RouteBookingStackType<'BOOKING_CONFIRM'>>()
   const { user } = useSelector(
     ({ auth }: RootStore) => ({
@@ -26,9 +28,9 @@ const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
     isEqual,
   )
 
-  const navigation = useNavigation<NavigationProp>()
   const mutate = useMutation(createTransaction, {
     onSuccess: () => {
+      hideModal()
       Alert.alert('Thông báo', 'Đặt vé thành công!', [
         {
           text: 'OK',
@@ -49,8 +51,6 @@ const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
     },
   })
 
-  const { confirmPayment, loading } = useConfirmPayment()
-
   const onCheckout = async () => {
     const totalPrice = route.params.seats.reduce((total, seat) => total + seat.price, 0)
 
@@ -69,7 +69,6 @@ const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
     })
 
     if (error) {
-      // console.log('initResponse.error', error)
       Alert.alert('Thông báo', 'Thanh toán thất bại!')
       return
     }
@@ -90,7 +89,7 @@ const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
         <View style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
           <Text style={{ fontWeight: '700', fontSize: 16 }}>Thanh toán</Text>
 
-          <Text>
+          <Text style={{ fontSize: 12 }}>
             Hãy nhập thông tin thẻ của bạn để thanh toán. Chúng tôi sẽ không lưu lại thông tin thẻ
           </Text>
 

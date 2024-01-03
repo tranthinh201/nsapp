@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   root: {
     display: 'flex',
     gap: 10,
-    padding: 20,
+    padding: 15,
   },
   container: {
     display: 'flex',
