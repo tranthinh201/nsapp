@@ -5,9 +5,10 @@ import { NavigationProp } from '@/navigation'
 import { RootStore } from '@/store'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { CardField, useConfirmPayment } from '@stripe/stripe-react-native'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isEqual } from 'lodash'
 import { View } from 'moti'
+import { useState } from 'react'
 import { Alert, StyleSheet } from 'react-native'
 import { Button, Modal as ModalPaper, Portal, Text } from 'react-native-paper'
 import { useSelector } from 'react-redux'
@@ -20,6 +21,8 @@ type ModalProps = {
 const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
   const { confirmPayment, loading } = useConfirmPayment()
   const navigation = useNavigation<NavigationProp>()
+  const queryClient = useQueryClient()
+  const [complete, setComplete] = useState(false)
   const route = useRoute<RouteBookingStackType<'BOOKING_CONFIRM'>>()
   const { user } = useSelector(
     ({ auth }: RootStore) => ({
@@ -31,6 +34,7 @@ const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
   const mutate = useMutation(createTransaction, {
     onSuccess: () => {
       hideModal()
+      queryClient.invalidateQueries(['myTicket', user?.id])
       Alert.alert('Thông báo', 'Đặt vé thành công!', [
         {
           text: 'OK',
@@ -47,13 +51,17 @@ const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
 
   const createPaymentIntent = useMutation(createIntent, {
     onError: () => {
-      Alert.alert('Thông báo', 'Khoi tạo thanh toán thất bại!')
+      Alert.alert('Thông báo', 'Khởi tạo thanh toán thất bại!')
     },
   })
 
   const onCheckout = async () => {
-    const totalPrice = route.params.seats.reduce((total, seat) => total + seat.price, 0)
+    if (!complete) {
+      Alert.alert('Thông báo', 'Vui lòng nhập đầy đủ thông tin thẻ!')
+      return
+    }
 
+    const totalPrice = route.params.seats.reduce((total, seat) => total + seat.price, 0)
     const { paymentIntent: clientSecret } = await createPaymentIntent.mutateAsync({
       amount: totalPrice,
     })
@@ -101,6 +109,9 @@ const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
             }}
             cardStyle={{ backgroundColor: '#EFEFEF' }}
             style={{ height: 50 }}
+            onCardChange={(cardDetails) => {
+              setComplete(cardDetails.complete)
+            }}
           />
         </View>
 

@@ -8,7 +8,7 @@ import { NavigationProp } from '@/navigation'
 import { RootStore } from '@/store'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useStripe } from '@stripe/stripe-react-native'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { isEqual } from 'lodash'
 import { useState } from 'react'
 import { Alert, StyleSheet, View } from 'react-native'
@@ -22,6 +22,7 @@ import { WarnPayment } from './components'
 const PaymentScreen = () => {
   const route = useRoute<RouteBookingStackType<'BOOKING_CONFIRM'>>()
   const navigation = useNavigation<NavigationProp>()
+  const queryClient = useQueryClient()
   const [openModal, setModal] = useState(false)
   const totalPriceString = route.params.seats
     .reduce((total, seat) => total + seat.price, 0)
@@ -53,12 +54,13 @@ const PaymentScreen = () => {
 
   const createPaymentIntent = useMutation(createIntent, {
     onError: () => {
-      Alert.alert('Thông báo', 'Khoi tạo thanh toán thất bại!')
+      Alert.alert('Thông báo', 'Khởi tạo thanh toán thất bại!')
     },
   })
 
   const mutate = useMutation(createTransaction, {
     onSuccess: () => {
+      queryClient.invalidateQueries(['myTicket', user?.id])
       Alert.alert('Thông báo', 'Đặt vé thành công!', [
         {
           text: 'OK',
@@ -138,7 +140,7 @@ const PaymentScreen = () => {
               <Text style={{ fontWeight: '700' }}>{totalPriceString} đ</Text>
             </View>
 
-            <Button mode="contained" style={{ borderRadius: 10 }} onPress={() => setModal(true)}>
+            <Button mode="contained" style={{ borderRadius: 10 }} onPress={handleOpenModal}>
               XÁC NHẬN
             </Button>
           </View>

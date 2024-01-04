@@ -103,7 +103,7 @@ const Comment = ({ movie }: CommentProps) => {
                           style={{ width: 30, height: 30, borderRadius: 100 }}
                         />
                       ) : (
-                        <Avatar.Text size={30} label={item.user.first_name} />
+                        <Avatar.Text size={30} label={item.user.first_name[0]} />
                       )}
 
                       <View>
