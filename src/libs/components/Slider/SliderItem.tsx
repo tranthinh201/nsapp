@@ -1,30 +1,19 @@
-import { ListMediaType } from '@/screens/Booking/MovieDetail'
-import { ResizeMode, Video } from 'expo-av'
+import { ListMediaType } from '@/screens/Booking'
 import React from 'react'
 import { Animated, Dimensions, StyleSheet, View } from 'react-native'
+import { YoutubeSlider } from './YoutubeSlider'
 
 const { width } = Dimensions.get('screen')
 
 const SlideItem = ({ item }: { item: ListMediaType }) => {
-  const video = React.useRef(null)
+  const idYoutube = item.path.split('v=')[1]
 
   return (
     <View style={styles.container}>
       {item.type === 'image' ? (
         <Animated.Image source={{ uri: item.path }} style={styles.image} />
       ) : (
-        item.type === 'video' && (
-          <Video
-            ref={video}
-            style={styles.video}
-            source={{
-              uri: item.path,
-            }}
-            useNativeControls
-            resizeMode={ResizeMode.CONTAIN}
-            isLooping
-          />
-        )
+        item.type === 'video' && <YoutubeSlider url={idYoutube} isLoading={false} />
       )}
     </View>
   )

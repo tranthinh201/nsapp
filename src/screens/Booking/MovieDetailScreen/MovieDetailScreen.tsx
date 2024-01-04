@@ -1,15 +1,15 @@
 import { getMovieById } from '@/libs/api/movie'
 import { Header } from '@/libs/components'
+import { YoutubeScreen } from '@/libs/components/YoutubeScreen'
 import { RouteBookingStackType } from '@/libs/route'
 import { NavigationProp } from '@/navigation'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { FlashList, ListRenderItem } from '@shopify/flash-list'
 import { useQuery } from '@tanstack/react-query'
-import { ResizeMode, Video } from 'expo-av'
 import React from 'react'
 import { Animated, Image, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button, Text } from 'react-native-paper'
+import { ActivityIndicator, Button, Text } from 'react-native-paper'
 import { PersonType } from '../types'
 import { Comment } from './Comment'
 import { InformationMovie } from './InformationMovie'
@@ -71,10 +71,9 @@ const MovieDetailScreen = () => {
     )
   }
 
-  const video = React.useRef(null)
-
   const renderList: ListRenderItem<ListMediaType> = ({ item, index }) => {
     const isLastItem = index === listMedia.length - 1
+    const idYoutubeTrailers = item.path.split('?v=')[1]
 
     return (
       <TouchableOpacity
@@ -85,18 +84,7 @@ const MovieDetailScreen = () => {
           marginRight: isLastItem ? 10 : 0,
         }}
       >
-        {item.type === 'video' && (
-          <Video
-            ref={video}
-            style={{ width: 200, height: 100, borderRadius: 12, marginTop: 34.5 }}
-            videoStyle={{ borderRadius: 10 }}
-            source={{
-              uri: item.path,
-            }}
-            useNativeControls
-            resizeMode={ResizeMode.CONTAIN}
-          />
-        )}
+        {item.type === 'video' && <YoutubeScreen url={idYoutubeTrailers} isLoading={isLoading} />}
 
         <Animated.Image
           source={{ uri: item.path }}
@@ -107,7 +95,11 @@ const MovieDetailScreen = () => {
   }
 
   if (isLoading) {
-    return <Text>Loading...</Text>
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator />
+      </View>
+    )
   }
 
   const handleMoveToCinema = () => {
