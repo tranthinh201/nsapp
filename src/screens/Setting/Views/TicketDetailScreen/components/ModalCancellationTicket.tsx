@@ -1,10 +1,13 @@
 import { cancelTransaction } from '@/libs/api/booking'
 import { NavigationProp } from '@/navigation'
+import { RootStore } from '@/store'
 import { useNavigation } from '@react-navigation/native'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { isEqual } from 'lodash'
 import { View } from 'moti'
 import { Alert, StyleSheet } from 'react-native'
 import { Button, Modal as ModalPaper, Portal, Text } from 'react-native-paper'
+import { useSelector } from 'react-redux'
 
 type ModalProps = {
   openModal: boolean
@@ -14,6 +17,13 @@ type ModalProps = {
 
 const ModalCancellationTicket = ({ openModal, hideModal, ticket_id }: ModalProps) => {
   const navigation = useNavigation<NavigationProp>()
+  const queryClient = useQueryClient()
+  const { user } = useSelector(
+    ({ auth }: RootStore) => ({
+      user: auth.user,
+    }),
+    isEqual,
+  )
 
   const mutate = useMutation(cancelTransaction, {
     onSuccess: async () => {
@@ -22,6 +32,7 @@ const ModalCancellationTicket = ({ openModal, hideModal, ticket_id }: ModalProps
         {
           text: 'OK',
           onPress: () => {
+            queryClient.invalidateQueries(['myTicket', user?.id])
             navigation.navigate('BottomTabs', { screen: 'TAB_HOME' })
           },
         },

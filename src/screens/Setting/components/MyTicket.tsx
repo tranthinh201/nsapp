@@ -25,7 +25,7 @@ const MyTicket = () => {
     isEqual,
   )
 
-  const { data, isFetching } = useQuery(['myTicket'], getUnCheckTicket, {
+  const { data, isFetching } = useQuery(['myTicket', user?.id], getUnCheckTicket, {
     enabled: !!user?.id,
   })
 

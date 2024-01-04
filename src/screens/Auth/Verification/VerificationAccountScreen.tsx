@@ -47,7 +47,6 @@ const VerificationAccountScreen = () => {
                 { token: code },
                 {
                   onSuccess: (response) => {
-                    console.log(JSON.stringify(response))
                     if (response.status === 201) {
                       navigation.navigate('AuthStack', {
                         screen: 'SIGN_IN',

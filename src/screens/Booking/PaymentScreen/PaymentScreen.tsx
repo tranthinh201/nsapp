@@ -100,7 +100,7 @@ const PaymentScreen = () => {
       return
     }
 
-    const { error } = await presentPaymentSheet()
+    const { error, paymentOption } = await presentPaymentSheet()
 
     if (error) {
       return
@@ -138,7 +138,7 @@ const PaymentScreen = () => {
               <Text style={{ fontWeight: '700' }}>{totalPriceString} đ</Text>
             </View>
 
-            <Button mode="contained" style={{ borderRadius: 10 }} onPress={onTransaction}>
+            <Button mode="contained" style={{ borderRadius: 10 }} onPress={() => setModal(true)}>
               XÁC NHẬN
             </Button>
           </View>

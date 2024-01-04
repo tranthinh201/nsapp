@@ -79,7 +79,8 @@ const ModalPayment = ({ openModal, hideModal }: ModalProps) => {
       user_id: user?.id as string,
       price: paymentIntent.amount,
       payment_status: 'SUCCESS',
-      payment_intent_id: clientSecret,
+      payment_intent_id: paymentIntent.id,
+      foods: [],
     })
   }
 

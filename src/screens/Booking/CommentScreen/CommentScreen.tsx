@@ -65,7 +65,7 @@ const CommentScreen = () => {
 
   const mutation = useMutation(createComment, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['movie-detail'] })
+      queryClient.invalidateQueries({ queryKey: ['movie-detail', route.params.movie_id] })
       navigation.navigate('BookingStack', {
         screen: 'BOOKING_MOVIE_DETAIL',
         params: {
