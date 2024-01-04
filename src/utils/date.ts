@@ -30,3 +30,9 @@ export const convertTimeTransaction = (date: string | Date | number) => {
 
   return format(time, 'HH:mm - dd/MM/yyy', { locale: vi })
 }
+
+export const convertToYear = (date: string | Date | number) => {
+  const time = new Date(date)
+
+  return format(time, 'yyyy')
+}

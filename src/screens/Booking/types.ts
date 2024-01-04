@@ -69,6 +69,13 @@ export const Comment = z.object({
   star: z.number().min(1).max(10),
   image: z.string().array().optional(),
   feeling: z.string().array().optional(),
+  user: z.object({
+    id: z.string(),
+    avatar: z.string(),
+    first_name: z.string(),
+    last_name: z.string(),
+    email_verified: z.date(),
+  }),
   created_at: z.date(),
   updated_at: z.date(),
 })
@@ -89,6 +96,10 @@ export const MovieSchema = z.object({
     name: z.string(),
     created_at: z.date(),
     updated_at: z.date(),
+  }),
+  rate: z.object({
+    star: z.number(),
+    total_rate: z.number(),
   }),
   movie_format_id: z.string(),
   movie_image: MovieImageSchema.array(),

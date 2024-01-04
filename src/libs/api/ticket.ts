@@ -5,7 +5,6 @@ export const getUnCheckTicket = async (): Promise<BillingType[]> => {
   try {
     const response = await ApiClient.get(`ticket/un-check`)
 
-    console.log('response', response)
     return response.data
   } catch (error) {
     throw error

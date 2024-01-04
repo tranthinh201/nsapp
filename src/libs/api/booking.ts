@@ -10,17 +10,21 @@ export const createTransaction = async ({
   foods,
   payment_intent_id,
 }: CreateTransactionType) => {
-  const response = await ApiClient.post('ticket', {
-    price,
-    schedule_id,
-    seats,
-    payment_status,
-    user_id,
-    foods,
-    payment_intent_id,
-  })
+  try {
+    const response = await ApiClient.post('ticket', {
+      price,
+      schedule_id,
+      seats,
+      payment_status,
+      user_id,
+      foods,
+      payment_intent_id,
+    })
 
-  return response.data
+    return response.data
+  } catch (error) {
+    throw error
+  }
 }
 
 export const cancelTransaction = async ({ id }: { id: string }) => {

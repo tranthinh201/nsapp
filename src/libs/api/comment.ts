@@ -18,6 +18,29 @@ export const createComment = async ({
       feeling,
       image,
     })
+
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const checkComment = async ({ movie_id }: { movie_id: string }) => {
+  try {
+    const response = await ApiClient.post(`comment/check`, {
+      movie_id,
+    })
+
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const deleteComment = async ({ id }: { id: string }) => {
+  try {
+    const response = await ApiClient.delete(`comment/${id}`)
+
     return response.data
   } catch (error) {
     throw error

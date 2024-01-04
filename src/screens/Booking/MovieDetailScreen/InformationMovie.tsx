@@ -38,9 +38,9 @@ const InformationMovie = ({ movie }: { movie: MovieType }) => {
           <View style={styles.rate}>
             <StarSvg width={14} height={14} style={{ marginTop: 2 }} />
 
-            <Text style={styles.numberRate}>9.3/10</Text>
+            <Text style={styles.numberRate}>{movie.rate.star}/10</Text>
 
-            <Text style={styles.totalRate}>(224 đánh giá)</Text>
+            <Text style={styles.totalRate}>({movie.rate.total_rate} đánh giá)</Text>
           </View>
 
           <View style={styles.warn}>
