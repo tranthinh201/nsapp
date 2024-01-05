@@ -35,13 +35,15 @@ const InformationMovie = ({ movie }: { movie: MovieType }) => {
 
           <Text style={styles.genre}>{movie.movie_type.name}</Text>
 
-          <View style={styles.rate}>
-            <StarSvg width={14} height={14} style={{ marginTop: 2 }} />
+          {movie.rate.star > 0 && (
+            <View style={styles.rate}>
+              <StarSvg width={14} height={14} style={{ marginTop: 2 }} />
 
-            <Text style={styles.numberRate}>{movie.rate.star}/10</Text>
+              <Text style={styles.numberRate}>{movie.rate.star}/10</Text>
 
-            <Text style={styles.totalRate}>({movie.rate.total_rate} đánh giá)</Text>
-          </View>
+              <Text style={styles.totalRate}>({movie.rate.total_rate} đánh giá)</Text>
+            </View>
+          )}
 
           <View style={styles.warn}>
             <WarnSvg width={13} height={13} style={{ marginTop: 2.5 }} />
