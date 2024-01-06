@@ -52,14 +52,14 @@ const MyTicket = () => {
           <Text style={{ fontWeight: '700' }}>{item.schedule.movie_name}</Text>
 
           <View style={{ flexDirection: 'row' }}>
-            <Text>{convertDateToHour(item.schedule.start_time)}</Text>
+            <Text style={{ fontSize: 12 }}>{convertDateToHour(item.schedule.start_time)}</Text>
             <Text> - </Text>
-            <Text>{convertDateToHour(item.schedule.end_time)}</Text>
+            <Text style={{ fontSize: 12 }}>{convertDateToHour(item.schedule.end_time)}</Text>
           </View>
 
-          <Text>{item.schedule.screen_name}</Text>
+          <Text style={{ fontSize: 12 }}>{item.schedule.cinema_name}</Text>
 
-          <Text>{item.schedule.cinema_address}</Text>
+          <Text style={{ fontSize: 12 }}>{item.schedule.cinema_address}</Text>
         </View>
       </Pressable>
     )

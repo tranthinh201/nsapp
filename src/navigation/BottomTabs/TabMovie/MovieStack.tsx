@@ -1,23 +1,23 @@
 import { SCREENS_KEY } from '@/navigation/preset'
-import { SettingScreen } from '@/screens/Setting'
+import { MovieScreen } from '@/screens/Movie'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import { SettingStackParams } from './SettingStackParams'
+import { MovieStackParams } from './MovieStackParams'
 
-const SettingScreens = [
+const MovieScreens = [
   {
-    name: SCREENS_KEY.SETTING.INDEX,
-    component: SettingScreen,
+    name: SCREENS_KEY.MOVIE.INDEX,
+    component: MovieScreen,
     options: { headerShown: false },
   },
 ]
 
-const Stack = createStackNavigator<SettingStackParams>()
+const Stack = createStackNavigator<MovieStackParams>()
 
-export function TabSetting() {
+export function TabMovie() {
   return (
     <Stack.Navigator>
-      {SettingScreens.map((child) => (
+      {MovieScreens.map((child) => (
         <Stack.Screen
           key={child.name}
           name={child.name}

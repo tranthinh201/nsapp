@@ -1,7 +1,4 @@
-import AppleIcon from '@/assets/svg/apple.svg'
 import EyeSvg from '@/assets/svg/eye.svg'
-import FaceBookIcon from '@/assets/svg/facebook.svg'
-import GoogleIcon from '@/assets/svg/google.svg'
 import HideSvg from '@/assets/svg/hide.svg'
 import { signIn } from '@/libs/api/auth'
 import { setAccessToken, setAuthUser } from '@/libs/asyncStorage'
@@ -164,20 +161,7 @@ const SignInScreen = () => {
             </Pressable>
           </View>
 
-          <View style={styles.socialList}>
-            <View style={[styles.socialItem, { width: width / 3 - 25 }]}>
-              <FaceBookIcon />
-            </View>
-
-            <View style={[styles.socialItem, { width: width / 3 - 25 }]}>
-              <GoogleIcon />
-            </View>
-
-            <View style={[styles.socialItem, { width: width / 3 - 25 }]}>
-              <AppleIcon />
-            </View>
-          </View>
-
+          
           <Button
             loading={isLoading}
             mode="contained"

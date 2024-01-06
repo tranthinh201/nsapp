@@ -27,22 +27,22 @@ const data = [
   {
     title: 'Vé đã mua',
     icon: <TicketSvg width={25} height={25} />,
-    route: 'Order',
+    route: 'HISTORY',
   },
   {
     title: 'Phim đã xem',
     icon: <EyeSvg width={25} height={25} />,
-    route: 'Order',
+    route: 'HISTORY',
   },
   {
     title: 'Đánh giá',
     icon: <StarSvg width={25} height={25} />,
-    route: 'Order',
+    route: 'HISTORY',
   },
   {
     title: 'Bình luận',
     icon: <CommentSvg width={25} height={25} />,
-    route: 'Order',
+    route: 'HISTORY',
   },
 ]
 
@@ -64,22 +64,27 @@ const AuthSetting = () => {
   }
 
   const renderItem = ({ item }: { item: DataType }) => {
+    const onPress = () => {
+      navigation.navigate('ProfileStack', {
+        screen: item.route as 'HISTORY',
+      })
+    }
+
     return (
-      <View
+      <Pressable
         style={{
           alignItems: 'center',
           width: dimensions.width / 4 - 20,
           marginRight: 10,
         }}
+        onPress={onPress}
       >
         {item.icon}
 
         <Text style={textStyles.text12}>{item.title}</Text>
-      </View>
+      </Pressable>
     )
   }
-
-  const fullName = `${user?.last_name[0]}${user?.name[0]}`
 
   return (
     <View>
@@ -92,7 +97,7 @@ const AuthSetting = () => {
               {user?.avatar ? (
                 <Image style={[styles.avatar]} source={{ uri: user.avatar }} />
               ) : (
-                <Avatar.Text size={80} label={fullName} />
+                <Avatar.Text size={80} label={user?.last_name[0] || 'T'} />
               )}
             </Pressable>
 

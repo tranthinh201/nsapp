@@ -4,6 +4,8 @@ import ComingSoonFocusedSvg from '@/assets/svg/coming-soon-focused.svg'
 import ComingSoonSvg from '@/assets/svg/coming-soon.svg'
 import FoodFocusedSvg from '@/assets/svg/food-focused.svg'
 import FoodSvg from '@/assets/svg/food.svg'
+import HomeFocusedSvg from '@/assets/svg/home-focused.svg'
+import HomeSvg from '@/assets/svg/home.svg'
 import SettingFocusedSvg from '@/assets/svg/setting-focused.svg'
 import SettingSvg from '@/assets/svg/setting.svg'
 import { useAppTheme } from '@/libs/config/theme'
@@ -14,6 +16,7 @@ import { MainBottomTabParamList } from './MainBottomTabParams'
 import { TabComingSoon } from './TabComingSoon'
 import { TabFood } from './TabFood'
 import { TabHome } from './TabHome'
+import { TabMovie } from './TabMovie'
 import { TabSetting } from './TabSetting'
 
 const Tab = createBottomTabNavigator<MainBottomTabParamList>()
@@ -31,14 +34,10 @@ const BottomTabs = () => {
       name: BOTTOM_TABS_KEY.TAB_HOME,
       component: TabHome,
       options: {
-        title: 'Phim',
+        title: 'Trang chủ',
         headerShown: false,
         tabBarIcon: ({ focused }: tabBarIconProps) =>
-          focused ? (
-            <BillBoardFocusedSvg width={20} height={20} />
-          ) : (
-            <BillBoardSvg width={20} height={20} />
-          ),
+          focused ? <HomeFocusedSvg width={30} height={30} /> : <HomeSvg width={30} height={30} />,
       },
     },
     {
@@ -52,6 +51,20 @@ const BottomTabs = () => {
             <ComingSoonFocusedSvg width={20} height={20} />
           ) : (
             <ComingSoonSvg width={20} height={20} />
+          ),
+      },
+    },
+    {
+      name: BOTTOM_TABS_KEY.TAB_MOVIE,
+      component: TabMovie,
+      options: {
+        title: 'Phim',
+        headerShown: false,
+        tabBarIcon: ({ focused }: tabBarIconProps) =>
+          focused ? (
+            <BillBoardFocusedSvg width={20} height={20} />
+          ) : (
+            <BillBoardSvg width={20} height={20} />
           ),
       },
     },
@@ -73,9 +86,9 @@ const BottomTabs = () => {
         headerShown: false,
         tabBarIcon: ({ focused }: tabBarIconProps) =>
           focused ? (
-            <SettingFocusedSvg width={20} height={20} />
+            <SettingFocusedSvg width={25} height={25} />
           ) : (
-            <SettingSvg width={20} height={20} />
+            <SettingSvg width={25} height={25} />
           ),
       },
     },
@@ -95,12 +108,11 @@ const BottomTabs = () => {
           component={tab.component}
           options={{
             ...tab.options,
-            tabBarActiveTintColor: colors.textRed,
+            tabBarActiveTintColor: colors.primary,
             tabBarInactiveTintColor: colors.textGray,
             tabBarLabelStyle: {
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: 'bold',
-              fontFamily: 'Itim-Regular',
             },
           }}
         />

@@ -13,6 +13,12 @@ export const convertDateToWeekAndDay = (date: string | Date | number) => {
   return format(time, 'EEEE, dd/MM', { locale: vi })
 }
 
+export const convertDateToWeekDayHour = (date: string | Date | number) => {
+  const time = new Date(date)
+
+  return format(time, 'HH:mm - EEEE, dd/MM', { locale: vi })
+}
+
 export const convertDate = (date: string | Date | number) => {
   const time = new Date(date)
 

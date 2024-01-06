@@ -13,6 +13,10 @@ const scheduleSchema = z.object({
   cinema_address: z.string(),
   movie_name: z.string(),
   movie_image: z.string(),
+  cinema_image: z.string(),
+  movie_type: z.string(),
+  movie_format: z.string(),
+  movie_language: z.string(),
 })
 
 const billingSchema = z.object({

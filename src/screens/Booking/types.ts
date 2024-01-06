@@ -97,6 +97,12 @@ export const MovieSchema = z.object({
     created_at: z.date(),
     updated_at: z.date(),
   }),
+  movie_format: z.object({
+    id: z.string(),
+    name: z.string(),
+    created_at: z.date(),
+    updated_at: z.date(),
+  }),
   rate: z.object({
     star: z.number(),
     total_rate: z.number(),

@@ -65,6 +65,9 @@ export const PROFILE_STACK = {
   TICKET_DETAIL: {
     INDEX: 'TICKET_DETAIL' as const,
   },
+  HISTORY: {
+    INDEX: 'HISTORY' as const,
+  },
 }
 
 export const SCREENS_KEY = {
@@ -76,6 +79,9 @@ export const SCREENS_KEY = {
     INDEX: 'SETTING_INDEX' as const,
     INFORMATION: 'SETTING_INFORMATION' as const,
     CHANGE_PASSWORD: 'SETTING_CHANGE_PASSWORD' as const,
+  },
+  MOVIE: {
+    INDEX: 'MOVIE_INDEX' as const,
   },
   COMING_SOON: {
     INDEX: 'COMING_SOON_INDEX' as const,
@@ -96,4 +102,5 @@ export const BOTTOM_TABS_KEY = {
   TAB_SETTING: 'TAB_SETTING' as const,
   TAB_COMING_SOON: 'TAB_COMING_SOON' as const,
   TAB_FOOD: 'TAB_FOOD' as const,
+  TAB_MOVIE: 'TAB_MOVIE' as const,
 }

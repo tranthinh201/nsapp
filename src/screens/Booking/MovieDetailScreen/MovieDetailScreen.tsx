@@ -32,12 +32,12 @@ const MovieDetailScreen = () => {
 
   let listMedia: ListMediaType[] = []
 
-  if (data?.trailer_movie) {
-    listMedia.push({
-      type: 'video',
-      path: data.trailer_movie,
-    })
-  }
+  // if (data?.trailer_movie) {
+  //   listMedia.push({
+  //     type: 'video',
+  //     path: data.trailer_movie,
+  //   })
+  // }
 
   if (data?.movie_image) {
     const imageMedia = data.movie_image.map((item) => ({
@@ -107,7 +107,7 @@ const MovieDetailScreen = () => {
   }
 
   if (isLoading) {
-    return <Text>Loading...</Text>
+    return
   }
 
   const handleMoveToCinema = () => {

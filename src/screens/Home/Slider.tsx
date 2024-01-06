@@ -1,8 +1,10 @@
+import StarSvg from '@/assets/svg/star.svg'
 import { listMovie } from '@/libs/api/movie'
+import { useAppTheme } from '@/libs/config/theme'
+import { textStyles } from '@/libs/styles'
 import { NavigationProp } from '@/navigation'
 import { useNavigation } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
-import { format } from 'date-fns'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import {
@@ -14,7 +16,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native'
-import { Button, Text } from 'react-native-paper'
+import { ActivityIndicator, Button, Text } from 'react-native-paper'
 import { MovieType } from '../Booking'
 
 const { width, height } = Dimensions.get('window')
@@ -68,11 +70,19 @@ function Backdrop({ scrollX, data }: { scrollX: Animated.Value; data?: MovieType
 const SliderHome = () => {
   const navigation = useNavigation<NavigationProp>()
   const scrollX = React.useRef(new Animated.Value(0)).current
-  const { data } = useQuery(['movies'], listMovie)
+  const { colors } = useAppTheme()
+  const { data, isLoading } = useQuery(['movies'], listMovie)
 
   const handleMoveToDetail = (id: string) => {
     navigation.navigate('BookingStack', { screen: 'BOOKING_MOVIE_DETAIL', params: { id } })
   }
+
+  if (isLoading)
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    )
 
   return (
     <SafeAreaView style={styles.container}>
@@ -118,14 +128,28 @@ const SliderHome = () => {
                   style={styles.posterImage}
                 />
 
-                <Text style={{ fontSize: 20, textTransform: 'uppercase' }}>{item.name}</Text>
+                <View style={{ gap: 2, alignItems: 'center' }}>
+                  {item.rate.total_rate > 0 ? (
+                    <View style={{ flexDirection: 'row' }}>
+                      <View style={styles.rate}>
+                        <StarSvg width={14} height={14} style={{ marginTop: 2 }} />
 
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ fontSize: 11 }}>{item.duration} phút </Text>
+                        <Text style={styles.numberRate}>{item.rate.star}/10</Text>
 
-                  <Text style={{ fontSize: 11 }}>
-                    {format(new Date(item.released_date), 'dd/MM/yyyy')}
-                  </Text>
+                        <Text style={styles.totalRate}>({item.rate.total_rate} đánh giá)</Text>
+                      </View>
+                    </View>
+                  ) : (
+                    <View style={{ flexDirection: 'row' }}>
+                      <Text style={textStyles.text12}>
+                        {item.movie_format.name} {item.language_movie}
+                      </Text>
+                    </View>
+                  )}
+
+                  <Text style={{ ...textStyles.text16, fontWeight: '500' }}>{item.name}</Text>
+
+                  <Text style={textStyles.text12}>{item.movie_type.name}</Text>
                 </View>
 
                 <Text style={{ color: 'grey' }}>
@@ -179,4 +203,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: 200,
   },
+  rate: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  numberRate: { ...textStyles.text12, marginHorizontal: 4, color: '#9B9B9B' },
+  totalRate: { ...textStyles.text12, color: '#9B9B9B' },
 })

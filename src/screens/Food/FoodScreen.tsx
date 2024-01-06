@@ -4,7 +4,7 @@ import { useAppTheme } from '@/libs/config/theme'
 import { useQuery } from '@tanstack/react-query'
 import { Image, ScrollView, StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Text } from 'react-native-paper'
+import { Divider, Text } from 'react-native-paper'
 
 const FoodScreen = () => {
   const { colors } = useAppTheme()
@@ -37,6 +37,8 @@ const FoodScreen = () => {
                 <Text style={{ fontWeight: '700' }}>{item.price.toLocaleString('it-IT')} đ</Text>
               </View>
             </View>
+
+            <Divider style={{ marginTop: 10 }} />
           </TouchableOpacity>
         ))}
       </ScrollView>

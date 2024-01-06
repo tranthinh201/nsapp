@@ -20,3 +20,13 @@ export const getDetailTicket = async ({ id }: { id: string }): Promise<BillingTy
     throw error
   }
 }
+
+export const getHistoryTicket = async (): Promise<BillingType[]> => {
+  try {
+    const response = await ApiClient.get(`ticket/history`)
+
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}

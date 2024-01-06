@@ -2,7 +2,9 @@ import { getMe, updateProfile } from '@/libs/api/user'
 import { AvatarSetting, Header, Input } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
 import { btnStyles, textStyles } from '@/libs/styles'
+import { NavigationProp } from '@/navigation'
 import { RootStore } from '@/store'
+import { useNavigation } from '@react-navigation/native'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { ImagePickerAsset } from 'expo-image-picker'
 import { isEqual } from 'lodash'
@@ -22,6 +24,7 @@ const InformationScreen = () => {
     }),
     isEqual,
   )
+  const navigation = useNavigation<NavigationProp>()
   const [imagePath, setImagePath] = useState<ImagePickerAsset>()
 
   const { data, isFetching } = useQuery(['user', user?.id], () => getMe(user?.id as string), {
@@ -64,9 +67,22 @@ const InformationScreen = () => {
     mutate({ id: user?.id as string, data })
   }
 
+  const handleMoveChangePassword = () => {
+    navigation.navigate('ProfileStack', {
+      screen: 'CHANGE_PASSWORD',
+    })
+  }
+
   return (
     <View style={styles.root}>
-      <Header title="Thông tin" />
+      <Header
+        title="Thông tin"
+        right={
+          <Button onPress={handleMoveChangePassword} mode="text">
+            Đổi mật khẩu
+          </Button>
+        }
+      />
 
       <KeyboardAwareScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
