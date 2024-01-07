@@ -7,12 +7,12 @@ import { SlideItem } from './SliderItem'
 const Slider = ({ movie }: { movie: MovieType }) => {
   let listMedia: ListMediaType[] = []
 
-  // if (movie.trailer_movie) {
-  //   listMedia.push({
-  //     type: 'video',
-  //     path: movie.trailer_movie,
-  //   })
-  // }
+  if (movie.trailer_movie) {
+    listMedia.push({
+      type: 'video',
+      path: movie.trailer_movie,
+    })
+  }
 
   if (movie.movie_image) {
     const imageMedia = movie.movie_image.map((item) => ({

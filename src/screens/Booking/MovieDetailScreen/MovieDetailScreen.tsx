@@ -32,12 +32,12 @@ const MovieDetailScreen = () => {
 
   let listMedia: ListMediaType[] = []
 
-  // if (data?.trailer_movie) {
-  //   listMedia.push({
-  //     type: 'video',
-  //     path: data.trailer_movie,
-  //   })
-  // }
+  if (data?.trailer_movie) {
+    listMedia.push({
+      type: 'video',
+      path: data.trailer_movie,
+    })
+  }
 
   if (data?.movie_image) {
     const imageMedia = data.movie_image.map((item) => ({
@@ -132,7 +132,7 @@ const MovieDetailScreen = () => {
     <>
       <Header title={data?.name.toLocaleUpperCase()} />
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {data && <InformationMovie movie={data} />}
 
         <View style={styles.list}>
