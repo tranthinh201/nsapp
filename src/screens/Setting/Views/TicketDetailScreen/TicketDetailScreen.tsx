@@ -55,194 +55,195 @@ const TicketDetailScreen = () => {
     return diffHours < 24
   }
 
+  if (isFetching)
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="small" color={colors.primary} />
+      </View>
+    )
+
   return (
     <>
       <View style={{ backgroundColor: colors.background, flex: 1, paddingBottom: 20 }}>
         <Header title="Thông tin vé xem phim" />
 
-        {isFetching ? (
-          <ActivityIndicator />
-        ) : (
-          <ScrollView>
-            <View style={styles.container}>
-              <View style={styles.header}>
-                <Image source={{ uri: data?.schedule.cinema_image }} width={30} height={30} />
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <Image source={{ uri: data?.schedule.cinema_image }} width={30} height={30} />
 
-                <View>
-                  <Text style={{ fontWeight: '500', fontSize: 12 }}>
-                    {data?.schedule.cinema_name}
-                  </Text>
-                  <Text style={{ fontSize: 18, fontWeight: '600' }}>
-                    {data?.schedule.movie_name}
-                  </Text>
-                  <Text style={textStyles.text12}>
-                    {data?.schedule.movie_format} {data?.schedule.movie_language}
-                  </Text>
-                </View>
-              </View>
-
-              <Image
-                source={{ uri: data?.schedule.movie_image }}
-                style={{ width: '100%', height: 200 }}
-              />
-
-              <View style={styles.detailContainer}>
-                <View style={styles.detailContent}>
-                  <View style={{ gap: 10 }}>
-                    <View style={{ gap: 4 }}>
-                      <Text style={{ color: colors.textGray }}>Mã đặt vé: </Text>
-                      <Text style={{ fontSize: 16, fontWeight: '600', maxWidth: 200 }}>
-                        {data?.id}
-                      </Text>
-                    </View>
-
-                    <View style={{ gap: 3 }}>
-                      <Text style={{ color: colors.textGray }}>Thời gian:</Text>
-
-                      <Text style={{ fontWeight: '600', fontSize: 16, color: colors.primary }}>
-                        {convertDateToHour(data?.schedule.start_time as string)}-
-                        {convertDateToHour(data?.schedule.end_time as string)}
-                      </Text>
-
-                      <Text style={{ fontWeight: '500', fontSize: 16 }}>
-                        {convertDateToYear(data?.schedule.start_time as string)}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View>
-                    <Pressable
-                      style={{ backgroundColor: colors.background, padding: 10, borderRadius: 8 }}
-                      onPress={() => setOpenModal(true)}
-                    >
-                      <QRCode value={qrCodeValue} />
-                    </Pressable>
-                  </View>
-                </View>
-
-                <Text style={[styles.warnText, { color: colors.textGray }]}>
-                  Đưa mã này cho nhân viên soát vé để vào rạp
+              <View>
+                <Text style={{ fontWeight: '500', fontSize: 12 }}>
+                  {data?.schedule.cinema_name}
                 </Text>
-
-                <DividerTicket />
+                <Text style={{ fontSize: 18, fontWeight: '600' }}>{data?.schedule.movie_name}</Text>
+                <Text style={textStyles.text12}>
+                  {data?.schedule.movie_format} {data?.schedule.movie_language}
+                </Text>
               </View>
+            </View>
 
-              <View
-                style={[
-                  styles.room,
-                  {
-                    backgroundColor: colors.background,
-                    borderColor: colors.divider,
-                  },
-                ]}
-              >
-                <View
-                  style={[
-                    styles.infoSeat,
-                    {
-                      borderColor: colors.divider,
-                    },
-                  ]}
-                >
-                  <View style={{ gap: 5 }}>
-                    <Text style={{ color: colors.textGray }}>Phòng chiếu</Text>
+            <Image
+              source={{ uri: data?.schedule.movie_image }}
+              style={{ width: '100%', height: 200 }}
+            />
 
-                    <Text style={{ fontWeight: '600' }}>{data?.schedule.screen_name}</Text>
+            <View style={styles.detailContainer}>
+              <View style={styles.detailContent}>
+                <View style={{ gap: 10 }}>
+                  <View style={{ gap: 4 }}>
+                    <Text style={{ color: colors.textGray }}>Mã đặt vé: </Text>
+                    <Text style={{ fontSize: 16, fontWeight: '600', maxWidth: 200 }}>
+                      {data?.id}
+                    </Text>
                   </View>
 
-                  <View style={{ gap: 5 }}>
-                    <Text style={{ color: colors.textGray }}>Số vé</Text>
+                  <View style={{ gap: 3 }}>
+                    <Text style={{ color: colors.textGray }}>Thời gian:</Text>
 
-                    <Text style={{ fontWeight: '600' }}>0{data?.tickets.length}</Text>
-                  </View>
+                    <Text style={{ fontWeight: '600', fontSize: 16, color: colors.primary }}>
+                      {convertDateToHour(data?.schedule.start_time as string)}-
+                      {convertDateToHour(data?.schedule.end_time as string)}
+                    </Text>
 
-                  <View style={{ gap: 5 }}>
-                    <Text style={{ color: colors.textGray }}>Số ghế</Text>
-
-                    <Text style={{ fontWeight: '600' }}>
-                      {data?.tickets.map((ticket) => ticket.seat_name).join(', ')}
+                    <Text style={{ fontWeight: '500', fontSize: 16 }}>
+                      {convertDateToYear(data?.schedule.start_time as string)}
                     </Text>
                   </View>
                 </View>
 
                 <View>
-                  <View style={{ gap: 5 }}>
-                    <Text style={{ color: colors.textGray }}>Rạp chiếu</Text>
-
-                    <Text style={{ fontWeight: '500' }}>{data?.schedule.cinema_name}</Text>
-
-                    <Text>{data?.schedule.cinema_address}</Text>
-                  </View>
+                  <Pressable
+                    style={{ backgroundColor: colors.background, padding: 10, borderRadius: 8 }}
+                    onPress={() => setOpenModal(true)}
+                  >
+                    <QRCode value={qrCodeValue} />
+                  </Pressable>
                 </View>
               </View>
 
+              <Text style={[styles.warnText, { color: colors.textGray }]}>
+                Đưa mã này cho nhân viên soát vé để vào rạp
+              </Text>
+
+              <DividerTicket />
+            </View>
+
+            <View
+              style={[
+                styles.room,
+                {
+                  backgroundColor: colors.background,
+                  borderColor: colors.divider,
+                },
+              ]}
+            >
               <View
                 style={[
-                  styles.infoTransaction,
+                  styles.infoSeat,
                   {
                     borderColor: colors.divider,
                   },
                 ]}
               >
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-end',
-                  }}
-                >
-                  <Text style={{ color: colors.textGray }}>Tổng tiền</Text>
+                <View style={{ gap: 5 }}>
+                  <Text style={{ color: colors.textGray }}>Phòng chiếu</Text>
 
-                  <Text style={{ color: colors.textGray, fontSize: 20, fontWeight: '700' }}>
-                    {formatNumberVND(data?.price as number)}
-                  </Text>
+                  <Text style={{ fontWeight: '600' }}>{data?.schedule.screen_name}</Text>
                 </View>
 
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-end',
-                  }}
-                >
-                  <Text style={{ color: colors.textGray }}>Mã giao dịch</Text>
+                <View style={{ gap: 5 }}>
+                  <Text style={{ color: colors.textGray }}>Số vé</Text>
 
-                  <Text style={{ color: colors.primary }}>{truncate(data?.id)}</Text>
+                  <Text style={{ fontWeight: '600' }}>0{data?.tickets.length}</Text>
                 </View>
 
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-end',
-                  }}
-                >
-                  <Text style={{ color: colors.textGray }}>Thời gian giao dịch</Text>
+                <View style={{ gap: 5 }}>
+                  <Text style={{ color: colors.textGray }}>Số ghế</Text>
 
-                  <Text style={{ color: colors.textGray }}>
-                    {convertTimeTransaction(data?.created_at as string)}
+                  <Text style={{ fontWeight: '600' }}>
+                    {data?.tickets.map((ticket) => ticket.seat_name).join(', ')}
                   </Text>
+                </View>
+              </View>
+
+              <View>
+                <View style={{ gap: 5 }}>
+                  <Text style={{ color: colors.textGray }}>Rạp chiếu</Text>
+
+                  <Text style={{ fontWeight: '500' }}>{data?.schedule.cinema_name}</Text>
+
+                  <Text>{data?.schedule.cinema_address}</Text>
                 </View>
               </View>
             </View>
 
-            {isStartTimeBefore24hour() ? (
-              <View style={{ paddingHorizontal: 15 }}>
-                <Text style={{ textAlign: 'center', color: colors.textGray, fontSize: 12 }}>
-                  Bạn không thể huỷ vé trước 24h so với thời gian chiếu
+            <View
+              style={[
+                styles.infoTransaction,
+                {
+                  borderColor: colors.divider,
+                },
+              ]}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                }}
+              >
+                <Text style={{ color: colors.textGray }}>Tổng tiền</Text>
+
+                <Text style={{ color: colors.textGray, fontSize: 20, fontWeight: '700' }}>
+                  {formatNumberVND(data?.price as number)}
                 </Text>
               </View>
-            ) : (
-              <Button
-                mode="outlined"
-                style={{ borderRadius: 10, marginHorizontal: 15 }}
-                onPress={() => setOpenModalTicket(true)}
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                }}
               >
-                Huỷ vé
-              </Button>
-            )}
-          </ScrollView>
-        )}
+                <Text style={{ color: colors.textGray }}>Mã giao dịch</Text>
+
+                <Text style={{ color: colors.primary }}>{truncate(data?.id)}</Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                }}
+              >
+                <Text style={{ color: colors.textGray }}>Thời gian giao dịch</Text>
+
+                <Text style={{ color: colors.textGray }}>
+                  {convertTimeTransaction(data?.created_at as string)}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {isStartTimeBefore24hour() ? (
+            <View style={{ paddingHorizontal: 15 }}>
+              <Text style={{ textAlign: 'center', color: colors.textGray, fontSize: 12 }}>
+                Bạn không thể huỷ vé trước 24h so với thời gian chiếu
+              </Text>
+            </View>
+          ) : (
+            <Button
+              mode="outlined"
+              style={{ borderRadius: 10, marginHorizontal: 15 }}
+              onPress={() => setOpenModalTicket(true)}
+            >
+              Huỷ vé
+            </Button>
+          )}
+        </ScrollView>
       </View>
 
       <ModalCancellationTicket

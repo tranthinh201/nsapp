@@ -80,7 +80,7 @@ const SliderHome = () => {
   if (isLoading)
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color={colors.primary} />
+        <ActivityIndicator size="small" color={colors.primary} />
       </View>
     )
 

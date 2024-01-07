@@ -4,12 +4,15 @@ import { Header } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
 import { RouteBookingStackType } from '@/libs/route'
 import { NavigationProp } from '@/navigation'
+import { RootStore } from '@/store'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
+import { isEqual } from 'lodash'
 import React, { useState } from 'react'
 import { ActivityIndicator, Alert, Platform, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Button, Snackbar, Text } from 'react-native-paper'
+import { useSelector } from 'react-redux'
 import { SelectSeatType } from '../types'
 import { InformationMovie } from './InformationMovie'
 import { Modal } from './Modal'
@@ -22,6 +25,12 @@ const SeatScreen = () => {
   const navigation = useNavigation<NavigationProp>()
   const [visible, setVisible] = React.useState(false)
   const [openModal, setOpenModal] = React.useState(false)
+  const { user } = useSelector(
+    ({ auth }: RootStore) => ({
+      user: auth.user,
+    }),
+    isEqual,
+  )
 
   const showModal = () => setOpenModal(true)
   const hideModal = () => setOpenModal(false)
@@ -37,6 +46,7 @@ const SeatScreen = () => {
       return
     }
 
+    if (!user) navigation.navigate('AuthStack', { screen: 'SIGN_IN' })
     setVisible(true)
   }
 
