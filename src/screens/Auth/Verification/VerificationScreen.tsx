@@ -1,4 +1,4 @@
-import { verifyForgotPassword } from '@/libs/api/auth'
+import { resendVerifyAccount, verifyForgotPassword } from '@/libs/api/auth'
 import { Header } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
 import { RouteAuthStackType } from '@/libs/route'
@@ -15,7 +15,11 @@ const VerificationScreen = () => {
   const { colors } = useAppTheme()
   const route = useRoute<RouteAuthStackType<'VERIFICATION'>>()
   const navigation = useNavigation<NavigationProp>()
-
+  const resendVerify = useMutation(resendVerifyAccount, {
+    onError: () => {
+      Alert.alert('Lỗi', 'Đường truyền mạng không ổn định')
+    },
+  })
   const mutation = useMutation(verifyForgotPassword)
 
   return (
@@ -24,10 +28,10 @@ const VerificationScreen = () => {
 
       <KeyboardAwareScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
-          <Text style={{ ...textStyles.title, marginTop: 20 }}>Enter Verification Code</Text>
+          <Text style={{ ...textStyles.title, marginTop: 20 }}>Nhập mã xác thực của bạn</Text>
 
           <Text style={{ ...textStyles.text12_regular, marginTop: 10 }}>
-            Enter code that we have sent to your email {route.params?.email}
+            Nhập mã xác thực được gửi đến email của bạn {route.params?.email}
           </Text>
 
           <OTPInputView
@@ -62,8 +66,17 @@ const VerificationScreen = () => {
           />
 
           <Text style={{ ...textStyles.text12_regular, marginTop: 0 }}>
-            Didn’t receive the code?{' '}
-            <Text style={{ ...textStyles.text14, color: colors.primary }}>Resend Code</Text>
+            Nếu bạn chưa nhận được mã xác thực, vui lòng nhấn vào{' '}
+            <Text
+              style={{ ...textStyles.text14, color: colors.primary }}
+              onPress={() =>
+                resendVerify.mutate({
+                  email: route.params?.email,
+                })
+              }
+            >
+              Gửi lại mã
+            </Text>
           </Text>
         </View>
       </KeyboardAwareScrollView>
