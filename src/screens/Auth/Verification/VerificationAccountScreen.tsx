@@ -15,7 +15,11 @@ const VerificationAccountScreen = () => {
   const { colors } = useAppTheme()
   const route = useRoute<RouteAuthStackType<'VERIFICATION'>>()
   const navigation = useNavigation<NavigationProp>()
-  const verify = useMutation(verifyAccount)
+  const verify = useMutation(verifyAccount, {
+    onError: () => {
+      Alert.alert('Lỗi', 'Đường truyền mạng không ổn định')
+    },
+  })
   const resendVerify = useMutation(resendVerifyAccount)
 
   return (
@@ -24,10 +28,10 @@ const VerificationAccountScreen = () => {
 
       <KeyboardAwareScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
-          <Text style={{ ...textStyles.title, marginTop: 20 }}>Enter Verification Code</Text>
+          <Text style={{ ...textStyles.title, marginTop: 20 }}>Nhập mã xác thực của bạn</Text>
 
           <Text style={{ ...textStyles.text12_regular, marginTop: 10 }}>
-            Enter code that we have sent to your email {route.params?.email}
+            Nhập mã xác thực được gửi đến email của bạn {route.params?.email}
           </Text>
 
           <OTPInputView
@@ -61,7 +65,7 @@ const VerificationAccountScreen = () => {
           />
 
           <Text style={{ ...textStyles.text12_regular, marginTop: 0 }}>
-            Didn’t receive the code?{' '}
+            Nếu bạn chưa nhận được mã xác thực, vui lòng nhấn vào{' '}
             <Text
               style={{ ...textStyles.text14, color: colors.primary }}
               onPress={() =>
@@ -70,7 +74,7 @@ const VerificationAccountScreen = () => {
                 })
               }
             >
-              Resend Code
+              Gửi lại mã
             </Text>
           </Text>
         </View>

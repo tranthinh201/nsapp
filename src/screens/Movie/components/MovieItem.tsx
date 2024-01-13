@@ -3,6 +3,7 @@ import { textStyles } from '@/libs/styles'
 import { NavigationProp } from '@/navigation'
 import { MovieType } from '@/screens/Booking'
 import { useNavigation } from '@react-navigation/native'
+import { truncate } from 'lodash'
 import { Image, View } from 'moti'
 import { Pressable, StyleSheet } from 'react-native'
 import { Divider, Text } from 'react-native-paper'
@@ -25,7 +26,7 @@ const MovieItem = ({ movie }: MovieItemProps) => {
       <Image source={{ uri: movie.movie_image.map((img) => img.path)[0] }} style={styles.image} />
 
       <View>
-        <Text style={{ fontWeight: '700' }}>{movie.name}</Text>
+        <Text style={{ fontWeight: '700' }}>{truncate(movie.name, { length: 23 })}</Text>
         <Text style={{ fontSize: 11, color: colors.textGrey }}>{movie.duration} phút</Text>
         <Text style={{ fontSize: 11, color: colors.textGrey }}>{movie.movie_type.name}</Text>
         <Text style={{ fontSize: 11, color: colors.textGrey }}>

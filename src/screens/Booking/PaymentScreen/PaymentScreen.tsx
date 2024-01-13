@@ -77,47 +77,47 @@ const PaymentScreen = () => {
 
   const { initPaymentSheet, presentPaymentSheet } = useStripe()
 
-  const onTransaction = async () => {
-    const totalPrice = route.params.seats.reduce((total, seat) => total + seat.price, 0)
+  // const onTransaction = async () => {
+  //   const totalPrice = route.params.seats.reduce((total, seat) => total + seat.price, 0)
 
-    const { paymentIntent: clientSecret } = await createPaymentIntent.mutateAsync({
-      amount: totalPrice,
-    })
+  //   const { paymentIntent: clientSecret } = await createPaymentIntent.mutateAsync({
+  //     amount: totalPrice,
+  //   })
 
-    if (!clientSecret) Alert.alert('Thông báo', 'Khởi tạo thanh toán thất bại!')
+  //   if (!clientSecret) Alert.alert('Thông báo', 'Khởi tạo thanh toán thất bại!')
 
-    const { error: errorInitPayment } = await initPaymentSheet({
-      merchantDisplayName: 'Movie App',
-      paymentIntentClientSecret: clientSecret,
-      returnURL: 'movieapp://stripe-redirect',
-      defaultBillingDetails: {
-        name: user?.last_name,
-        phone: user?.phone_number,
-        email: user?.email,
-      },
-    })
+  //   const { error: errorInitPayment } = await initPaymentSheet({
+  //     merchantDisplayName: 'Movie App',
+  //     paymentIntentClientSecret: clientSecret,
+  //     returnURL: 'movieapp://stripe-redirect',
+  //     defaultBillingDetails: {
+  //       name: user?.last_name,
+  //       phone: user?.phone_number,
+  //       email: user?.email,
+  //     },
+  //   })
 
-    if (errorInitPayment) {
-      Alert.alert('Thông báo', 'Khởi tạo tạo thanh toán thất bại!')
-      return
-    }
+  //   if (errorInitPayment) {
+  //     Alert.alert('Thông báo', 'Khởi tạo tạo thanh toán thất bại!')
+  //     return
+  //   }
 
-    const { error, paymentOption } = await presentPaymentSheet()
+  //   const { error, paymentOption } = await presentPaymentSheet()
 
-    if (error) {
-      return
-    }
+  //   if (error) {
+  //     return
+  //   }
 
-    mutate.mutate({
-      schedule_id: route.params.schedule_id,
-      seats: route.params.seats.map((seat) => seat.id),
-      user_id: user?.id as string,
-      price: totalPrice,
-      payment_status: 'SUCCESS',
-      payment_intent_id: clientSecret,
-      foods: [],
-    })
-  }
+  //   mutate.mutate({
+  //     schedule_id: route.params.schedule_id,
+  //     seats: route.params.seats.map((seat) => seat.id),
+  //     user_id: user?.id as string,
+  //     price: totalPrice,
+  //     payment_status: 'SUCCESS',
+  //     payment_intent_id: clientSecret,
+  //     foods: [],
+  //   })
+  // }
 
   return (
     <>

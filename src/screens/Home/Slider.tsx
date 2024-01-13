@@ -147,9 +147,13 @@ const SliderHome = () => {
                     </View>
                   )}
 
-                  <Text style={{ ...textStyles.text16, fontWeight: '500' }}>{item.name}</Text>
+                  <Text style={{ ...textStyles.text16, fontWeight: '500', textAlign: 'center' }}>
+                    {item.name}
+                  </Text>
 
-                  <Text style={textStyles.text12}>{item.movie_type.name}</Text>
+                  <Text style={[textStyles.text12, { textAlign: 'center' }]}>
+                    {item.movie_type.name}
+                  </Text>
                 </View>
 
                 <Text style={{ color: 'grey' }}>
