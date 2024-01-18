@@ -2,6 +2,7 @@ import { getListFood } from '@/libs/api/food'
 import { Header } from '@/libs/components'
 import { useAppTheme } from '@/libs/config/theme'
 import { useQuery } from '@tanstack/react-query'
+import { truncate } from 'lodash'
 import { Image, ScrollView, StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Divider, Text } from 'react-native-paper'
@@ -18,7 +19,12 @@ const FoodScreen = () => {
         {data?.map((item) => (
           <TouchableOpacity
             key={item.id}
-            style={{ backgroundColor: '#fff', padding: 10, borderRadius: 10, marginVertical: 10 }}
+            style={{
+              backgroundColor: '#fff',
+              paddingVertical: 10,
+              borderRadius: 10,
+              marginVertical: 10,
+            }}
           >
             <View
               style={{
@@ -31,7 +37,9 @@ const FoodScreen = () => {
                 <Text style={{ fontWeight: '700' }}>{item.name}</Text>
 
                 <Text style={{ color: colors.grey, fontSize: 12, marginTop: 6, marginBottom: 8 }}>
-                  {item.description}
+                  {truncate(item.description, {
+                    length: 180,
+                  })}
                 </Text>
 
                 <Text style={{ fontWeight: '700' }}>{item.price.toLocaleString('it-IT')} đ</Text>
@@ -55,7 +63,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   list: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     backgroundColor: '#fff',
   },
 

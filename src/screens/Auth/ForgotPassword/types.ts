@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const ForgotPasswordSchema = z.object({
-  email: z.string().email({ message: 'Email is not valid' }),
+  email: z.string().email({ message: 'Email không được để trống' }),
 })
 
 export const VerifyOtpSchema = z.object({

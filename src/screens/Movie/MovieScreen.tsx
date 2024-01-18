@@ -49,7 +49,7 @@ const MovieScreen = () => {
 
       <View style={styles.root}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ paddingTop: 15 }}>
+          <View style={{ paddingTop: 15, paddingHorizontal: 15 }}>
             <Text>Tìm kiếm phim bạn yêu thích</Text>
 
             <Searchbar
@@ -74,7 +74,10 @@ const MovieScreen = () => {
           {movie.length > 0 ? (
             movie?.map((item) => {
               return (
-                <View style={{ rowGap: 4, paddingBottom: 20, marginTop: 10 }} key={item.id}>
+                <View
+                  style={{ rowGap: 4, paddingBottom: 20, marginTop: 10, paddingHorizontal: 15 }}
+                  key={item.id}
+                >
                   <MovieItem movie={item} />
 
                   <Divider />
@@ -113,7 +116,6 @@ export { MovieScreen }
 
 const styles = StyleSheet.create({
   root: {
-    paddingHorizontal: 15,
     flex: 1,
     backgroundColor: '#fff',
   },

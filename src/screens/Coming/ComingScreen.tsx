@@ -7,12 +7,11 @@ import { useNavigation } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
+import { truncate } from 'lodash'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Text } from 'react-native-paper'
 import { MovieType } from '../Booking'
-
-
 
 const ComingScreen = () => {
   const { data, isFetching } = useQuery(['coming'], getListComingSoon)
@@ -33,7 +32,11 @@ const ComingScreen = () => {
           {format(new Date(item.released_date), 'dd/MM').split('/').join(' Thg ')}
         </Text>
 
-        <Text style={{ fontWeight: '700' }}>{item.name}</Text>
+        <Text style={{ fontWeight: '700' }}>
+          {truncate(item.name, {
+            length: 20,
+          })}
+        </Text>
 
         <Text style={{ fontSize: 11, color: colors.textGrey }}>{item.movie_type.name}</Text>
       </Pressable>

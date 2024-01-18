@@ -4,6 +4,7 @@ import { useAppTheme } from '@/libs/config/theme'
 import { btnStyles, textStyles } from '@/libs/styles'
 import { NavigationProp } from '@/navigation'
 import { RootStore } from '@/store'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigation } from '@react-navigation/native'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { ImagePickerAsset } from 'expo-image-picker'
@@ -14,7 +15,7 @@ import { Alert, StyleSheet, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Button } from 'react-native-paper'
 import { useSelector } from 'react-redux'
-import { InformationType } from './types'
+import { InformationInputUpdateType, InformationSchema, InformationType } from './types'
 
 const InformationScreen = () => {
   const theme = useAppTheme()
@@ -41,10 +42,12 @@ const InformationScreen = () => {
     formState: { errors },
   } = useForm<InformationType>({
     values: {
+      id: user?.id as string,
       first_name: user?.name as string,
       last_name: user?.last_name as string,
       phone_number: user?.phone_number as string,
       address: user?.phone_number,
+      avatar: user?.avatar as string,
     },
     defaultValues: {
       first_name: data?.first_name,
@@ -52,6 +55,7 @@ const InformationScreen = () => {
       phone_number: data?.phone_number,
       address: data?.address,
     },
+    resolver: zodResolver(InformationSchema),
   })
 
   const { mutate } = useMutation(updateProfile, {
@@ -63,8 +67,8 @@ const InformationScreen = () => {
     },
   })
 
-  const onSubmit: SubmitHandler<InformationType> = (data) => {
-    mutate({ id: user?.id as string, data })
+  const onSubmit: SubmitHandler<InformationInputUpdateType> = (data) => {
+    mutate({ ...data, id: user?.id as string, avatar: imagePath?.uri as string })
   }
 
   const handleMoveChangePassword = () => {

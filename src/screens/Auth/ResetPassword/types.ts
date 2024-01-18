@@ -2,8 +2,8 @@ import { z } from 'zod'
 
 export const ResetPasswordSchema = z
   .object({
-    password: z.string().min(1, { message: 'Password is field required!' }),
-    confirmPassword: z.string().min(1, { message: 'Confirm password is field required!' }),
+    password: z.string().min(1, { message: 'Mật khẩu không được để trống!' }),
+    confirmPassword: z.string().min(1, { message: 'Mật khẩu xác nhận không được để trống' }),
     token: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {

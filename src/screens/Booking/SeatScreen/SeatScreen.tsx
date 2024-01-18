@@ -40,13 +40,16 @@ const SeatScreen = () => {
   const onDismissSnackBar = () => setVisible(false)
 
   const handleMoveToConfirm = () => {
-    if (seats.length !== 0) {
-      showModal()
-
+    if (!user) {
+      navigation.navigate('AuthStack', { screen: 'SIGN_IN' })
       return
     }
 
-    if (!user) navigation.navigate('AuthStack', { screen: 'SIGN_IN' })
+    if (seats.length !== 0) {
+      showModal()
+      return
+    }
+
     setVisible(true)
   }
 

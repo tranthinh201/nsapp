@@ -33,10 +33,10 @@ const ResetPasswordScreen = () => {
   const { isLoading, mutate } = useMutation(resetPassword, {
     onSuccess: (response) => {
       if (response.status === 201) {
-        Alert.alert('Success', 'Your password has been changed')
+        Alert.alert('Thông báo', 'Cập nhật mật khẩu thành công!')
         navigation.navigate('AuthStack', { screen: 'SIGN_IN' })
       } else {
-        Alert.alert('Error', 'Your token is invalid')
+        Alert.alert('Thông báo', 'Cập nhật mật khẩu thất bại!')
       }
     },
   })
@@ -47,7 +47,7 @@ const ResetPasswordScreen = () => {
 
   return (
     <View style={styles.root}>
-      <Header />
+      <Header title="Đặt lại mật khẩu" />
 
       <KeyboardAwareScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
@@ -61,21 +61,19 @@ const ResetPasswordScreen = () => {
                     fontFamily: theme.fonts.default.fontFamily,
                     fontSize: 14,
                   }}
-                  label="Password"
+                  label="Mật khẩu"
                   theme={theme}
                   value={value}
                   onChangeText={onChange}
                   secureTextEntry={true}
                   error={!!errors?.password?.message}
                   helperText={errors?.password?.message}
-                  placeholder="Enter your password"
+                  placeholder="Nhập mât khẩu mới"
                 />
               )}
               name="password"
             />
-          </View>
 
-          <View style={styles.containerInput}>
             <Controller
               control={control}
               render={({ field: { onChange, value } }) => (
@@ -85,14 +83,14 @@ const ResetPasswordScreen = () => {
                     fontFamily: theme.fonts.default.fontFamily,
                     fontSize: 14,
                   }}
-                  label="New password"
+                  label="Nhập lại mật khẩu"
                   theme={theme}
                   value={value}
                   onChangeText={onChange}
                   secureTextEntry={true}
                   error={!!errors?.password?.message}
                   helperText={errors?.password?.message}
-                  placeholder="Enter your new password"
+                  placeholder="Nhập lại mât khẩu mới"
                 />
               )}
               name="confirmPassword"
@@ -105,7 +103,7 @@ const ResetPasswordScreen = () => {
             loading={isLoading}
             onPress={handleSubmit(onSubmit)}
           >
-            <Text style={{ fontSize: 14, color: theme.colors.text }}>Change password</Text>
+            <Text style={{ fontSize: 14, color: theme.colors.text }}>Cập nhật</Text>
           </Button>
         </View>
       </KeyboardAwareScrollView>
@@ -127,7 +125,8 @@ const styles = StyleSheet.create({
   },
   containerInput: {
     marginTop: 32,
-    marginBottom: 10,
+    marginBottom: 20,
+    gap: 20,
   },
   scrollContainer: {
     paddingBottom: 20,

@@ -20,7 +20,7 @@ const MovieItem = ({ movie }: MovieItemProps) => {
 
   return (
     <Pressable
-      style={{ gap: 7, paddingBottom: 20, marginTop: 10, flexDirection: 'row' }}
+      style={{ gap: 7, paddingBottom: 20, marginTop: 10, flexDirection: 'row', paddingRight: 160 }}
       onPress={() => handleMoveToDetail(movie.id)}
     >
       <Image source={{ uri: movie.movie_image.map((img) => img.path)[0] }} style={styles.image} />
@@ -35,7 +35,9 @@ const MovieItem = ({ movie }: MovieItemProps) => {
 
         <Divider style={{ marginVertical: 10 }} />
 
-        <Text style={{ fontSize: 11, color: colors.textGrey }}>{movie.brief_movie}</Text>
+        <Text style={{ fontSize: 11, color: colors.textGrey }}>
+          {truncate(movie.brief_movie, { length: 200 })}
+        </Text>
       </View>
     </Pressable>
   )

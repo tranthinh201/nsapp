@@ -161,7 +161,7 @@ const TicketDetailScreen = () => {
                 <View style={{ gap: 5 }}>
                   <Text style={{ color: colors.textGray }}>Số ghế</Text>
 
-                  <Text style={{ fontWeight: '600' }}>
+                  <Text style={{ fontWeight: '600', width: 100 }}>
                     {data?.tickets.map((ticket) => ticket.seat_name).join(', ')}
                   </Text>
                 </View>

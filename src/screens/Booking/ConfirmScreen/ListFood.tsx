@@ -4,6 +4,7 @@ import { textStyles } from '@/libs/styles'
 import { FoodType } from '@/screens/Food/type'
 import { FlashList } from '@shopify/flash-list'
 import { useQuery } from '@tanstack/react-query'
+import { truncate } from 'lodash'
 import { Image, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 
@@ -17,7 +18,7 @@ const ListFood = () => {
       <Image source={{ uri: item.image }} style={styles.image} />
 
       <View style={{ gap: 6 }}>
-        <Text style={{ textTransform: 'uppercase' }}>{item.name}</Text>
+        <Text style={{ textTransform: 'uppercase' }}>{truncate(item.name, { length: 20 })}</Text>
 
         <Text style={[{ fontWeight: '700' }, textStyles.text12]}>{item.price} đ</Text>
       </View>

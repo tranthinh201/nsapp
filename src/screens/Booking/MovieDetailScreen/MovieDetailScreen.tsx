@@ -62,6 +62,8 @@ const MovieDetailScreen = () => {
           width: 100,
           marginRight: isLastItem ? 10 : 0,
           marginLeft: 10,
+          height: 200,
+          alignItems: 'flex-start',
         }}
       >
         <Image source={{ uri: item.avatar }} style={{ height: 120, borderRadius: 10 }} />
@@ -135,7 +137,7 @@ const MovieDetailScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {data && <InformationMovie movie={data} />}
 
-        <View style={styles.list}>
+        <View style={[styles.list, { height: 220 }]}>
           <Text style={styles.titleList}>Đạo diễn & diễn viên</Text>
 
           {data?.persons && (

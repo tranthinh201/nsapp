@@ -30,8 +30,9 @@ const VerificationAccountScreen = () => {
         <View style={styles.container}>
           <Text style={{ ...textStyles.title, marginTop: 20 }}>Nhập mã xác thực của bạn</Text>
 
-          <Text style={{ ...textStyles.text12_regular, marginTop: 10 }}>
-            Nhập mã xác thực được gửi đến email của bạn {route.params?.email}
+          <Text style={{ ...textStyles.text14, marginTop: 10 }}>
+            Mã xác thực đã được gửi đến email của bạn{' '}
+            <Text style={{ fontWeight: '500', color: colors.primary }}>{route.params?.email}</Text>
           </Text>
 
           <OTPInputView
@@ -64,7 +65,7 @@ const VerificationAccountScreen = () => {
             }}
           />
 
-          <Text style={{ ...textStyles.text12_regular, marginTop: 0 }}>
+          <Text style={{ ...textStyles.text14, marginTop: 0 }}>
             Nếu bạn chưa nhận được mã xác thực, vui lòng nhấn vào{' '}
             <Text
               style={{ ...textStyles.text14, color: colors.primary }}
